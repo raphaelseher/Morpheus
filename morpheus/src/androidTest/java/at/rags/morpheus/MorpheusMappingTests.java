@@ -19,15 +19,16 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   @Test
   public void testInit() throws Exception {
     Morpheus morpheus = new Morpheus();
+    Logger.setDebug(true);
     assertNotNull(morpheus);
   }
 
   @Test
   public void testDataArray() throws Exception {
     Morpheus morpheus = new Morpheus();
-    morpheus.registerResourceClass("articles", Article.class);
-    morpheus.registerResourceClass("people", Author.class);
-    morpheus.registerResourceClass("comments", Comment.class);
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
         morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
@@ -42,9 +43,9 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   @Test
   public void testDataObject() throws Exception {
     Morpheus morpheus = new Morpheus();
-    morpheus.registerResourceClass("articles", Article.class);
-    morpheus.registerResourceClass("people", Author.class);
-    morpheus.registerResourceClass("comments", Comment.class);
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
         morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
@@ -60,9 +61,9 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   @Test
   public void testRelationship() throws Exception {
     Morpheus morpheus = new Morpheus();
-    morpheus.registerResourceClass("articles", Article.class);
-    morpheus.registerResourceClass("people", Author.class);
-    morpheus.registerResourceClass("comments", Comment.class);
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
         morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
@@ -77,9 +78,9 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   @Test
   public void testIncluded() throws Exception {
     Morpheus morpheus = new Morpheus();
-    morpheus.registerResourceClass("articles", Article.class);
-    morpheus.registerResourceClass("people", Author.class);
-    morpheus.registerResourceClass("comments", Comment.class);
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
         morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
