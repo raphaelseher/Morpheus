@@ -64,9 +64,16 @@ public class Morpheus {
       Logger.debug("JSON does not contain links object");
     }
 
+    //meta object
+    JSONObject metaObject = null;
+    try {
+      metaObject = jsonObject.getJSONObject("meta");
+      jsonapiObject.setMeta(mapper.mapMeta(metaObject));
+    } catch (JSONException e) {
+      Logger.debug("JSON does not contain meta object");
+    }
 
     //TODO errors
-    //TODO meta
 
     return jsonapiObject;
   }

@@ -140,6 +140,20 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertNull(jsonapiObject.getLinks().related);
   }
 
+  @Test
+  public void testMeta() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
+
+    assertNotNull(jsonapiObject.getMeta());
+    assertTrue(jsonapiObject.getMeta().get("testmeta").equals("yes"));
+  }
+
   private String loadJSONFromAsset(int file) {
     String json = null;
     try {

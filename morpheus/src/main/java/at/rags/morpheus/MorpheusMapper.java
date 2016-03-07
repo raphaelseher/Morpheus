@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.util.ArrayMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,7 @@ import org.json.JSONObject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
@@ -234,6 +237,29 @@ public class MorpheusMapper {
 
     return links;
   }
+
+  /**
+   * Will loop through meta JSONObject and return values as arrayMap.
+   *
+   * @param metaJsonObject JSONObject for meta.
+   * @return ArrayMap with meta values.
+   */
+  public ArrayMap<String, Object> mapMeta(JSONObject metaJsonObject) {
+    ArrayMap<String, Object> metaMap = new ArrayMap<>();
+
+    for(Iterator<String> iter = metaJsonObject.keys();iter.hasNext();) {
+      String key = iter.next();
+
+      try {
+        metaMap.put(key, metaJsonObject.get(key));
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return metaMap;
+  }
+
 
   /**
    * Will check if the relation is included. If true included object will be returned.
