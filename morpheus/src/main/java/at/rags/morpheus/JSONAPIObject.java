@@ -12,8 +12,8 @@ import java.util.Objects;
 public class JSONAPIObject {
 
   private Object resource;
-  private List<Object> resources;
-  private List<Object> included;
+  private List<MorpheusResource> resources;
+  private List<MorpheusResource> included;
   private ArrayMap<String, Object> meta;
   private List<Objects> errors;
 
@@ -27,19 +27,19 @@ public class JSONAPIObject {
     this.resource = resource;
   }
 
-  public List<Object> getResources() {
+  public List<MorpheusResource> getResources() {
     return resources;
   }
 
-  public void setResources(List<Object> resources) {
+  public void setResources(List<MorpheusResource> resources) {
     this.resources = resources;
   }
 
-  public List<Object> getIncluded() {
+  public List<MorpheusResource> getIncluded() {
     return included;
   }
 
-  public void setIncluded(List<Object> included) {
+  public void setIncluded(List<MorpheusResource> included) {
     this.included = included;
   }
 

@@ -16,4 +16,16 @@ public class Author extends MorpheusResource {
 
   @SerializeName(jsonName = "twitter")
   private String twitterHandle;
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public String getTwitterHandle() {
+    return twitterHandle;
+  }
 }

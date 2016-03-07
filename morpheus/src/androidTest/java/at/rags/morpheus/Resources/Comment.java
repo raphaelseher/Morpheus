@@ -10,4 +10,7 @@ public class Comment extends MorpheusResource {
   @SerializeName(jsonName = "body")
   private String body;
 
+  public String getBody() {
+    return body;
+  }
 }

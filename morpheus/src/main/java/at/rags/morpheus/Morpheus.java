@@ -32,7 +32,7 @@ public class Morpheus {
     JSONArray includedArray = null;
     try {
       includedArray = jsonObject.getJSONArray("included");
-      jsonapiObject.setIncluded(mapper.mapDataArray(includedArray));
+      jsonapiObject.setIncluded(mapper.mapDataArray(includedArray, null));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }
@@ -41,18 +41,18 @@ public class Morpheus {
     JSONArray dataArray = null;
     try {
       dataArray = jsonObject.getJSONArray("data");
-      jsonapiObject.setResources(mapper.mapDataArray(dataArray));
+      jsonapiObject.setResources(mapper.mapDataArray(dataArray, jsonapiObject.getIncluded()));
     } catch (JSONException e) {
-      Logger.debug("JSON does not contain data object");
+      Logger.debug("JSON does not contain data array");
     }
 
     //data object
     JSONObject dataObject = null;
     try {
       dataObject = jsonObject.getJSONObject("data");
-      jsonapiObject.setResource(mapper.mapDataObject(dataObject));
+      jsonapiObject.setResource(mapper.mapDataObject(dataObject, jsonapiObject.getIncluded()));
     } catch (JSONException e) {
-      Logger.debug("JSON does not contain data array");
+      Logger.debug("JSON does not contain data object");
     }
 
     //TODO map included on relation

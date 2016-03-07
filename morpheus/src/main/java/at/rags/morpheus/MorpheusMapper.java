@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +28,8 @@ public class MorpheusMapper {
    * @param dataObject JSONObject from data
    * @return Deserialized Object.
    */
-  public Object mapDataObject(JSONObject dataObject) {
-    Object realObject = null;
+  public MorpheusResource mapDataObject(JSONObject dataObject, List<MorpheusResource> included) {
+    MorpheusResource realObject = null;
 
     try {
       realObject = MorpheusDeserializer.createObjectFromString(getTypeFromJson(dataObject));
@@ -44,7 +46,7 @@ public class MorpheusMapper {
     }
 
     try {
-      realObject = mapRelations(realObject, dataObject.getJSONObject("relationships"));
+      realObject = mapRelations(realObject, dataObject.getJSONObject("relationships"), included);
     } catch (Exception e) {
       Logger.debug("JSON data does not contain relationships");
     }
@@ -60,10 +62,9 @@ public class MorpheusMapper {
    *
    * @param dataArray JSONArray of the data node.
    * @return List of deserialized objects.
-   * @see #mapDataObject(JSONObject)
    */
-  public List<Object> mapDataArray(JSONArray dataArray) {
-    ArrayList<Object> objects = new ArrayList<>();
+  public List<MorpheusResource> mapDataArray(JSONArray dataArray, List<MorpheusResource> included) {
+    ArrayList<MorpheusResource> objects = new ArrayList<>();
 
     for (int i = 0; i < dataArray.length(); i++) {
       JSONObject jsonObject = null;
@@ -73,7 +74,7 @@ public class MorpheusMapper {
       } catch (JSONException e) {
         Logger.debug("Was not able to get dataArray["+i+"] as JSONObject.");
       }
-      objects.add(mapDataObject(jsonObject));
+      objects.add(mapDataObject(jsonObject, included));
     }
 
     return objects;
@@ -87,7 +88,7 @@ public class MorpheusMapper {
    * @return Object with mapped fields.
    * @throws Exception
    */
-  public Object mapId(Object object, JSONObject jsonDataObject) {
+  public MorpheusResource mapId(MorpheusResource object, JSONObject jsonDataObject) {
     try {
       return MorpheusDeserializer.setIdField(object, jsonDataObject.get("id"));
     } catch (JSONException e) {
@@ -105,7 +106,7 @@ public class MorpheusMapper {
    * @param attributesJsonObject Attributes object inside the data node.
    * @return Object with mapped fields.
    */
-  public Object mapAttributes(Object object, JSONObject attributesJsonObject) {
+  public MorpheusResource mapAttributes(MorpheusResource object, JSONObject attributesJsonObject) {
 
     for (Field field : object.getClass().getDeclaredFields()) {
       // get the right attribute name
@@ -123,7 +124,7 @@ public class MorpheusMapper {
 
       if (!isRelation) {
         try {
-          MorpheusDeserializer.setField(object, jsonFieldName, attributesJsonObject.get(jsonFieldName));
+          MorpheusDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
         } catch (JSONException e) {
           Logger.debug("JSON attributes does not contain " + jsonFieldName);
         }
@@ -140,7 +141,8 @@ public class MorpheusMapper {
    * @param jsonObject JSONObject.
    * @return Real object with relations.
    */
-  public Object mapRelations(Object object, JSONObject jsonObject) throws Exception {
+  public MorpheusResource mapRelations(MorpheusResource object, JSONObject jsonObject,
+                                       List<MorpheusResource> included) throws Exception {
     List<String> relationshipNames = getRelationshipNames(object.getClass());
 
     //going through relationship names annotated in Class
@@ -156,7 +158,9 @@ public class MorpheusMapper {
       JSONObject relationDataObject = null;
       try {
         relationDataObject = relationJsonObject.getJSONObject("data");
-        Object relationObject = mapDataObject(relationDataObject);
+        MorpheusResource relationObject = mapDataObject(relationDataObject, null);
+
+        relationObject = matchIncludedToRelation(relationObject, included);
 
         MorpheusDeserializer.setField(object, relationship, relationObject);
       } catch (JSONException e) {
@@ -167,7 +171,9 @@ public class MorpheusMapper {
       JSONArray relationDataArray = null;
       try {
         relationDataArray = relationJsonObject.getJSONArray("data");
-        List<Object> relationArray = mapDataArray(relationDataArray);
+        List<MorpheusResource> relationArray = mapDataArray(relationDataArray, null);
+
+        relationArray = matchIncludedToRelation(relationArray, included);
 
         MorpheusDeserializer.setField(object, relationship, relationArray);
       } catch (JSONException e) {
@@ -176,7 +182,24 @@ public class MorpheusMapper {
     }
 
     return object;
-  }g
+  }
+
+  private MorpheusResource matchIncludedToRelation(MorpheusResource object, List<MorpheusResource> included) {
+    for (MorpheusResource resource : included) {
+      if (object.getId().equals(resource.getId()) && object.getClass().equals(resource.getClass())) {
+        return resource;
+      }
+    }
+    return object;
+  }
+
+  private List<MorpheusResource> matchIncludedToRelation(List<MorpheusResource> resources, List<MorpheusResource> included) {
+    List<MorpheusResource> matchedResources = new ArrayList<>();
+    for (MorpheusResource resource : resources) {
+      matchedResources.add(matchIncludedToRelation(resource, included));
+    }
+    return matchedResources;
+  }
 
   // helper
 

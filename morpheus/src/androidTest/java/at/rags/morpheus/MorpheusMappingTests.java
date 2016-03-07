@@ -88,6 +88,24 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertTrue(jsonapiObject.getIncluded().size() == 3);
   }
 
+  @Test
+  public void testIncludedRelations() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+
+    assertNotNull(jsonapiObject.getResource());
+    Article article = (Article)jsonapiObject.getResource();
+    assertTrue(article.getAuthor().getFirstName().equals("Dan"));
+
+    Comment comment = (Comment)article.getComments().get(0);
+    assertTrue(comment.getBody().equals("First!"));
+  }
+
   private String loadJSONFromAsset(int file) {
     String json = null;
     try {

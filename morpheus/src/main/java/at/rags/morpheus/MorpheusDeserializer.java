@@ -32,16 +32,16 @@ public class MorpheusDeserializer {
    * @return Instance of the resourceName class.
    * @throws Exception
    */
-  public static Object createObjectFromString(String resourceName) throws Exception {
+  public static MorpheusResource createObjectFromString(String resourceName) throws Exception {
     Class objectClass = mRegisteredClasses.get(resourceName);
     try {
-      return objectClass.newInstance();
+      return (MorpheusResource)objectClass.newInstance();
     } catch (InstantiationException e) {
       throw new Exception("Unable to create new instance of " + objectClass);
     }
   }
 
-  public static Object setField(Object object, String fieldName, Object data) {
+  public static MorpheusResource setField(MorpheusResource object, String fieldName, Object data) {
     Field field = null;
     try {
       field = object.getClass().getDeclaredField(fieldName);
@@ -56,7 +56,7 @@ public class MorpheusDeserializer {
     return object;
   }
 
-  public static Object setIdField(Object object, Object data) throws Exception {
+  public static MorpheusResource setIdField(MorpheusResource object, Object data) throws Exception {
     Class superClass = object.getClass().getSuperclass();
     do {
       if (superClass == MorpheusResource.class) {
