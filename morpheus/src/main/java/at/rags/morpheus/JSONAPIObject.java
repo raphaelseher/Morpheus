@@ -16,6 +16,7 @@ public class JSONAPIObject {
   private List<MorpheusResource> included;
   private ArrayMap<String, Object> meta;
   private List<Objects> errors;
+  private Links links;
 
   //getters & setters
 
@@ -57,5 +58,13 @@ public class JSONAPIObject {
 
   public void setErrors(List<Objects> errors) {
     this.errors = errors;
+  }
+
+  public Links getLinks() {
+    return links;
+  }
+
+  public void setLinks(Links links) {
+    this.links = links;
   }
 }

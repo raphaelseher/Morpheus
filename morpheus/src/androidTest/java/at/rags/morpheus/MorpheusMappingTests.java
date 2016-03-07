@@ -106,6 +106,40 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertTrue(comment.getBody().equals("First!"));
   }
 
+  @Test
+  public void testLinks() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+
+    assertNotNull(jsonapiObject.getResource());
+    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(article.getLinks());
+    assertTrue(article.getLinks().selfLink.equals("http://example.com/articles/1"));
+    assertNull(article.getLinks().related);
+  }
+
+  @Test
+  public void testPaginationLinks() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+
+    assertNotNull(jsonapiObject.getLinks());
+    assertTrue(jsonapiObject.getLinks().selfLink.equals("http://example.com/articles"));
+    assertTrue(jsonapiObject.getLinks().next.equals("http://example.com/articles?page[offset]=2"));
+    assertTrue(jsonapiObject.getLinks().last.equals("http://example.com/articles?page[offset]=10"));
+    assertNull(jsonapiObject.getLinks().related);
+  }
+
   private String loadJSONFromAsset(int file) {
     String json = null;
     try {

@@ -55,8 +55,16 @@ public class Morpheus {
       Logger.debug("JSON does not contain data object");
     }
 
-    //TODO map included on relation
-    //TODO map links
+    //link object
+    JSONObject linkObject = null;
+    try {
+      linkObject = jsonObject.getJSONObject("links");
+      jsonapiObject.setLinks(mapper.mapLinks(linkObject));
+    } catch (JSONException e) {
+      Logger.debug("JSON does not contain links object");
+    }
+
+
     //TODO errors
     //TODO meta
 

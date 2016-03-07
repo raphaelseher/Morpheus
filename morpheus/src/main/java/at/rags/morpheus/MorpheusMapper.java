@@ -1,7 +1,5 @@
 package at.rags.morpheus;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +49,12 @@ public class MorpheusMapper {
       Logger.debug("JSON data does not contain relationships");
     }
 
-    //TODO map links
+    try {
+      realObject.setLinks(mapLinks(dataObject.getJSONObject("links")));
+    } catch (JSONException e) {
+      Logger.debug("JSON data does not contain links");
+    }
+
     //TODO meta
 
     return realObject;
@@ -184,6 +187,61 @@ public class MorpheusMapper {
     return object;
   }
 
+  //TODO map href and meta
+  /**
+   * Will map links and return them.
+   *
+   * @param linksJsonObject JSONObject from link.
+   * @return Links with mapped values.
+   */
+  public Links mapLinks(JSONObject linksJsonObject) {
+    Links links = new Links();
+    try {
+      links.selfLink = linksJsonObject.getString("self");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain self");
+    }
+
+    try {
+      links.related = linksJsonObject.getString("related");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain related");
+    }
+
+    try {
+      links.first = linksJsonObject.getString("first");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain first");
+    }
+
+    try {
+      links.last = linksJsonObject.getString("last");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain last");
+    }
+
+    try {
+      links.prev = linksJsonObject.getString("prev");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain prev");
+    }
+
+    try {
+      links.next = linksJsonObject.getString("next");
+    } catch (JSONException e) {
+      Logger.debug("JSON link does not contain next");
+    }
+
+    return links;
+  }
+
+  /**
+   * Will check if the relation is included. If true included object will be returned.
+   *
+   * @param object Relation resources.
+   * @param included List of included resources.
+   * @return Relation of included resource.
+   */
   private MorpheusResource matchIncludedToRelation(MorpheusResource object, List<MorpheusResource> included) {
     for (MorpheusResource resource : included) {
       if (object.getId().equals(resource.getId()) && object.getClass().equals(resource.getClass())) {
@@ -193,9 +251,16 @@ public class MorpheusMapper {
     return object;
   }
 
-  private List<MorpheusResource> matchIncludedToRelation(List<MorpheusResource> resources, List<MorpheusResource> included) {
+  /**
+   * Loops through relations and calls {@link #matchIncludedToRelation(MorpheusResource, List)}.
+   *
+   * @param relationResources List of relation resources.
+   * @param included List of included resources.
+   * @return List of relations and/or included resources.
+   */
+  private List<MorpheusResource> matchIncludedToRelation(List<MorpheusResource> relationResources, List<MorpheusResource> included) {
     List<MorpheusResource> matchedResources = new ArrayList<>();
-    for (MorpheusResource resource : resources) {
+    for (MorpheusResource resource : relationResources) {
       matchedResources.add(matchIncludedToRelation(resource, included));
     }
     return matchedResources;
