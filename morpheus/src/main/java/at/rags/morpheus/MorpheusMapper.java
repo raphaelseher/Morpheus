@@ -130,7 +130,16 @@ public class MorpheusMapper {
 
       if (!isRelation) {
         try {
-          MorpheusDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
+          if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
+            List<String> attributeAsList = new ArrayList<>();
+            JSONArray attributeJsonArray = attributesJsonObject.getJSONArray(jsonFieldName);
+            for (int i = 0; attributeJsonArray.length() > i; i++) {
+              attributeAsList.add(attributeJsonArray.getString(i));
+            }
+            MorpheusDeserializer.setField(object, field.getName(), attributeAsList);
+          } else {
+            MorpheusDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
+          }
         } catch (JSONException e) {
           Logger.debug("JSON attributes does not contain " + jsonFieldName);
         }
@@ -149,10 +158,10 @@ public class MorpheusMapper {
    */
   public MorpheusResource mapRelations(MorpheusResource object, JSONObject jsonObject,
                                        List<MorpheusResource> included) throws Exception {
-    List<String> relationshipNames = getRelationshipNames(object.getClass());
+    ArrayMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
 
     //going through relationship names annotated in Class
-    for (String relationship : relationshipNames) {
+    for (String relationship : relationshipNames.keySet()) {
       JSONObject relationJsonObject = null;
       try {
         relationJsonObject = jsonObject.getJSONObject(relationship);
@@ -168,7 +177,7 @@ public class MorpheusMapper {
 
         relationObject = matchIncludedToRelation(relationObject, included);
 
-        MorpheusDeserializer.setField(object, relationship, relationObject);
+        MorpheusDeserializer.setField(object, relationshipNames.get(relationship), relationObject);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -181,7 +190,7 @@ public class MorpheusMapper {
 
         relationArray = matchIncludedToRelation(relationArray, included);
 
-        MorpheusDeserializer.setField(object, relationship, relationArray);
+        MorpheusDeserializer.setField(object,  relationshipNames.get(relationship), relationArray);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -316,13 +325,18 @@ public class MorpheusMapper {
    * @param clazz Class for annotation.
    * @return List of relationship names.
    */
-  private  List<String> getRelationshipNames(Class clazz) {
-    List<String> relationNames = new ArrayList<>();
+  private  ArrayMap<String, String> getRelationshipNames(Class clazz) {
+    ArrayMap<String, String> relationNames = new ArrayMap<>();
     for (Field field : clazz.getDeclaredFields()) {
+      String fieldName = field.getName();
       for (Annotation annotation : field.getDeclaredAnnotations()) {
+        if (annotation.annotationType() == SerializeName.class) {
+          SerializeName serializeName = (SerializeName)annotation;
+          fieldName = serializeName.jsonName();
+        }
         if (annotation.annotationType() == Relationship.class) {
           Relationship relationshipAnnotation = (Relationship)annotation;
-          relationNames.add(relationshipAnnotation.relationName());
+          relationNames.put(relationshipAnnotation.relationName(), fieldName);
         }
       }
     }
