@@ -17,6 +17,8 @@ public class Article extends MorpheusResource {
   @Relationship(relationName = "comments")
   private List<Comment> comments;
 
+  private List<String> tags;
+
   public String getTitle() {
     return title;
   }
@@ -27,5 +29,9 @@ public class Article extends MorpheusResource {
 
   public List<Comment> getComments() {
     return comments;
+  }
+
+  public List<String> getTags() {
+    return tags;
   }
 }
