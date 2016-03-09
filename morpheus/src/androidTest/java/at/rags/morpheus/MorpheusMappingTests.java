@@ -12,6 +12,7 @@ import java.io.InputStream;
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
 import at.rags.morpheus.Resources.Comment;
+import at.rags.morpheus.Resources.Product;
 
 @RunWith(JUnit4.class)
 public class MorpheusMappingTests extends InstrumentationTestCase {
@@ -152,6 +153,41 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
 
     assertNotNull(jsonapiObject.getMeta());
     assertTrue(jsonapiObject.getMeta().get("testmeta").equals("yes"));
+  }
+
+  @Test
+  public void testAttributesArray() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    MorpheusDeserializer.registerResourceClass("people", Author.class);
+    MorpheusDeserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+
+    assertNotNull(jsonapiObject.getLinks());
+    Article article = (Article)jsonapiObject.getResource();
+
+    assertTrue(article.getTags().get(0).equals("main"));
+    assertTrue(article.getTags().get(1).equals("dev"));
+  }
+
+  @Test
+  public void testAttributesTypes() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    MorpheusDeserializer.registerResourceClass("products", Product.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.jsonToObject(loadJSONFromAsset(R.raw.product));
+
+    Product product = (Product)jsonapiObject.getResources().get(0);
+
+    assertTrue(product.getId().equals("123456"));
+    assertTrue(product.getName().equals("Fancy new roboter"));
+    assertTrue(product.getPrice() == 999.75);
+    assertTrue(product.getInStock() == 9);
+    assertTrue(product.getAvailability().get("Store 1"));
+    assertFalse(product.getAvailability().get("Store 3"));
   }
 
   private String loadJSONFromAsset(int file) {

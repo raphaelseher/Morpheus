@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class MorpheusMapper {
     try {
       realObject = mapAttributes(realObject, dataObject.getJSONObject("attributes"));
     } catch (Exception e) {
+      e.printStackTrace();
       Logger.debug("JSON data does not contain attributes");
     }
 
@@ -131,12 +133,16 @@ public class MorpheusMapper {
       if (!isRelation) {
         try {
           if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-            List<String> attributeAsList = new ArrayList<>();
+            List<Object> attributeAsList = new ArrayList<>();
             JSONArray attributeJsonArray = attributesJsonObject.getJSONArray(jsonFieldName);
             for (int i = 0; attributeJsonArray.length() > i; i++) {
-              attributeAsList.add(attributeJsonArray.getString(i));
+              attributeAsList.add(attributeJsonArray.get(i));
             }
             MorpheusDeserializer.setField(object, field.getName(), attributeAsList);
+          } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
+            ArrayMap<String, Object> dictionary = new ArrayMap<>();
+            JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
+            MorpheusDeserializer.setField(object, field.getName(), mapMeta(objectForMap));
           } else {
             MorpheusDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
           }

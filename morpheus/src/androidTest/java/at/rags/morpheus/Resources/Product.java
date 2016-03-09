@@ -1,5 +1,7 @@
 package at.rags.morpheus.Resources;
 
+import android.util.ArrayMap;
+
 import java.util.Dictionary;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class Product extends MorpheusResource {
   @SerializeName(jsonName = "in-stock")
   private int inStock;
   @SerializeName(jsonName = "stores-availability")
-  private Dictionary<String, Boolean> availability;
+  private ArrayMap<String, Boolean> availability;
 
   public String getName() {
     return name;
@@ -35,7 +37,7 @@ public class Product extends MorpheusResource {
     return inStock;
   }
 
-  public Dictionary<String, Boolean> getAvailability() {
+  public ArrayMap<String, Boolean> getAvailability() {
     return availability;
   }
 }
