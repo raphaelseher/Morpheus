@@ -1,0 +1,98 @@
+package at.rags.morpheus;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by raphaelseher on 09/03/16.
+ */
+public class Factory {
+
+  private static Mapper mapper = new Mapper();
+
+  /**
+   * Deserializes a json object of data to the registered class.
+   *
+   * @param dataObject JSONObject from data
+   * @return Deserialized Object.
+   */
+  public static MorpheusResource newObjectFromJSONObject(JSONObject dataObject, List<MorpheusResource> included) {
+    MorpheusResource realObject = null;
+
+    try {
+      realObject = Deserializer.createObjectFromString(getTypeFromJson(dataObject));
+    } catch (Exception e) {
+      Logger.debug(e.getMessage());
+    }
+
+    realObject = mapper.mapId(realObject, dataObject);
+
+    try {
+      realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Logger.debug("JSON data does not contain attributes");
+    }
+
+    try {
+      realObject = mapper.mapRelations(realObject, dataObject.getJSONObject("relationships"), included);
+    } catch (Exception e) {
+      Logger.debug("JSON data does not contain relationships");
+    }
+
+    try {
+      realObject.setLinks(mapper.mapLinks(dataObject.getJSONObject("links")));
+    } catch (JSONException e) {
+      Logger.debug("JSON data does not contain links");
+    }
+
+    //TODO meta
+
+    return realObject;
+  }
+
+  /**
+   * Loops through data objects and deserializes them.
+   *
+   * @param dataArray JSONArray of the data node.
+   * @return List of deserialized objects.
+   */
+  public static List<MorpheusResource> newObjectFromJSONArray(JSONArray dataArray, List<MorpheusResource> included) {
+    ArrayList<MorpheusResource> objects = new ArrayList<>();
+
+    for (int i = 0; i < dataArray.length(); i++) {
+      JSONObject jsonObject = null;
+
+      try {
+        jsonObject = dataArray.getJSONObject(i);
+      } catch (JSONException e) {
+        Logger.debug("Was not able to get dataArray["+i+"] as JSONObject.");
+      }
+      objects.add(newObjectFromJSONObject(jsonObject, included));
+    }
+
+    return objects;
+  }
+
+  // helper
+
+  /**
+   * Get the type of the data message.
+   *
+   * @param object JSONObject.
+   * @return Name of the json type.
+   */
+  public static String getTypeFromJson(JSONObject object) {
+    String type = null;
+    try {
+      type = object.getString("type");
+    } catch (JSONException e) {
+      Logger.debug("JSON data does not contain type");
+    }
+    return type;
+  }
+}

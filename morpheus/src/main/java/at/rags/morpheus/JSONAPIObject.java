@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class JSONAPIObject {
 
-  private Object resource;
+  private MorpheusResource resource;
   private List<MorpheusResource> resources;
   private List<MorpheusResource> included;
   private ArrayMap<String, Object> meta;
@@ -24,7 +24,7 @@ public class JSONAPIObject {
     return resource;
   }
 
-  public void setResource(Object resource) {
+  public void setResource(MorpheusResource resource) {
     this.resource = resource;
   }
 

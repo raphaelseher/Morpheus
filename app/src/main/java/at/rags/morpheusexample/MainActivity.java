@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 
 import at.rags.morpheus.JSONAPIObject;
 import at.rags.morpheus.Morpheus;
-import at.rags.morpheus.MorpheusDeserializer;
+import at.rags.morpheus.Deserializer;
 import at.rags.morpheusexample.JsonApiResources.Article;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     Morpheus morph = new Morpheus();
-    MorpheusDeserializer.registerResourceClass("articles", Article.class);
+    Deserializer.registerResourceClass("articles", Article.class);
     JSONAPIObject jsonapiObject = null;
     try {
       jsonapiObject = morph.jsonToObject(loadJSONFromAsset());

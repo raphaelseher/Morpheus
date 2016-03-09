@@ -12,15 +12,16 @@ import org.json.JSONObject;
  */
 public class Morpheus {
 
-  private MorpheusMapper mapper;
+  private Mapper mapper;
 
   @TargetApi(Build.VERSION_CODES.KITKAT)
   public Morpheus() {
-    mapper = new MorpheusMapper();
+    mapper = new Mapper();
   }
 
   public JSONAPIObject jsonToObject(String jsonString) throws Exception {
     JSONAPIObject jsonapiObject = new JSONAPIObject();
+
     JSONObject jsonObject = null;
     try {
       jsonObject = new JSONObject(jsonString);
@@ -32,7 +33,7 @@ public class Morpheus {
     JSONArray includedArray = null;
     try {
       includedArray = jsonObject.getJSONArray("included");
-      jsonapiObject.setIncluded(mapper.mapDataArray(includedArray, null));
+      jsonapiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }
@@ -41,7 +42,7 @@ public class Morpheus {
     JSONArray dataArray = null;
     try {
       dataArray = jsonObject.getJSONArray("data");
-      jsonapiObject.setResources(mapper.mapDataArray(dataArray, jsonapiObject.getIncluded()));
+      jsonapiObject.setResources(Factory.newObjectFromJSONArray(dataArray, jsonapiObject.getIncluded()));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain data array");
     }
@@ -50,7 +51,7 @@ public class Morpheus {
     JSONObject dataObject = null;
     try {
       dataObject = jsonObject.getJSONObject("data");
-      jsonapiObject.setResource(mapper.mapDataObject(dataObject, jsonapiObject.getIncluded()));
+      jsonapiObject.setResource(Factory.newObjectFromJSONObject(dataObject, jsonapiObject.getIncluded()));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain data object");
     }
@@ -68,7 +69,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonapiObject.setMeta(mapper.mapMeta(metaObject));
+      jsonapiObject.setMeta(mapper.jsonObjectToArrayMap(metaObject));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }

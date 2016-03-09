@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 /**
  * Created by raphaelseher on 07/03/16.
  */
-public class MorpheusDeserializer {
+public class Deserializer {
 
   private static ArrayMap<String, Class> mRegisteredClasses = new ArrayMap<>();
 
@@ -77,6 +77,10 @@ public class MorpheusDeserializer {
       Logger.debug("No field Id found. That should not happened.");
     } catch (IllegalAccessException e) {
       Logger.debug("Could not access field Id");
+    } catch (IllegalArgumentException e) {
+      Field field = superClass.getDeclaredField("Id");
+      field.setAccessible(true);
+      field.set(object, String.valueOf(data));
     }
 
     return object;

@@ -36,7 +36,8 @@
       "self": "http://example.com/articles/1"
     }
   }],
-  "included": [{
+  "included": [
+    {
     "type": "people",
     "id": "9",
     "attributes": {
