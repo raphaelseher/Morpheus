@@ -4,6 +4,8 @@ import android.util.ArrayMap;
 
 import java.lang.reflect.Field;
 
+import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+
 /**
  * Created by raphaelseher on 07/03/16.
  */
@@ -32,7 +34,7 @@ public class Deserializer {
    * @return Instance of the resourceName class.
    * @throws Exception
    */
-  public static MorpheusResource createObjectFromString(String resourceName) throws Exception {
+  public MorpheusResource createObjectFromString(String resourceName) throws Exception {
     Class objectClass = mRegisteredClasses.get(resourceName);
     try {
       return (MorpheusResource)objectClass.newInstance();
@@ -41,7 +43,7 @@ public class Deserializer {
     }
   }
 
-  public static MorpheusResource setField(MorpheusResource object, String fieldName, Object data) {
+  public MorpheusResource setField(MorpheusResource object, String fieldName, Object data) {
     Field field = null;
     try {
       field = object.getClass().getDeclaredField(fieldName);
@@ -56,7 +58,7 @@ public class Deserializer {
     return object;
   }
 
-  public static MorpheusResource setIdField(MorpheusResource object, Object data) throws Exception {
+  public MorpheusResource setIdField(MorpheusResource object, Object data) throws Exception {
     Class superClass = object.getClass().getSuperclass();
     do {
       if (superClass == MorpheusResource.class) {
@@ -66,7 +68,7 @@ public class Deserializer {
     } while (superClass != null);
 
     if (superClass == null) {
-      throw new Exception(object.getClass() + " is not inheriting MorpheusResource");
+      throw new NotExtendingResourceException(object.getClass() + " is not inheriting MorpheusResource");
     }
 
     try {

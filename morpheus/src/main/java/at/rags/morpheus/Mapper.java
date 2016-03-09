@@ -20,6 +20,16 @@ import at.rags.morpheus.Annotations.SerializeName;
  */
 public class Mapper {
 
+  private Deserializer mDeserializer;
+
+  public Mapper() {
+    mDeserializer = new Deserializer();
+  }
+
+  public Mapper(Deserializer deserializer) {
+    mDeserializer = deserializer;
+  }
+
   //TODO map href and meta
   /**
    * Will map links and return them.
@@ -71,19 +81,19 @@ public class Mapper {
   /**
    * Will loop through meta JSONObject and return values as arrayMap.
    *
-   * @param metaJsonObject JSONObject for meta.
+   * @param jsonObject JSONObject for meta.
    * @return ArrayMap with meta values.
    */
-  public ArrayMap<String, Object> jsonObjectToArrayMap(JSONObject metaJsonObject) {
+  public ArrayMap<String, Object> jsonObjectToArrayMap(JSONObject jsonObject) {
     ArrayMap<String, Object> metaMap = new ArrayMap<>();
 
-    for(Iterator<String> iter = metaJsonObject.keys();iter.hasNext();) {
+    for(Iterator<String> iter = jsonObject.keys(); iter.hasNext();) {
       String key = iter.next();
 
       try {
-        metaMap.put(key, metaJsonObject.get(key));
+        metaMap.put(key, jsonObject.get(key));
       } catch (JSONException e) {
-        e.printStackTrace();
+        Logger.debug("JSON does not contain " + key + ".");
       }
     }
 
@@ -98,14 +108,13 @@ public class Mapper {
    * @return Object with mapped fields.
    * @throws Exception
    */
-  public MorpheusResource mapId(MorpheusResource object, JSONObject jsonDataObject) {
+  public MorpheusResource mapId(MorpheusResource object, JSONObject jsonDataObject) throws Exception {
     try {
-      return Deserializer.setIdField(object, jsonDataObject.get("id"));
+      return mDeserializer.setIdField(object, jsonDataObject.get("id"));
     } catch (JSONException e) {
       Logger.debug("JSON data does not contain id.");
-    } catch (Exception e) {
-      e.printStackTrace();
     }
+
     return object;
   }
 
@@ -140,13 +149,13 @@ public class Mapper {
             for (int i = 0; attributeJsonArray.length() > i; i++) {
               attributeAsList.add(attributeJsonArray.get(i));
             }
-            Deserializer.setField(object, field.getName(), attributeAsList);
+            mDeserializer.setField(object, field.getName(), attributeAsList);
           } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
             ArrayMap<String, Object> dictionary = new ArrayMap<>();
             JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
-            Deserializer.setField(object, field.getName(), jsonObjectToArrayMap(objectForMap));
+            mDeserializer.setField(object, field.getName(), jsonObjectToArrayMap(objectForMap));
           } else {
-            Deserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
+            mDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
           }
         } catch (JSONException e) {
           Logger.debug("JSON attributes does not contain " + jsonFieldName);
@@ -185,7 +194,7 @@ public class Mapper {
 
         relationObject = matchIncludedToRelation(relationObject, included);
 
-        Deserializer.setField(object, relationshipNames.get(relationship), relationObject);
+        mDeserializer.setField(object, relationshipNames.get(relationship), relationObject);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -198,7 +207,7 @@ public class Mapper {
 
         relationArray = matchIncludedToRelation(relationArray, included);
 
-        Deserializer.setField(object, relationshipNames.get(relationship), relationArray);
+        mDeserializer.setField(object, relationshipNames.get(relationship), relationArray);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }

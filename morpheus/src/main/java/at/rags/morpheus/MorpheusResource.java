@@ -16,6 +16,10 @@ public class MorpheusResource {
     return links;
   }
 
+  public void setId(String id) {
+    Id = id;
+  }
+
   public void setLinks(Links links) {
     this.links = links;
   }

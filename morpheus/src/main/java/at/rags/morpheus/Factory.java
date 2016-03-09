@@ -13,6 +13,7 @@ import java.util.List;
 public class Factory {
 
   private static Mapper mapper = new Mapper();
+  private static Deserializer deserializer = new Deserializer();
 
   /**
    * Deserializes a json object of data to the registered class.
@@ -24,12 +25,16 @@ public class Factory {
     MorpheusResource realObject = null;
 
     try {
-      realObject = Deserializer.createObjectFromString(getTypeFromJson(dataObject));
+      realObject = deserializer.createObjectFromString(getTypeFromJson(dataObject));
     } catch (Exception e) {
       Logger.debug(e.getMessage());
     }
 
-    realObject = mapper.mapId(realObject, dataObject);
+    try {
+      realObject = mapper.mapId(realObject, dataObject);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     try {
       realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
