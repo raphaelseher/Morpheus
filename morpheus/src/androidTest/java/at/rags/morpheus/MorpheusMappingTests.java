@@ -184,8 +184,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
 
     assertTrue(product.getId().equals("123456"));
     assertTrue(product.getName().equals("Fancy new roboter"));
-    //assertTrue(product.getPrice() == 999.75);
-    //assertTrue(product.getInStock() == 9);
+    assertTrue(product.getPrice() == 999.75);
+    assertTrue(product.getInStock() == 9);
     assertTrue(product.getAvailability().get("Store 1"));
     assertFalse(product.getAvailability().get("Store 3"));
   }
