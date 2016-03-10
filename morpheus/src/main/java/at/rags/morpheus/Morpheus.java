@@ -11,12 +11,14 @@ import org.json.JSONObject;
  * Work in progress.
  */
 public class Morpheus {
-
   private Mapper mapper;
 
-  @TargetApi(Build.VERSION_CODES.KITKAT)
   public Morpheus() {
     mapper = new Mapper();
+  }
+
+  public Morpheus(AttributeMapper attributeMapper) {
+    mapper = new Mapper(new Deserializer(), attributeMapper);
   }
 
   public JSONAPIObject jsonToObject(String jsonString) throws Exception {
@@ -69,7 +71,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonapiObject.setMeta(mapper.jsonObjectToArrayMap(metaObject));
+      jsonapiObject.setMeta(mapper.getAttributeMapper().jsonObjectToArrayMap(metaObject));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }
@@ -78,4 +80,6 @@ public class Morpheus {
 
     return jsonapiObject;
   }
+
+
 }

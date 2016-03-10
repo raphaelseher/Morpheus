@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
@@ -21,13 +21,16 @@ import at.rags.morpheus.Annotations.SerializeName;
 public class Mapper {
 
   private Deserializer mDeserializer;
+  private AttributeMapper mAttributeMapper;
 
   public Mapper() {
     mDeserializer = new Deserializer();
+    mAttributeMapper = new AttributeMapper();
   }
 
-  public Mapper(Deserializer deserializer) {
+  public Mapper(Deserializer deserializer, AttributeMapper attributeMapper) {
     mDeserializer = deserializer;
+    mAttributeMapper = attributeMapper;
   }
 
   //TODO map href and meta
@@ -78,27 +81,6 @@ public class Mapper {
     return links;
   }
 
-  /**
-   * Will loop through meta JSONObject and return values as arrayMap.
-   *
-   * @param jsonObject JSONObject for meta.
-   * @return ArrayMap with meta values.
-   */
-  public ArrayMap<String, Object> jsonObjectToArrayMap(JSONObject jsonObject) {
-    ArrayMap<String, Object> metaMap = new ArrayMap<>();
-
-    for(Iterator<String> iter = jsonObject.keys(); iter.hasNext();) {
-      String key = iter.next();
-
-      try {
-        metaMap.put(key, jsonObject.get(key));
-      } catch (JSONException e) {
-        Logger.debug("JSON does not contain " + key + ".");
-      }
-    }
-
-    return metaMap;
-  }
 
   /**
    * Map the Id from json to the object.
@@ -126,7 +108,6 @@ public class Mapper {
    * @return Object with mapped fields.
    */
   public MorpheusResource mapAttributes(MorpheusResource object, JSONObject attributesJsonObject) {
-
     for (Field field : object.getClass().getDeclaredFields()) {
       // get the right attribute name
       String jsonFieldName = field.getName();
@@ -141,26 +122,11 @@ public class Mapper {
         }
       }
 
-      if (!isRelation) {
-        try {
-          if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-            List<Object> attributeAsList = new ArrayList<>();
-            JSONArray attributeJsonArray = attributesJsonObject.getJSONArray(jsonFieldName);
-            for (int i = 0; attributeJsonArray.length() > i; i++) {
-              attributeAsList.add(attributeJsonArray.get(i));
-            }
-            mDeserializer.setField(object, field.getName(), attributeAsList);
-          } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
-            ArrayMap<String, Object> dictionary = new ArrayMap<>();
-            JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
-            mDeserializer.setField(object, field.getName(), jsonObjectToArrayMap(objectForMap));
-          } else {
-            mDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
-          }
-        } catch (JSONException e) {
-          Logger.debug("JSON attributes does not contain " + jsonFieldName);
-        }
+      if (isRelation) {
+        continue;
       }
+
+      mAttributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
     }
 
     return object;
@@ -175,7 +141,7 @@ public class Mapper {
    */
   public MorpheusResource mapRelations(MorpheusResource object, JSONObject jsonObject,
                                        List<MorpheusResource> included) throws Exception {
-    ArrayMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
+    HashMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
 
     //going through relationship names annotated in Class
     for (String relationship : relationshipNames.keySet()) {
@@ -183,7 +149,8 @@ public class Mapper {
       try {
         relationJsonObject = jsonObject.getJSONObject(relationship);
       } catch (JSONException e) {
-        throw new Exception("Relationship named " + relationship + "not found in JSON");
+        Logger.debug("Relationship named " + relationship + "not found in JSON");
+        continue;
       }
 
       //map json object of data
@@ -256,8 +223,8 @@ public class Mapper {
    * @param clazz Class for annotation.
    * @return List of relationship names.
    */
-  private  ArrayMap<String, String> getRelationshipNames(Class clazz) {
-    ArrayMap<String, String> relationNames = new ArrayMap<>();
+  private HashMap<String, String> getRelationshipNames(Class clazz) {
+    HashMap<String, String> relationNames = new HashMap<>();
     for (Field field : clazz.getDeclaredFields()) {
       String fieldName = field.getName();
       for (Annotation annotation : field.getDeclaredAnnotations()) {
@@ -273,5 +240,16 @@ public class Mapper {
     }
 
     return relationNames;
+  }
+
+  // getter
+
+
+  public Deserializer getDeserializer() {
+    return mDeserializer;
+  }
+
+  public AttributeMapper getAttributeMapper() {
+    return mAttributeMapper;
   }
 }

@@ -100,4 +100,12 @@ public class Factory {
     }
     return type;
   }
+
+  public static void setDeserializer(Deserializer deserializer) {
+    Factory.deserializer = deserializer;
+  }
+
+  public static void setMapper(Mapper mapper) {
+    Factory.mapper = mapper;
+  }
 }
