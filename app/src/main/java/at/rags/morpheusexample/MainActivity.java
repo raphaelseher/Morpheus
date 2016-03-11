@@ -20,35 +20,5 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
-    Morpheus morph = new Morpheus();
-    Deserializer.registerResourceClass("articles", Article.class);
-    JSONAPIObject jsonapiObject = null;
-    try {
-      jsonapiObject = morph.jsonToObject(loadJSONFromAsset());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    Article article = (Article) jsonapiObject.getResources().get(0);
-    Log.v(TAG, "ID?: " + article.getId());
-    Log.v(TAG, "Title?: " + article.getTitle());
-  }
-
-  private String loadJSONFromAsset() {
-    String json = null;
-    try {
-      InputStream is = getResources().openRawResource(R.raw.articles);
-      int size = is.available();
-      byte[] buffer = new byte[size];
-      is.read(buffer);
-      is.close();
-      json = new String(buffer, "UTF-8");
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-      return null;
-    }
-    return json;
   }
 }

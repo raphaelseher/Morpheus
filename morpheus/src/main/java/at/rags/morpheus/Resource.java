@@ -1,9 +1,17 @@
 package at.rags.morpheus;
 
 /**
- * Created by raphaelseher on 03/03/16.
+ * Extend this resource to your custom Object you want to map.
+ * You can set custom json object names and relationships via the provided annotations.
+ * <pre>
+ * {@code
+ * public class Article extends Resource { ... }
+ * }</pre>
+ *
+ * @see {@link at.rags.morpheus.Annotations.SerializeName}
+ * @see {@link at.rags.morpheus.Annotations.Relationship}
  */
-public class MorpheusResource {
+public class Resource {
   private String Id;
 
   private Links links;

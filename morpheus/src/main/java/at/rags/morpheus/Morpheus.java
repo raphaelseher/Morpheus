@@ -1,14 +1,22 @@
 package at.rags.morpheus;
 
-import android.annotation.TargetApi;
-import android.os.Build;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Work in progress.
+ * Morpheus is a library to map JSON with the json:api specification format.
+ * (http://jsonapi.org/).
+ *
+ * Feel free to contribute on github. (//TODO insert new link here)
+ *
+ * Example
+ * <pre>
+ * {@code
+ *  Morpheus morpheus = new Morpheus();
+ *  JSONAPIObject jsonapiObject = morpheus.parse(YOUR-JSON-STRING);
+ * }
+ * </pre>
  */
 public class Morpheus {
   private Mapper mapper;
@@ -19,16 +27,24 @@ public class Morpheus {
 
   public Morpheus(AttributeMapper attributeMapper) {
     mapper = new Mapper(new Deserializer(), attributeMapper);
+    Factory.setMapper(mapper);
   }
 
-  public JSONAPIObject jsonToObject(String jsonString) throws Exception {
+  /**
+   * Will return you an {@link JSONAPIObject} with parsed objects, links, relations and includes.
+   *
+   * @param jsonString Your json:api formated string.
+   * @return A {@link JSONAPIObject}.
+   * @throws JSONException When string is invalid.
+   */
+  public JSONAPIObject parse(String jsonString) throws JSONException {
     JSONAPIObject jsonapiObject = new JSONAPIObject();
 
     JSONObject jsonObject = null;
     try {
       jsonObject = new JSONObject(jsonString);
-    } catch (Exception e) {
-      throw new Exception("Invalid JSON String.");
+    } catch (JSONException e) {
+      throw e;
     }
 
     //included
@@ -71,7 +87,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonapiObject.setMeta(mapper.getAttributeMapper().jsonObjectToArrayMap(metaObject));
+      jsonapiObject.setMeta(mapper.getAttributeMapper().createArrayMapFromJSONObject(metaObject));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }
@@ -80,6 +96,5 @@ public class Morpheus {
 
     return jsonapiObject;
   }
-
 
 }

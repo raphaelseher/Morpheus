@@ -14,14 +14,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import at.rags.morpheus.AttributeMapper;
-import at.rags.morpheus.Deserializer;
 import at.rags.morpheus.TestResources.Article;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -48,7 +45,7 @@ public class AttributeMapperUnitTest {
     when(mockIter.next()).thenReturn("String 1", "String 2");
     when(jsonObject.keys()).thenReturn(mockIter);
 
-    ArrayMap<String, Object> map = mAttributeMapper.jsonObjectToArrayMap(jsonObject);
+    ArrayMap<String, Object> map = mAttributeMapper.createArrayMapFromJSONObject(jsonObject);
 
     verify(jsonObject).get(eq("String 1"));
     verify(jsonObject).get(eq("String 2"));
@@ -71,7 +68,7 @@ public class AttributeMapperUnitTest {
 
     ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("title"), stringArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("title"), stringArgumentCaptor.capture());
   }
 
   @Test
@@ -113,7 +110,7 @@ public class AttributeMapperUnitTest {
 
     ArgumentCaptor<ArrayList> listArgumentCaptor = ArgumentCaptor.forClass(ArrayList.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("tags"), listArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("tags"), listArgumentCaptor.capture());
     assertTrue(listArgumentCaptor.getValue().get(0).equals("Tag1"));
     assertTrue(listArgumentCaptor.getValue().get(1).equals("Tag2"));
   }
@@ -140,7 +137,7 @@ public class AttributeMapperUnitTest {
 
     ArgumentCaptor<ArrayMap> mapArgumentCaptor = ArgumentCaptor.forClass(ArrayMap.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("map"), mapArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("map"), mapArgumentCaptor.capture());
 
     assertNotNull(mapArgumentCaptor);
   }
@@ -155,7 +152,7 @@ public class AttributeMapperUnitTest {
     when(jsonObject.keys()).thenReturn(mockIter);
     when(jsonObject.get(anyString())).thenThrow(new JSONException(""));
 
-    ArrayMap<String, Object> map = mAttributeMapper.jsonObjectToArrayMap(jsonObject);
+    ArrayMap<String, Object> map = mAttributeMapper.createArrayMapFromJSONObject(jsonObject);
 
     assertNotNull(map);
   }

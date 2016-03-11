@@ -1,20 +1,20 @@
 package at.rags.morpheus.Resources;
 
 import at.rags.morpheus.Annotations.SerializeName;
-import at.rags.morpheus.MorpheusResource;
+import at.rags.morpheus.Resource;
 
 /**
  * Created by raphaelseher on 05/03/16.
  */
-public class Author extends MorpheusResource {
+public class Author extends Resource {
 
-  @SerializeName(jsonName = "first-name")
+  @SerializeName("first-name")
   private String firstName;
 
-  @SerializeName(jsonName = "last-name")
+  @SerializeName("last-name")
   private String lastName;
 
-  @SerializeName(jsonName = "twitter")
+  @SerializeName("twitter")
   private String twitterHandle;
 
   public String getFirstName() {

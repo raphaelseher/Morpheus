@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by raphaelseher on 09/03/16.
+ * Factory to create and map {@link Resource}.
  */
 public class Factory {
 
@@ -21,8 +21,8 @@ public class Factory {
    * @param dataObject JSONObject from data
    * @return Deserialized Object.
    */
-  public static MorpheusResource newObjectFromJSONObject(JSONObject dataObject, List<MorpheusResource> included) {
-    MorpheusResource realObject = null;
+  public static Resource newObjectFromJSONObject(JSONObject dataObject, List<Resource> included) {
+    Resource realObject = null;
 
     try {
       realObject = deserializer.createObjectFromString(getTypeFromJson(dataObject));
@@ -50,6 +50,7 @@ public class Factory {
     }
 
     try {
+      assert realObject != null;
       realObject.setLinks(mapper.mapLinks(dataObject.getJSONObject("links")));
     } catch (JSONException e) {
       Logger.debug("JSON data does not contain links");
@@ -66,8 +67,8 @@ public class Factory {
    * @param dataArray JSONArray of the data node.
    * @return List of deserialized objects.
    */
-  public static List<MorpheusResource> newObjectFromJSONArray(JSONArray dataArray, List<MorpheusResource> included) {
-    ArrayList<MorpheusResource> objects = new ArrayList<>();
+  public static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included) {
+    ArrayList<Resource> objects = new ArrayList<>();
 
     for (int i = 0; i < dataArray.length(); i++) {
       JSONObject jsonObject = null;

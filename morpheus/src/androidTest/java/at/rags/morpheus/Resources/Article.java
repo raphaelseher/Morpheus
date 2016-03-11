@@ -3,18 +3,18 @@ package at.rags.morpheus.Resources;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
-import at.rags.morpheus.MorpheusResource;
+import at.rags.morpheus.Resource;
 import at.rags.morpheus.Annotations.SerializeName;
 
-public class Article extends MorpheusResource {
+public class Article extends Resource {
 
-  @SerializeName(jsonName = "title")
+  @SerializeName("title")
   private String title;
 
-  @Relationship(relationName = "author")
+  @Relationship("author")
   private Author author;
 
-  @Relationship(relationName = "comments")
+  @Relationship("comments")
   private List<Comment> comments;
 
   private List<String> tags;

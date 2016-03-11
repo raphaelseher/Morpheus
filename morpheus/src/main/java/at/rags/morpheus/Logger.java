@@ -3,7 +3,7 @@ package at.rags.morpheus;
 import android.util.Log;
 
 /**
- * Created by raphaelseher on 07/03/16.
+ * Logger you can turn on and off.
  */
 public class Logger {
   private static final String TAG = "Morpheus";

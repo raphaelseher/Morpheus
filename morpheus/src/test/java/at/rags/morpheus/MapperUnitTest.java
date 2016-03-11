@@ -1,7 +1,5 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,27 +10,18 @@ import org.mockito.Matchers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
-import at.rags.morpheus.Annotations.SerializeName;
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.Article;
 import at.rags.morpheus.TestResources.Author;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -100,11 +89,11 @@ public class MapperUnitTest {
     Deserializer mockDeserializer = mock(Deserializer.class);
     Mapper mapper = new Mapper(mockDeserializer, null);
     JSONObject jsonObject = mock(JSONObject.class);
-    MorpheusResource resource = new MorpheusResource();
+    Resource resource = new Resource();
     resource.setId("123456");
 
     when(mockDeserializer.
-        setIdField(Matchers.<MorpheusResource>anyObject(), anyObject()))
+        setIdField(Matchers.<Resource>anyObject(), anyObject()))
         .thenReturn(resource);
 
     resource = mapper.mapId(resource, jsonObject);
@@ -118,10 +107,10 @@ public class MapperUnitTest {
     Deserializer mockDeserializer = mock(Deserializer.class);
     Mapper mapper = new Mapper(mockDeserializer, null);
     JSONObject jsonObject = mock(JSONObject.class);
-    MorpheusResource resource = new MorpheusResource();
+    Resource resource = new Resource();
 
     when(mockDeserializer.
-        setIdField(Matchers.<MorpheusResource>anyObject(), anyObject()))
+        setIdField(Matchers.<Resource>anyObject(), anyObject()))
         .thenThrow(new NotExtendingResourceException(""));
 
     resource = mapper.mapId(resource, jsonObject);
@@ -130,7 +119,7 @@ public class MapperUnitTest {
   @Test
   public void testMapIdJSONException() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
-    MorpheusResource resource = new MorpheusResource();
+    Resource resource = new Resource();
 
     when(jsonObject.get(anyString())).thenThrow(new JSONException(""));
 
@@ -153,17 +142,17 @@ public class MapperUnitTest {
 
     ArgumentCaptor<Field> fieldArgumentCaptor = ArgumentCaptor.forClass(Field.class);
 
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), any(Field.class), eq("title"));
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), fieldArgumentCaptor.capture(), eq("public"));
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), any(Field.class), eq("tags"));
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), any(Field.class), eq("map"));
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), any(Field.class), eq("version"));
-    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<MorpheusResource>anyObject(),
+    verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
         any(JSONObject.class), any(Field.class), eq("price"));
 
     assertEquals(fieldArgumentCaptor.getValue().getName(), "publicStatus");
@@ -174,7 +163,7 @@ public class MapperUnitTest {
     Deserializer mockDeserializer = mock(Deserializer.class);
     Mapper mapper = new Mapper(mockDeserializer, null);
     JSONObject jsonObject = mock(JSONObject.class);
-    List<MorpheusResource> mockIncluded = mock(List.class);
+    List<Resource> mockIncluded = mock(List.class);
 
     when(jsonObject.getJSONObject(anyString())).thenThrow(new JSONException(""));
 
@@ -193,7 +182,7 @@ public class MapperUnitTest {
     JSONObject jsonObject = mock(JSONObject.class);
     JSONObject relationObject = mock(JSONObject.class);
     JSONObject authorObject = mock(JSONObject.class);
-    List<MorpheusResource> included = new ArrayList<>();
+    List<Resource> included = new ArrayList<>();
 
     Author includedAuthor = new Author();
     includedAuthor.setId("1");
@@ -210,7 +199,7 @@ public class MapperUnitTest {
     when(relationObject.getJSONArray(anyString())).thenThrow(new JSONException(""));
     when(authorObject.getString("type")).thenReturn("author");
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
-    when(mockDeserializer.setIdField(Matchers.<MorpheusResource>anyObject(),
+    when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author);
 
     Article article = new Article();
@@ -218,7 +207,7 @@ public class MapperUnitTest {
 
     ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("author"), objectArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("author"), objectArgumentCaptor.capture());
 
     Author resultAuthor = (Author)objectArgumentCaptor.getValue();
     assertEquals(resultAuthor.getId(), "1");
@@ -234,7 +223,7 @@ public class MapperUnitTest {
     JSONObject jsonObject = mock(JSONObject.class);
     JSONObject relationObject = mock(JSONObject.class);
     JSONObject authorObject = mock(JSONObject.class);
-    List<MorpheusResource> included = new ArrayList<>();
+    List<Resource> included = new ArrayList<>();
 
     Author author = new Author();
     author.setId("1");
@@ -246,7 +235,7 @@ public class MapperUnitTest {
     when(relationObject.getJSONArray(anyString())).thenThrow(new JSONException(""));
     when(authorObject.getString("type")).thenReturn("author");
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
-    when(mockDeserializer.setIdField(Matchers.<MorpheusResource>anyObject(),
+    when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author);
 
     Article article = new Article();
@@ -254,7 +243,7 @@ public class MapperUnitTest {
 
     ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("author"), objectArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("author"), objectArgumentCaptor.capture());
 
     Author resultAuthor = (Author)objectArgumentCaptor.getValue();
     assertEquals(resultAuthor.getId(), "1");
@@ -271,7 +260,7 @@ public class MapperUnitTest {
     JSONObject relationObject = mock(JSONObject.class);
     JSONArray authorObjects = mock(JSONArray.class);
     JSONObject authorObject = mock(JSONObject.class);
-    List<MorpheusResource> included = new ArrayList<>();
+    List<Resource> included = new ArrayList<>();
 
     Author includedAuthor = new Author();
     includedAuthor.setId("1");
@@ -292,7 +281,7 @@ public class MapperUnitTest {
     when(authorObjects.getJSONObject(0)).thenReturn(authorObject);
     when(authorObjects.getJSONObject(1)).thenReturn(authorObject);
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
-    when(mockDeserializer.setIdField(Matchers.<MorpheusResource>anyObject(),
+    when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author1);
 
     Article article = new Article();
@@ -300,7 +289,7 @@ public class MapperUnitTest {
 
     ArgumentCaptor<List> objectArgumentCaptor = ArgumentCaptor.forClass(List.class);
 
-    verify(mockDeserializer).setField(Matchers.<MorpheusResource>anyObject(), eq("authors"), objectArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("authors"), objectArgumentCaptor.capture());
 
     Author resultAuthor = (Author)objectArgumentCaptor.getValue().get(0);
     assertEquals(resultAuthor.getId(), "1");

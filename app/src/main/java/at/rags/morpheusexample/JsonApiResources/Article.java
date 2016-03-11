@@ -4,7 +4,7 @@ import at.rags.morpheus.Annotations.SerializeName;
 
 public class Article extends MyResource {
 
-  @SerializeName(jsonName = "title")
+  @SerializeName(value = "title")
   private String title;
 
   public String getTitle() {

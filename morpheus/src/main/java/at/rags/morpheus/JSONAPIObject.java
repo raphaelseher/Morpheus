@@ -2,18 +2,14 @@ package at.rags.morpheus;
 
 import android.util.ArrayMap;
 
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by raphaelseher on 05/03/16.
- */
 public class JSONAPIObject {
 
-  private MorpheusResource resource;
-  private List<MorpheusResource> resources;
-  private List<MorpheusResource> included;
+  private Resource resource;
+  private List<Resource> resources;
+  private List<Resource> included;
   private ArrayMap<String, Object> meta;
   private List<Objects> errors;
   private Links links;
@@ -24,23 +20,23 @@ public class JSONAPIObject {
     return resource;
   }
 
-  public void setResource(MorpheusResource resource) {
+  public void setResource(Resource resource) {
     this.resource = resource;
   }
 
-  public List<MorpheusResource> getResources() {
+  public List<Resource> getResources() {
     return resources;
   }
 
-  public void setResources(List<MorpheusResource> resources) {
+  public void setResources(List<Resource> resources) {
     this.resources = resources;
   }
 
-  public List<MorpheusResource> getIncluded() {
+  public List<Resource> getIncluded() {
     return included;
   }
 
-  public void setIncluded(List<MorpheusResource> included) {
+  public void setIncluded(List<Resource> included) {
     this.included = included;
   }
 

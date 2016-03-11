@@ -32,7 +32,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
+        morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
     assertTrue(jsonapiObject.getResources().size() == 1);
     assertTrue(jsonapiObject.getResources().get(0).getClass() == Article.class);
@@ -49,7 +49,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonapiObject.getResource());
     assertTrue(jsonapiObject.getResource().getClass() == Article.class);
@@ -67,7 +67,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
+        morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
     assertTrue(jsonapiObject.getResources().size() == 1);
     assertTrue(jsonapiObject.getResources().get(0).getClass() == Article.class);
@@ -84,7 +84,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
+        morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
     assertTrue(jsonapiObject.getIncluded().size() == 3);
   }
@@ -97,7 +97,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonapiObject.getResource());
     Article article = (Article)jsonapiObject.getResource();
@@ -115,7 +115,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonapiObject.getResource());
     Article article = (Article)jsonapiObject.getResource();
@@ -132,7 +132,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonapiObject.getLinks());
     assertTrue(jsonapiObject.getLinks().selfLink.equals("http://example.com/articles"));
@@ -149,7 +149,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.articles));
+        morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
     assertNotNull(jsonapiObject.getMeta());
     assertTrue(jsonapiObject.getMeta().get("testmeta").equals("yes"));
@@ -163,7 +163,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("comments", Comment.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.article));
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonapiObject.getLinks());
     Article article = (Article)jsonapiObject.getResource();
@@ -178,14 +178,14 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("products", Product.class);
 
     JSONAPIObject jsonapiObject =
-        morpheus.jsonToObject(loadJSONFromAsset(R.raw.product));
+        morpheus.parse(loadJSONFromAsset(R.raw.product));
 
     Product product = (Product)jsonapiObject.getResources().get(0);
 
     assertTrue(product.getId().equals("123456"));
     assertTrue(product.getName().equals("Fancy new roboter"));
-    //assertTrue(product.getPrice() == 999.75);
-    //assertTrue(product.getInStock() == 9);
+    assertTrue(product.getPrice() == 999.75);
+    assertTrue(product.getInStock() == 9);
     assertTrue(product.getAvailability().get("Store 1"));
     assertFalse(product.getAvailability().get("Store 3"));
   }

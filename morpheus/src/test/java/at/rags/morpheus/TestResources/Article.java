@@ -5,23 +5,23 @@ import android.util.ArrayMap;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
-import at.rags.morpheus.MorpheusResource;
+import at.rags.morpheus.Resource;
 import at.rags.morpheus.Annotations.SerializeName;
 
-public class Article extends MorpheusResource {
+public class Article extends Resource {
 
   private String title;
-  @SerializeName(jsonName = "public")
+  @SerializeName("public")
   private boolean publicStatus;
   private List<String> tags;
   private ArrayMap<String, String> map;
   private int version;
   private double price;
 
-  @Relationship(relationName = "author")
+  @Relationship("author")
   private Author author;
 
-  @Relationship(relationName = "authors")
+  @Relationship("authors")
   private List<Author> authors;
 
   //getter & setter

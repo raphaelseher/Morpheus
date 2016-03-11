@@ -1,12 +1,11 @@
 package at.rags.morpheus.TestResources;
 
-import at.rags.morpheus.Morpheus;
-import at.rags.morpheus.MorpheusResource;
+import at.rags.morpheus.Resource;
 
 /**
  * Created by raphaelseher on 10/03/16.
  */
-public class Author extends MorpheusResource {
+public class Author extends Resource {
   private String name;
 
   public String getName() {

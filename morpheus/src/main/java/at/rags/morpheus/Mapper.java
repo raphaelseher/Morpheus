@@ -1,7 +1,5 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +12,13 @@ import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
 import at.rags.morpheus.Annotations.SerializeName;
+import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 
 /**
- * Created by raphaelseher on 07/03/16.
+ * Mapper will map all different top-level members and will
+ * also map the relations.
+ *
+ * Includes will also mapped to matching relationship members.
  */
 public class Mapper {
 
@@ -81,16 +83,15 @@ public class Mapper {
     return links;
   }
 
-
   /**
    * Map the Id from json to the object.
    *
    * @param object Object of the class.
    * @param jsonDataObject JSONObject of the dataNode.
    * @return Object with mapped fields.
-   * @throws Exception
+   * @throws NotExtendingResourceException Throws when the object is not extending {@link Resource}
    */
-  public MorpheusResource mapId(MorpheusResource object, JSONObject jsonDataObject) throws Exception {
+  public Resource mapId(Resource object, JSONObject jsonDataObject) throws NotExtendingResourceException {
     try {
       return mDeserializer.setIdField(object, jsonDataObject.get("id"));
     } catch (JSONException e) {
@@ -107,7 +108,7 @@ public class Mapper {
    * @param attributesJsonObject Attributes object inside the data node.
    * @return Object with mapped fields.
    */
-  public MorpheusResource mapAttributes(MorpheusResource object, JSONObject attributesJsonObject) {
+  public Resource mapAttributes(Resource object, JSONObject attributesJsonObject) {
     for (Field field : object.getClass().getDeclaredFields()) {
       // get the right attribute name
       String jsonFieldName = field.getName();
@@ -115,7 +116,7 @@ public class Mapper {
       for (Annotation annotation : field.getAnnotations()) {
         if (annotation.annotationType() == SerializeName.class) {
           SerializeName serializeName = (SerializeName) annotation;
-          jsonFieldName = serializeName.jsonName();
+          jsonFieldName = serializeName.value();
         }
         if (annotation.annotationType() == Relationship.class) {
           isRelation = true;
@@ -139,8 +140,8 @@ public class Mapper {
    * @param jsonObject JSONObject.
    * @return Real object with relations.
    */
-  public MorpheusResource mapRelations(MorpheusResource object, JSONObject jsonObject,
-                                       List<MorpheusResource> included) throws Exception {
+  public Resource mapRelations(Resource object, JSONObject jsonObject,
+                                       List<Resource> included) throws Exception {
     HashMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
 
     //going through relationship names annotated in Class
@@ -157,7 +158,7 @@ public class Mapper {
       JSONObject relationDataObject = null;
       try {
         relationDataObject = relationJsonObject.getJSONObject("data");
-        MorpheusResource relationObject = Factory.newObjectFromJSONObject(relationDataObject, null);
+        Resource relationObject = Factory.newObjectFromJSONObject(relationDataObject, null);
 
         relationObject = matchIncludedToRelation(relationObject, included);
 
@@ -170,7 +171,7 @@ public class Mapper {
       JSONArray relationDataArray = null;
       try {
         relationDataArray = relationJsonObject.getJSONArray("data");
-        List<MorpheusResource> relationArray = Factory.newObjectFromJSONArray(relationDataArray, null);
+        List<Resource> relationArray = Factory.newObjectFromJSONArray(relationDataArray, null);
 
         relationArray = matchIncludedToRelation(relationArray, included);
 
@@ -191,8 +192,8 @@ public class Mapper {
    * @param included List of included resources.
    * @return Relation of included resource.
    */
-  public MorpheusResource matchIncludedToRelation(MorpheusResource object, List<MorpheusResource> included) {
-    for (MorpheusResource resource : included) {
+  public Resource matchIncludedToRelation(Resource object, List<Resource> included) {
+    for (Resource resource : included) {
       if (object.getId().equals(resource.getId()) && object.getClass().equals(resource.getClass())) {
         return resource;
       }
@@ -201,15 +202,15 @@ public class Mapper {
   }
 
   /**
-   * Loops through relations and calls {@link #matchIncludedToRelation(MorpheusResource, List)}.
+   * Loops through relations and calls {@link #matchIncludedToRelation(Resource, List)}.
    *
    * @param relationResources List of relation resources.
    * @param included List of included resources.
    * @return List of relations and/or included resources.
    */
-  public List<MorpheusResource> matchIncludedToRelation(List<MorpheusResource> relationResources, List<MorpheusResource> included) {
-    List<MorpheusResource> matchedResources = new ArrayList<>();
-    for (MorpheusResource resource : relationResources) {
+  public List<Resource> matchIncludedToRelation(List<Resource> relationResources, List<Resource> included) {
+    List<Resource> matchedResources = new ArrayList<>();
+    for (Resource resource : relationResources) {
       matchedResources.add(matchIncludedToRelation(resource, included));
     }
     return matchedResources;
@@ -230,11 +231,11 @@ public class Mapper {
       for (Annotation annotation : field.getDeclaredAnnotations()) {
         if (annotation.annotationType() == SerializeName.class) {
           SerializeName serializeName = (SerializeName)annotation;
-          fieldName = serializeName.jsonName();
+          fieldName = serializeName.value();
         }
         if (annotation.annotationType() == Relationship.class) {
           Relationship relationshipAnnotation = (Relationship)annotation;
-          relationNames.put(relationshipAnnotation.relationName(), fieldName);
+          relationNames.put(relationshipAnnotation.value(), fieldName);
         }
       }
     }
@@ -243,7 +244,6 @@ public class Mapper {
   }
 
   // getter
-
 
   public Deserializer getDeserializer() {
     return mDeserializer;

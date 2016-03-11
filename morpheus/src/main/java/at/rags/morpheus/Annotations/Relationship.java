@@ -1,15 +1,27 @@
 package at.rags.morpheus.Annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Created by raphaelseher on 05/03/16.
- */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
+/**
+ * Define your json:api relationship.
+ *
+ * <pre>
+ * {@code
+ * @Relationship("author")
+ * private Author author;
+ *
+ * @Relationship("comments")
+ * private List<Comment> comments;
+ * }
+ * </pre>
+ */
 public @interface Relationship {
-  String relationName();
+  String value();
 }

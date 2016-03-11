@@ -12,10 +12,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by raphaelseher on 10/03/16.
+ * AttributeMapper is used to map the json:api attribute node to
+ * your object fields.
+ *
+ * You can create your own AttributeMapper and set it via {@link Morpheus#Morpheus(AttributeMapper)}.
  */
 public class AttributeMapper {
-
   private Deserializer mDeserializer;
 
   public AttributeMapper() {
@@ -26,23 +28,40 @@ public class AttributeMapper {
     mDeserializer = deserializer;
   }
 
-  public void mapAttributeToObject(MorpheusResource object, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
+  /**
+   * Will map the attributes of the JSONAPI attribute object.
+   * JSONArrays will get mapped as List<Object>.
+   * JSONObject will get mapped as ArrayMap<String, Object>.
+   * Everything else will get mapped without changes.
+   *
+   * @param jsonApiResource Object extended with {@link Resource} that will get the field set.
+   * @param attributesJsonObject {@link JSONObject} with json:api attributes object
+   * @param field Field that will be set.
+   * @param jsonFieldName Name of the json-field in attributesJsonObject to get data from.
+   */
+  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
     try {
       if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-        List<Object> list = mapArray(object, attributesJsonObject.getJSONArray(jsonFieldName));
-        mDeserializer.setField(object, field.getName(), list);
+        List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName));
+        mDeserializer.setField(jsonApiResource, field.getName(), list);
       } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
         JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
-        mDeserializer.setField(object, field.getName(), jsonObjectToArrayMap(objectForMap));
+        mDeserializer.setField(jsonApiResource, field.getName(), createArrayMapFromJSONObject(objectForMap));
       } else {
-        mDeserializer.setField(object, field.getName(), attributesJsonObject.get(jsonFieldName));
+        mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
       }
     } catch (JSONException e) {
       Logger.debug("JSON attributes does not contain " + jsonFieldName);
     }
   }
 
-  private List<Object> mapArray(MorpheusResource object, JSONArray jsonArray) {
+  /**
+   * Will loop through JSONArray and return values as List<Object>.
+   *
+   * @param jsonArray JSONArray with values.
+   * @return List<Object> of JSONArray values.
+   */
+  private List<Object> createListFromJSONArray(JSONArray jsonArray) {
     List<Object> attributeAsList = new ArrayList<>();
     for (int i = 0; jsonArray.length() > i; i++) {
       try {
@@ -55,12 +74,12 @@ public class AttributeMapper {
   }
 
   /**
-   * Will loop through meta JSONObject and return values as arrayMap.
+   * Will loop through JSONObject and return values as arrayMap.
    *
    * @param jsonObject JSONObject for meta.
    * @return ArrayMap with meta values.
    */
-  public ArrayMap<String, Object> jsonObjectToArrayMap(JSONObject jsonObject) {
+  public ArrayMap<String, Object> createArrayMapFromJSONObject(JSONObject jsonObject) {
     ArrayMap<String, Object> metaMap = new ArrayMap<>();
 
     for(Iterator<String> iter = jsonObject.keys(); iter.hasNext();) {
