@@ -1,0 +1,26 @@
+{
+  "errors": [
+    {
+      "status": "403",
+      "source": { "pointer": "/data/attributes/secret-powers" },
+      "detail": "Editing secret powers is not authorized on Sundays."
+    },
+    {
+      "id": "1",
+      "status": "422",
+      "code": "2",
+      "source": { "pointer": "/data/attributes/volume" ,
+                  "parameter" : "/data/attributes/battery"},
+      "title": "some title",
+      "detail": "Volume does not, in fact, go to 11.",
+      "links": { "about" : "about.com"},
+      "meta": { "test-meta":"yes"}
+    },
+    {
+      "status": "500",
+      "source": { "pointer": "/data/attributes/reputation" },
+      "title": "The backend responded with an error",
+      "detail": "Reputation service not responding after three requests."
+    }
+  ]
+}

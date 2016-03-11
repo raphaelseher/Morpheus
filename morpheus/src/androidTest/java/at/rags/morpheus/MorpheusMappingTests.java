@@ -209,6 +209,35 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertFalse(product.getAvailability().get("Store 3"));
   }
 
+  @Test
+  public void testErrors() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("products", Product.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.parse(loadJSONFromAsset(R.raw.error));
+
+    assertNotNull(jsonapiObject.getErrors());
+    assertEquals(jsonapiObject.getErrors().get(0).getStatus(), "403");
+    assertEquals(jsonapiObject.getErrors().get(0).getSource().getPointer(), "/data/attributes/secret-powers");
+    assertEquals(jsonapiObject.getErrors().get(0).getDetail(), "Editing secret powers is not authorized on Sundays.");
+
+    assertEquals(jsonapiObject.getErrors().get(1).getStatus(), "422");
+    assertEquals(jsonapiObject.getErrors().get(1).getId(), "1");
+    assertEquals(jsonapiObject.getErrors().get(1).getCode(), "2");
+    assertEquals(jsonapiObject.getErrors().get(1).getSource().getPointer(), "/data/attributes/volume");
+    assertEquals(jsonapiObject.getErrors().get(1).getSource().getParameter(), "/data/attributes/battery");
+    assertEquals(jsonapiObject.getErrors().get(1).getTitle(), "some title");
+    assertEquals(jsonapiObject.getErrors().get(1).getDetail(), "Volume does not, in fact, go to 11.");
+    assertEquals(jsonapiObject.getErrors().get(1).getLinks().getAbout(), "about.com");
+
+    assertEquals(jsonapiObject.getErrors().get(2).getStatus(), "500");
+    assertEquals(jsonapiObject.getErrors().get(2).getSource().getPointer(), "/data/attributes/reputation");
+    assertNull(jsonapiObject.getErrors().get(2).getSource().getParameter());
+    assertEquals(jsonapiObject.getErrors().get(2).getTitle(), "The backend responded with an error");
+    assertEquals(jsonapiObject.getErrors().get(2).getDetail(), "Reputation service not responding after three requests.");
+  }
+
   private String loadJSONFromAsset(int file) {
     String json = null;
     try {

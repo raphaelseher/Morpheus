@@ -101,6 +101,13 @@ public class Morpheus {
     }
 
     //TODO errors
+    JSONArray errorArray = null;
+    try {
+      errorArray = jsonObject.getJSONArray("errors");
+      jsonapiObject.setErrors(mapper.mapErrors(errorArray));
+    } catch (JSONException e) {
+      Logger.debug("JSON does not contain errors object");
+    }
 
     return jsonapiObject;
   }

@@ -216,6 +216,94 @@ public class Mapper {
     return matchedResources;
   }
 
+  public List<Error> mapErrors(JSONArray errorArray) {
+    List<Error> errors = new ArrayList<>();
+
+    for (int i = 0; errorArray.length() > i; i++) {
+      JSONObject errorJsonObject;
+      try {
+        errorJsonObject = errorArray.getJSONObject(i);
+      } catch (JSONException e) {
+        Logger.debug("No index " + i + " in error json array");
+        continue;
+      }
+      Error error = new Error();
+
+      try {
+        error.setId(errorJsonObject.getString("id"));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain id");
+      }
+
+      try {
+        error.setStatus(errorJsonObject.getString("status"));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain status");
+      }
+
+      try {
+        error.setCode(errorJsonObject.getString("code"));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain code");
+      }
+
+      try {
+        error.setTitle(errorJsonObject.getString("title"));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain title");
+      }
+
+      try {
+        error.setDetail(errorJsonObject.getString("detail"));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain detail");
+      }
+
+      JSONObject sourceJsonObject = null;
+      try {
+        sourceJsonObject = errorJsonObject.getJSONObject("source");
+      }
+      catch (JSONException e) {
+        Logger.debug("JSON object does not contain source");
+      }
+
+      if (sourceJsonObject != null) {
+        Source source = new Source();
+        try {
+          source.setParameter(sourceJsonObject.getString("parameter"));
+        } catch (JSONException e) {
+          Logger.debug("JSON object does not contain parameter");
+        }
+        try {
+          source.setPointer(sourceJsonObject.getString("pointer"));
+        } catch (JSONException e) {
+          Logger.debug("JSON object does not contain pointer");
+        }
+        error.setSource(source);
+      }
+
+      try {
+        JSONObject linksJsonObject = errorJsonObject.getJSONObject("links");
+        ErrorLinks links = new ErrorLinks();
+        links.setAbout(linksJsonObject.getString("about"));
+        error.setLinks(links);
+      }
+      catch (JSONException e) {
+        Logger.debug("JSON object does not contain links or about");
+      }
+
+      try {
+        error.setMeta(mAttributeMapper.createArrayMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
+      } catch (JSONException e) {
+        Logger.debug("JSON object does not contain JSONObject meta");
+      }
+
+      errors.add(error);
+    }
+
+    return errors;
+  }
+
   //helper
 
   /**

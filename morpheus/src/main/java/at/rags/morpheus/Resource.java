@@ -52,4 +52,5 @@ class Links {
   public String last;
   public String prev;
   public String next;
+  public String about;
 }

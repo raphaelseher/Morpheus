@@ -11,7 +11,7 @@ public class JSONAPIObject {
   private List<Resource> resources;
   private List<Resource> included;
   private ArrayMap<String, Object> meta;
-  private List<Objects> errors;
+  private List<Error> errors;
   private Links links;
 
   //getters & setters
@@ -48,11 +48,11 @@ public class JSONAPIObject {
     this.meta = meta;
   }
 
-  public List<Objects> getErrors() {
+  public List<Error> getErrors() {
     return errors;
   }
 
-  public void setErrors(List<Objects> errors) {
+  public void setErrors(List<Error> errors) {
     this.errors = errors;
   }
 
