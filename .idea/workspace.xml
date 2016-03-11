@@ -82,8 +82,35 @@
       <file leaf-file-name="Morpheus.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Morpheus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3283582">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.876905">
+              <caret line="105" column="3" selection-start-line="105" selection-start-column="3" selection-end-line="105" selection-end-column="3" />
+              <folding>
+                <element signature="e#589#590#0" expanded="true" />
+                <element signature="e#620#621#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AttributeMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/AttributeMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#554#555#0" expanded="true" />
+                <element signature="e#598#599#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/morpheus/src/main/res/raw/article.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.75">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -2419,7 +2446,6 @@
       <list>
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/MorpheusReflection.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/res/raw/content.json" />
-        <option value="$PROJECT_DIR$/morpheus/src/main/res/raw/article.json" />
         <option value="$PROJECT_DIR$/morpheus/src/main/res/raw/Product.json" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/MorpheusMapper.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/MorpheusDeserializer.java" />
@@ -2436,7 +2462,6 @@
         <option value="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/TestResources/MultiExtendResource.java" />
         <option value="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/DeserializerTest.java" />
         <option value="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/FactoryUnitTest.java" />
-        <option value="$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/MorpheusMappingTests.java" />
         <option value="$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/Resources/Article.java" />
         <option value="$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/Resources/Author.java" />
         <option value="$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/Resources/Comment.java" />
@@ -2451,11 +2476,13 @@
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/AttributeMapper.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/JSONAPIResource.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/MorpheusResource.java" />
-        <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Factory.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Logger.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Deserializer.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Resource.java" />
+        <option value="$PROJECT_DIR$/morpheus/src/main/res/raw/article.json" />
+        <option value="$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/MorpheusMappingTests.java" />
+        <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Factory.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Morpheus.java" />
       </list>
     </option>
@@ -2519,6 +2546,28 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="morpheus" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Morpheus" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="morpheus" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="raw" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2694,33 +2743,7 @@
       <recent name="at.rags.morpheus.TestResources" />
     </key>
   </component>
-  <component name="RunManager" selected="Android Tests.MorpheusMappingTests...">
-    <configuration default="false" name="DeserializerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="at.rags.morpheus.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="morpheus" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="at.rags.morpheus" />
-      <option name="MAIN_CLASS_NAME" value="at.rags.morpheus.DeserializerTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.at.rags.morpheus in morpheus">
     <configuration default="false" name="at.rags.morpheus in morpheus" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -2817,6 +2840,26 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="testDataObjectMeta...()" type="AndroidTestRunConfigurationType" factoryName="Android Tests" temporary="true" nameIsGenerated="true">
+      <module name="morpheus" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="testDataObjectMeta" />
+      <option name="CLASS_NAME" value="at.rags.morpheus.MorpheusMappingTests" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2963,19 +3006,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Android Application.app" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.DeserializerTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.at.rags.morpheus in morpheus" />
-      <item index="3" class="java.lang.String" itemvalue="Android Tests.MorpheusMappingTests..." />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapAttributesMappingTwoAnnotations" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapRelationsObjectWithSerializeName" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.at.rags.morpheus in morpheus" />
+      <item index="2" class="java.lang.String" itemvalue="Android Tests.MorpheusMappingTests..." />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapAttributesMappingTwoAnnotations" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapRelationsObjectWithSerializeName" />
+      <item index="5" class="java.lang.String" itemvalue="Android Tests.testDataObjectMeta...()" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Android Tests.MorpheusMappingTests..." />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.at.rags.morpheus in morpheus" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapRelationsObjectWithSerializeName" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapAttributesMappingTwoAnnotations" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.DeserializerTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.at.rags.morpheus in morpheus" />
+        <item index="1" class="java.lang.String" itemvalue="Android Tests.MorpheusMappingTests..." />
+        <item index="2" class="java.lang.String" itemvalue="Android Tests.testDataObjectMeta...()" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapRelationsObjectWithSerializeName" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.MapperUnitTest.testMapAttributesMappingTwoAnnotations" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
@@ -3004,13 +3047,22 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="239" y="23" width="2321" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32974634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32513452" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19833261" sideWeight="0.52036893" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19833261" sideWeight="0.52099884" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39947438" sideWeight="0.42951542" order="7" side_tool="true" content_ui="tabs" />
@@ -3018,14 +3070,14 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820907" sideWeight="0.4955947" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3228286" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3228286" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290917" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32974634" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19833261" sideWeight="0.47963107" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19833261" sideWeight="0.47900113" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289777" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290917" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3094,7 +3146,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#589#590#0" expanded="true" />
+            <element signature="e#620#621#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3124,20 +3179,6 @@
         <state vertical-scroll-proportion="0.33333334">
           <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/res/raw/article.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/res/raw/articles.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="4" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -3435,57 +3476,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Factory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.058915947">
-          <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/AttributeMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25923017">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#554#555#0" expanded="true" />
-            <element signature="e#598#599#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Deserializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2372348">
-          <caret line="110" column="97" selection-start-line="110" selection-start-column="97" selection-end-line="110" selection-end-column="97" />
-          <folding>
-            <element signature="e#4447#4448#0" expanded="true" />
-            <element signature="e#4481#4482#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.672919">
-          <caret line="164" column="36" selection-start-line="164" selection-start-column="36" selection-end-line="164" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12711865">
-          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -3498,16 +3492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/MorpheusMappingTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16496465">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Annotations/Relationship.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11783189">
@@ -3516,11 +3500,96 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Resource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26484752">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+          <folding>
+            <element signature="e#593#594#0" expanded="true" />
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#675#676#0" expanded="true" />
+            <element signature="e#704#705#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#765#766#0" expanded="true" />
+            <element signature="e#793#794#0" expanded="true" />
+            <element signature="e#820#821#0" expanded="true" />
+            <element signature="e#839#840#0" expanded="true" />
+            <element signature="e#873#874#0" expanded="true" />
+            <element signature="e#890#891#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/res/raw/articles.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06004804">
+          <caret line="5" column="4" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/res/raw/article.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.75">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/androidTest/java/at/rags/morpheus/MorpheusMappingTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68347013">
+          <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/AttributeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#554#555#0" expanded="true" />
+            <element signature="e#598#599#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Deserializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42180094">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Factory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5099648">
+          <caret line="56" column="27" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21101993">
+          <caret line="93" column="104" selection-start-line="93" selection-start-column="75" selection-end-line="93" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Morpheus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3283582">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.876905">
+          <caret line="105" column="3" selection-start-line="105" selection-start-column="3" selection-end-line="105" selection-end-column="3" />
+          <folding>
+            <element signature="e#589#590#0" expanded="true" />
+            <element signature="e#620#621#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

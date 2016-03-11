@@ -35,7 +35,7 @@ public class Mapper {
     mAttributeMapper = attributeMapper;
   }
 
-  //TODO map href and meta
+  //TODO map href and meta (http://jsonapi.org/format/#document-links)
   /**
    * Will map links and return them.
    *

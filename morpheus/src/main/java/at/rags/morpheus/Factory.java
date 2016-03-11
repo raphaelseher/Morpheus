@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+
 /**
  * Factory to create and map {@link Resource}.
  */
@@ -21,13 +23,13 @@ public class Factory {
    * @param dataObject JSONObject from data
    * @return Deserialized Object.
    */
-  public static Resource newObjectFromJSONObject(JSONObject dataObject, List<Resource> included) {
+  public static Resource newObjectFromJSONObject(JSONObject dataObject, List<Resource> included) throws Exception {
     Resource realObject = null;
 
     try {
       realObject = deserializer.createObjectFromString(getTypeFromJson(dataObject));
     } catch (Exception e) {
-      Logger.debug(e.getMessage());
+      throw e;
     }
 
     try {
@@ -51,12 +53,16 @@ public class Factory {
 
     try {
       assert realObject != null;
+      realObject.setMeta(mapper.getAttributeMapper().createArrayMapFromJSONObject(dataObject.getJSONObject("meta")));
+    } catch (Exception e) {
+      Logger.debug("JSON data does not contain meta");
+    }
+
+    try {
       realObject.setLinks(mapper.mapLinks(dataObject.getJSONObject("links")));
     } catch (JSONException e) {
       Logger.debug("JSON data does not contain links");
     }
-
-    //TODO meta
 
     return realObject;
   }
@@ -67,7 +73,7 @@ public class Factory {
    * @param dataArray JSONArray of the data node.
    * @return List of deserialized objects.
    */
-  public static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included) {
+  public static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included) throws Exception {
     ArrayList<Resource> objects = new ArrayList<>();
 
     for (int i = 0; i < dataArray.length(); i++) {
@@ -78,7 +84,11 @@ public class Factory {
       } catch (JSONException e) {
         Logger.debug("Was not able to get dataArray["+i+"] as JSONObject.");
       }
-      objects.add(newObjectFromJSONObject(jsonObject, included));
+      try {
+        objects.add(newObjectFromJSONObject(jsonObject, included));
+      } catch (Exception e) {
+        throw e;
+      }
     }
 
     return objects;

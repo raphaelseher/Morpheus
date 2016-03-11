@@ -11,6 +11,9 @@
       "title": "JSON API paints my bikeshed!",
       "tags": ["main", "dev"]
     },
+    "meta": {
+      "test-meta":"yes"
+    },
     "relationships": {
       "author": {
         "links": {

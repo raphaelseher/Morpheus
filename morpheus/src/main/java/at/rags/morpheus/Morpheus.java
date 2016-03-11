@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+
 /**
  * Morpheus is a library to map JSON with the json:api specification format.
  * (http://jsonapi.org/).
@@ -35,11 +37,9 @@ public class Morpheus {
    *
    * @param jsonString Your json:api formated string.
    * @return A {@link JSONAPIObject}.
-   * @throws JSONException When string is invalid.
+   * @throws JSONException or NotExtendingResourceException
    */
-  public JSONAPIObject parse(String jsonString) throws JSONException {
-    JSONAPIObject jsonapiObject = new JSONAPIObject();
-
+  public JSONAPIObject parse(String jsonString) throws Exception {
     JSONObject jsonObject = null;
     try {
       jsonObject = new JSONObject(jsonString);
@@ -47,10 +47,18 @@ public class Morpheus {
       throw e;
     }
 
+    return parseFromJSONObject(jsonObject);
+  }
+
+  /**
+   * Parse and map all the top level members.
+   */
+  private JSONAPIObject parseFromJSONObject(JSONObject jsonObject) throws Exception {
+    JSONAPIObject jsonapiObject = new JSONAPIObject();
+
     //included
-    JSONArray includedArray = null;
     try {
-      includedArray = jsonObject.getJSONArray("included");
+      JSONArray includedArray = jsonObject.getJSONArray("included");
       jsonapiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
@@ -96,5 +104,4 @@ public class Morpheus {
 
     return jsonapiObject;
   }
-
 }

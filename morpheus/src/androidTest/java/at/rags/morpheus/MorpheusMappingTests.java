@@ -58,6 +58,25 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
   }
 
+  @Test
+  public void testDataObjectMeta() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("articles", Article.class);
+    Deserializer.registerResourceClass("people", Author.class);
+    Deserializer.registerResourceClass("comments", Comment.class);
+
+    JSONAPIObject jsonapiObject =
+        morpheus.parse(loadJSONFromAsset(R.raw.article));
+
+    assertNotNull(jsonapiObject.getResource());
+    assertTrue(jsonapiObject.getResource().getClass() == Article.class);
+    Article article = (Article)jsonapiObject.getResource();
+    assertTrue(article.getId().equals("1"));
+    assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
+    assertNotNull(article.getMeta());
+    assertEquals(article.getMeta().get("test-meta"), "yes");
+  }
+
 
   @Test
   public void testRelationship() throws Exception {
