@@ -63,6 +63,4 @@ At the moment Morpheus maps
 You can write your own AttributeMapper by extending `AttributeMapper.java` and initialize Morpheus with your mapper.
 
 # Contribution
-If you want to contritbute make your changes and make and pull request. I am thankfull for every help.
-If you find bugs or have problems, please make an issue.
-I am also very happy for every message that help me to increase my skills.
+If you want to contritbute: make your changes and do a pull request.
