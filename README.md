@@ -8,6 +8,11 @@ Take a look at the [documentation](http://www.raphaelseher.at/Morpheus/docs/inde
 ## Usage
 
 Prepare your resources
+
+1. extend Resource
+2. Use @SerializeName() annotation when your field name differs from the json.
+3. Create relationship mapping with the @Relationship() annotation.
+
 ```java
 public class Article extends Resource {
   @SerializeName("article-title")
@@ -19,6 +24,11 @@ public class Article extends Resource {
 }
 ```
 Deserialize your data
+
+1. Create a Morpheus instance
+2. Register your resources
+3. parse your JSON string
+
 ```java
 Morpheus morpheus = new Morpheus();
 //register your resources
@@ -34,13 +44,25 @@ Log.v(TAG, "Article Id: " + article.getId())
 
 # Development status
 Morpheus can (0.3.0):
+
 * deserialize data object or array
 * deserialize relationships
 * map includes to relationships
 * deserialize links, meta, errors
 
+# Data Attribute Mapping
+At the moment Morpheus maps
+
+* Strings -> `String`
+* Floats -> `double`
+* Booleans -> `boolean`
+* JSONArrays -> `List<Object>`
+* JSONObject -> `ArrayMap<String, Object>`
+
+
+You can write your own `AttributeMapper.java` and initialize Morpheus with your mapper.
+
 # Contribution
 If you want to contritbute make your changes and make and pull request. I am thankfull for every help.
 If you find bugs or have problems, please make an issue.
 I am also very happy for every message that help me to increase my skills.
-
