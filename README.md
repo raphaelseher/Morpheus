@@ -8,8 +8,7 @@ You can define your own java classes to deserialize.
 Prepare your resources
 ```java
 public class Article extends Resource {
-  
-  @SerializeName("title")
+  @SerializeName("article-title")
   private String title;
   @Relationship("author")
   private Author author;
