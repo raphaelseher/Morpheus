@@ -3,6 +3,8 @@
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
 
+Take a look at the [documentation](http://www.raphaelseher.at/Morpheus/docs/index.html).
+
 ## Usage
 
 Prepare your resources
