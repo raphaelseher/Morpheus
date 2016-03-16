@@ -30,8 +30,8 @@ public class AttributeMapper {
 
   /**
    * Will map the attributes of the JSONAPI attribute object.
-   * JSONArrays will get mapped as List<Object>.
-   * JSONObject will get mapped as ArrayMap<String, Object>.
+   * JSONArrays will get mapped as {@literal List<Object>}.
+   * JSONObject will get mapped as {@literal ArrayMap<String, Object>}.
    * Everything else will get mapped without changes.
    *
    * @param jsonApiResource Object extended with {@link Resource} that will get the field set.

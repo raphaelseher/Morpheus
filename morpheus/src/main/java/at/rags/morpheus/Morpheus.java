@@ -100,7 +100,6 @@ public class Morpheus {
       Logger.debug("JSON does not contain meta object");
     }
 
-    //TODO errors
     JSONArray errorArray = null;
     try {
       errorArray = jsonObject.getJSONArray("errors");

@@ -10,8 +10,8 @@ import android.util.ArrayMap;
  * public class Article extends Resource { ... }
  * }</pre>
  *
- * @see {@link at.rags.morpheus.Annotations.SerializeName}
- * @see {@link at.rags.morpheus.Annotations.Relationship}
+ * @see at.rags.morpheus.Annotations.SerializeName
+ * @see at.rags.morpheus.Annotations.Relationship
  */
 public class Resource {
   private String Id;

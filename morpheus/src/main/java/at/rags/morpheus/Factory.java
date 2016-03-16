@@ -21,7 +21,9 @@ public class Factory {
    * Deserializes a json object of data to the registered class.
    *
    * @param dataObject JSONObject from data
+   * @param included {@literal List<Resource>} from includes to automatic match them.
    * @return Deserialized Object.
+   * @throws Exception when deserializer is not able to create instance.
    */
   public static Resource newObjectFromJSONObject(JSONObject dataObject, List<Resource> included) throws Exception {
     Resource realObject = null;
@@ -71,7 +73,9 @@ public class Factory {
    * Loops through data objects and deserializes them.
    *
    * @param dataArray JSONArray of the data node.
+   * @param included {@literal List<Resource>} from includes to automatic match them.
    * @return List of deserialized objects.
+   * @throws Exception when deserializer is not able to create instance.
    */
   public static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included) throws Exception {
     ArrayList<Resource> objects = new ArrayList<>();

@@ -138,7 +138,9 @@ public class Mapper {
    *
    * @param object Real object to map.
    * @param jsonObject JSONObject.
+   * @param included List of included resources.
    * @return Real object with relations.
+   * @throws Exception when deserializer is not able to create instance.
    */
   public Resource mapRelations(Resource object, JSONObject jsonObject,
                                        List<Resource> included) throws Exception {
