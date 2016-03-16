@@ -1,9 +1,17 @@
 # Morpheus
 
+[ ![Download](https://api.bintray.com/packages/xamoom/maven/Morpheus/images/download.svg) ](https://bintray.com/xamoom/maven/Morpheus/_latestVersion)
+
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
 
 Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.html).
+
+## Install
+
+```java
+compile 'com.xamoom.android:morpheus:0.3.0'
+```
 
 ## Usage
 
@@ -37,7 +45,7 @@ Deserializer.registerResourceClass("people", Author.class);
 Deserializer.registerResourceClass("comments", Comment.class);
 JSONAPIObject jsonapiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
-        
+
 Article article = (Article)jsonapiObject.getResources().get(0);
 Log.v(TAG, "Article Id: " + article.getId())
 ```
