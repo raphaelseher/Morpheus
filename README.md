@@ -7,7 +7,7 @@ You can define your own java classes to deserialize.
 
 Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.html).
 
- ## Install
+## Install
 
  ```java
  compile 'com.xamoom.android:morpheus:0.3.0'
