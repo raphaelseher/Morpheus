@@ -43,7 +43,7 @@ Morpheus morpheus = new Morpheus();
 Deserializer.registerResourceClass("articles", Article.class);
 Deserializer.registerResourceClass("people", Author.class);
 Deserializer.registerResourceClass("comments", Comment.class);
-JSONAPIObject jsonApiObject =
+JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
 Article article = (Article)jsonApiObject.getResources().get(0);
