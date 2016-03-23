@@ -10,7 +10,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.3.1'
+ compile 'com.xamoom.android:morpheus:0.3.0'
  ```
 
 ## Usage
@@ -51,7 +51,7 @@ Log.v(TAG, "Article Id: " + article.getId())
 ```
 
 # Development status
-Morpheus can (0.3.0):
+Morpheus can):
 
 * deserialize data object or array
 * deserialize relationships
