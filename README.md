@@ -10,7 +10,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.3.0'
+ compile 'com.xamoom.android:morpheus:0.3.1'
  ```
 
 ## Usage
