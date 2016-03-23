@@ -31,12 +31,12 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
-    assertTrue(jsonapiObject.getResources().size() == 1);
-    assertTrue(jsonapiObject.getResources().get(0).getClass() == Article.class);
-    Article article = (Article)jsonapiObject.getResources().get(0);
+    assertTrue(jsonApiObject.getResources().size() == 1);
+    assertTrue(jsonApiObject.getResources().get(0).getClass() == Article.class);
+    Article article = (Article) jsonApiObject.getResources().get(0);
     assertTrue(article.getId().equals("1"));
     assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
   }
@@ -48,12 +48,12 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getResource());
-    assertTrue(jsonapiObject.getResource().getClass() == Article.class);
-    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(jsonApiObject.getResource());
+    assertTrue(jsonApiObject.getResource().getClass() == Article.class);
+    Article article = (Article) jsonApiObject.getResource();
     assertTrue(article.getId().equals("1"));
     assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
   }
@@ -65,12 +65,12 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getResource());
-    assertTrue(jsonapiObject.getResource().getClass() == Article.class);
-    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(jsonApiObject.getResource());
+    assertTrue(jsonApiObject.getResource().getClass() == Article.class);
+    Article article = (Article) jsonApiObject.getResource();
     assertTrue(article.getId().equals("1"));
     assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
     assertNotNull(article.getMeta());
@@ -85,12 +85,12 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
-    assertTrue(jsonapiObject.getResources().size() == 1);
-    assertTrue(jsonapiObject.getResources().get(0).getClass() == Article.class);
-    Article article = (Article)jsonapiObject.getResources().get(0);
+    assertTrue(jsonApiObject.getResources().size() == 1);
+    assertTrue(jsonApiObject.getResources().get(0).getClass() == Article.class);
+    Article article = (Article) jsonApiObject.getResources().get(0);
     assertNotNull(article.getAuthor());
     assertTrue(article.getComments().size() == 2);
   }
@@ -102,10 +102,10 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
-    assertTrue(jsonapiObject.getIncluded().size() == 3);
+    assertTrue(jsonApiObject.getIncluded().size() == 3);
   }
 
   @Test
@@ -115,11 +115,11 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getResource());
-    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(jsonApiObject.getResource());
+    Article article = (Article) jsonApiObject.getResource();
     assertTrue(article.getAuthor().getFirstName().equals("Dan"));
 
     Comment comment = (Comment)article.getComments().get(0);
@@ -133,11 +133,11 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getResource());
-    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(jsonApiObject.getResource());
+    Article article = (Article) jsonApiObject.getResource();
     assertNotNull(article.getLinks());
     assertTrue(article.getLinks().selfLink.equals("http://example.com/articles/1"));
     assertNull(article.getLinks().related);
@@ -150,14 +150,14 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getLinks());
-    assertTrue(jsonapiObject.getLinks().selfLink.equals("http://example.com/articles"));
-    assertTrue(jsonapiObject.getLinks().next.equals("http://example.com/articles?page[offset]=2"));
-    assertTrue(jsonapiObject.getLinks().last.equals("http://example.com/articles?page[offset]=10"));
-    assertNull(jsonapiObject.getLinks().related);
+    assertNotNull(jsonApiObject.getLinks());
+    assertTrue(jsonApiObject.getLinks().selfLink.equals("http://example.com/articles"));
+    assertTrue(jsonApiObject.getLinks().next.equals("http://example.com/articles?page[offset]=2"));
+    assertTrue(jsonApiObject.getLinks().last.equals("http://example.com/articles?page[offset]=10"));
+    assertNull(jsonApiObject.getLinks().related);
   }
 
   @Test
@@ -167,11 +167,11 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.articles));
 
-    assertNotNull(jsonapiObject.getMeta());
-    assertTrue(jsonapiObject.getMeta().get("testmeta").equals("yes"));
+    assertNotNull(jsonApiObject.getMeta());
+    assertTrue(jsonApiObject.getMeta().get("testmeta").equals("yes"));
   }
 
   @Test
@@ -181,11 +181,11 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
-    assertNotNull(jsonapiObject.getLinks());
-    Article article = (Article)jsonapiObject.getResource();
+    assertNotNull(jsonApiObject.getLinks());
+    Article article = (Article) jsonApiObject.getResource();
 
     assertTrue(article.getTags().get(0).equals("main"));
     assertTrue(article.getTags().get(1).equals("dev"));
@@ -196,10 +196,10 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Morpheus morpheus = new Morpheus();
     Deserializer.registerResourceClass("products", Product.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.product));
 
-    Product product = (Product)jsonapiObject.getResources().get(0);
+    Product product = (Product) jsonApiObject.getResources().get(0);
 
     assertTrue(product.getId().equals("123456"));
     assertTrue(product.getName().equals("Fancy new roboter"));
@@ -214,28 +214,28 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Morpheus morpheus = new Morpheus();
     Deserializer.registerResourceClass("products", Product.class);
 
-    JSONAPIObject jsonapiObject =
+    JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.error));
 
-    assertNotNull(jsonapiObject.getErrors());
-    assertEquals(jsonapiObject.getErrors().get(0).getStatus(), "403");
-    assertEquals(jsonapiObject.getErrors().get(0).getSource().getPointer(), "/data/attributes/secret-powers");
-    assertEquals(jsonapiObject.getErrors().get(0).getDetail(), "Editing secret powers is not authorized on Sundays.");
+    assertNotNull(jsonApiObject.getErrors());
+    assertEquals(jsonApiObject.getErrors().get(0).getStatus(), "403");
+    assertEquals(jsonApiObject.getErrors().get(0).getSource().getPointer(), "/data/attributes/secret-powers");
+    assertEquals(jsonApiObject.getErrors().get(0).getDetail(), "Editing secret powers is not authorized on Sundays.");
 
-    assertEquals(jsonapiObject.getErrors().get(1).getStatus(), "422");
-    assertEquals(jsonapiObject.getErrors().get(1).getId(), "1");
-    assertEquals(jsonapiObject.getErrors().get(1).getCode(), "2");
-    assertEquals(jsonapiObject.getErrors().get(1).getSource().getPointer(), "/data/attributes/volume");
-    assertEquals(jsonapiObject.getErrors().get(1).getSource().getParameter(), "/data/attributes/battery");
-    assertEquals(jsonapiObject.getErrors().get(1).getTitle(), "some title");
-    assertEquals(jsonapiObject.getErrors().get(1).getDetail(), "Volume does not, in fact, go to 11.");
-    assertEquals(jsonapiObject.getErrors().get(1).getLinks().getAbout(), "about.com");
+    assertEquals(jsonApiObject.getErrors().get(1).getStatus(), "422");
+    assertEquals(jsonApiObject.getErrors().get(1).getId(), "1");
+    assertEquals(jsonApiObject.getErrors().get(1).getCode(), "2");
+    assertEquals(jsonApiObject.getErrors().get(1).getSource().getPointer(), "/data/attributes/volume");
+    assertEquals(jsonApiObject.getErrors().get(1).getSource().getParameter(), "/data/attributes/battery");
+    assertEquals(jsonApiObject.getErrors().get(1).getTitle(), "some title");
+    assertEquals(jsonApiObject.getErrors().get(1).getDetail(), "Volume does not, in fact, go to 11.");
+    assertEquals(jsonApiObject.getErrors().get(1).getLinks().getAbout(), "about.com");
 
-    assertEquals(jsonapiObject.getErrors().get(2).getStatus(), "500");
-    assertEquals(jsonapiObject.getErrors().get(2).getSource().getPointer(), "/data/attributes/reputation");
-    assertNull(jsonapiObject.getErrors().get(2).getSource().getParameter());
-    assertEquals(jsonapiObject.getErrors().get(2).getTitle(), "The backend responded with an error");
-    assertEquals(jsonapiObject.getErrors().get(2).getDetail(), "Reputation service not responding after three requests.");
+    assertEquals(jsonApiObject.getErrors().get(2).getStatus(), "500");
+    assertEquals(jsonApiObject.getErrors().get(2).getSource().getPointer(), "/data/attributes/reputation");
+    assertNull(jsonApiObject.getErrors().get(2).getSource().getParameter());
+    assertEquals(jsonApiObject.getErrors().get(2).getTitle(), "The backend responded with an error");
+    assertEquals(jsonApiObject.getErrors().get(2).getDetail(), "Reputation service not responding after three requests.");
   }
 
   private String loadJSONFromAsset(int file) {

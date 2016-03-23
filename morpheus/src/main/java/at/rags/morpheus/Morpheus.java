@@ -4,8 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import at.rags.morpheus.Exceptions.NotExtendingResourceException;
-
 /**
  * Morpheus is a library to map JSON with the json:api specification format.
  * (http://jsonapi.org/).
@@ -16,7 +14,7 @@ import at.rags.morpheus.Exceptions.NotExtendingResourceException;
  * <pre>
  * {@code
  *  Morpheus morpheus = new Morpheus();
- *  JSONAPIObject jsonapiObject = morpheus.parse(YOUR-JSON-STRING);
+ *  JsonApiObject jsonapiObject = morpheus.parse(YOUR-JSON-STRING);
  * }
  * </pre>
  */
@@ -33,13 +31,13 @@ public class Morpheus {
   }
 
   /**
-   * Will return you an {@link JSONAPIObject} with parsed objects, links, relations and includes.
+   * Will return you an {@link JsonApiObject} with parsed objects, links, relations and includes.
    *
    * @param jsonString Your json:api formated string.
-   * @return A {@link JSONAPIObject}.
+   * @return A {@link JsonApiObject}.
    * @throws JSONException or NotExtendingResourceException
    */
-  public JSONAPIObject parse(String jsonString) throws Exception {
+  public JsonApiObject parse(String jsonString) throws Exception {
     JSONObject jsonObject = null;
     try {
       jsonObject = new JSONObject(jsonString);
@@ -53,13 +51,13 @@ public class Morpheus {
   /**
    * Parse and map all the top level members.
    */
-  private JSONAPIObject parseFromJSONObject(JSONObject jsonObject) throws Exception {
-    JSONAPIObject jsonapiObject = new JSONAPIObject();
+  private JsonApiObject parseFromJSONObject(JSONObject jsonObject) throws Exception {
+    JsonApiObject jsonApiObject = new JsonApiObject();
 
     //included
     try {
       JSONArray includedArray = jsonObject.getJSONArray("included");
-      jsonapiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
+      jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }
@@ -68,7 +66,7 @@ public class Morpheus {
     JSONArray dataArray = null;
     try {
       dataArray = jsonObject.getJSONArray("data");
-      jsonapiObject.setResources(Factory.newObjectFromJSONArray(dataArray, jsonapiObject.getIncluded()));
+      jsonApiObject.setResources(Factory.newObjectFromJSONArray(dataArray, jsonApiObject.getIncluded()));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain data array");
     }
@@ -77,7 +75,7 @@ public class Morpheus {
     JSONObject dataObject = null;
     try {
       dataObject = jsonObject.getJSONObject("data");
-      jsonapiObject.setResource(Factory.newObjectFromJSONObject(dataObject, jsonapiObject.getIncluded()));
+      jsonApiObject.setResource(Factory.newObjectFromJSONObject(dataObject, jsonApiObject.getIncluded()));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain data object");
     }
@@ -86,7 +84,7 @@ public class Morpheus {
     JSONObject linkObject = null;
     try {
       linkObject = jsonObject.getJSONObject("links");
-      jsonapiObject.setLinks(mapper.mapLinks(linkObject));
+      jsonApiObject.setLinks(mapper.mapLinks(linkObject));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain links object");
     }
@@ -95,7 +93,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonapiObject.setMeta(mapper.getAttributeMapper().createArrayMapFromJSONObject(metaObject));
+      jsonApiObject.setMeta(mapper.getAttributeMapper().createArrayMapFromJSONObject(metaObject));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }
@@ -103,11 +101,11 @@ public class Morpheus {
     JSONArray errorArray = null;
     try {
       errorArray = jsonObject.getJSONArray("errors");
-      jsonapiObject.setErrors(mapper.mapErrors(errorArray));
+      jsonApiObject.setErrors(mapper.mapErrors(errorArray));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain errors object");
     }
 
-    return jsonapiObject;
+    return jsonApiObject;
   }
 }

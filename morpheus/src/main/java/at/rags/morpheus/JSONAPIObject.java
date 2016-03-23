@@ -5,7 +5,7 @@ import android.util.ArrayMap;
 import java.util.List;
 import java.util.Objects;
 
-public class JSONAPIObject {
+public class JsonApiObject {
 
   private Resource resource;
   private List<Resource> resources;
