@@ -76,7 +76,7 @@ public class AttributeMapper {
    * Will loop through JSONObject and return values as arrayMap.
    *
    * @param jsonObject JSONObject for meta.
-   * @return ArrayMap with meta values.
+   * @return HashMap with meta values.
    */
   public HashMap<String, Object> createMapFromJSONObject(JSONObject jsonObject) {
     HashMap<String, Object> metaMap = new HashMap<>();
