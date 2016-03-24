@@ -10,7 +10,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.3.0'
+ compile 'com.xamoom.android:morpheus:0.3.1'
  ```
 
 ## Usage
@@ -65,7 +65,7 @@ At the moment Morpheus maps
 * Floats -> `double`
 * Booleans -> `boolean`
 * JSONArrays -> `List<Object>`
-* JSONObject -> `ArrayMap<String, Object>`
+* JSONObject -> `HashMap<String, Object>`
 
 
 You can write your own AttributeMapper by extending `AttributeMapper.java` and initialize Morpheus with your mapper.
