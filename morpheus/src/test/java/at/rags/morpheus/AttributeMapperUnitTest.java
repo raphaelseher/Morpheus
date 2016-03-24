@@ -12,6 +12,7 @@ import org.mockito.Matchers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import at.rags.morpheus.TestResources.Article;
@@ -45,7 +46,7 @@ public class AttributeMapperUnitTest {
     when(mockIter.next()).thenReturn("String 1", "String 2");
     when(jsonObject.keys()).thenReturn(mockIter);
 
-    ArrayMap<String, Object> map = mAttributeMapper.createArrayMapFromJSONObject(jsonObject);
+    HashMap<String, Object> map = mAttributeMapper.createMapFromJSONObject(jsonObject);
 
     verify(jsonObject).get(eq("String 1"));
     verify(jsonObject).get(eq("String 2"));
@@ -152,7 +153,7 @@ public class AttributeMapperUnitTest {
     when(jsonObject.keys()).thenReturn(mockIter);
     when(jsonObject.get(anyString())).thenThrow(new JSONException(""));
 
-    ArrayMap<String, Object> map = mAttributeMapper.createArrayMapFromJSONObject(jsonObject);
+    HashMap<String, Object> map = mAttributeMapper.createMapFromJSONObject(jsonObject);
 
     assertNotNull(map);
   }

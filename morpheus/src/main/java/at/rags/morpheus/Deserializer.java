@@ -3,6 +3,7 @@ package at.rags.morpheus;
 import android.util.ArrayMap;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 
@@ -11,7 +12,7 @@ import at.rags.morpheus.Exceptions.NotExtendingResourceException;
  */
 public class Deserializer {
 
-  private static ArrayMap<String, Class> registeredClasses = new ArrayMap<>();
+  private static HashMap<String, Class> registeredClasses = new HashMap<>();
 
   /**
    * Register your class for a JSON type.
@@ -39,7 +40,7 @@ public class Deserializer {
   public Resource createObjectFromString(String resourceName) throws InstantiationException, IllegalAccessException, NotExtendingResourceException {
     Class objectClass = registeredClasses.get(resourceName);
     try {
-      return (Resource)objectClass.newInstance();
+      return (Resource) objectClass.newInstance();
     } catch (InstantiationException | IllegalAccessException e) {
       throw e;
     } catch (ClassCastException e) {
@@ -126,11 +127,11 @@ public class Deserializer {
     return superClass;
   }
 
-  public static ArrayMap<String, Class> getRegisteredClasses() {
+  public static HashMap<String, Class> getRegisteredClasses() {
     return registeredClasses;
   }
 
-  public static void setRegisteredClasses(ArrayMap<String, Class> registeredClasses) {
+  public static void setRegisteredClasses(HashMap<String, Class> registeredClasses) {
     Deserializer.registeredClasses = registeredClasses;
   }
 }

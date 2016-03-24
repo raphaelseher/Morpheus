@@ -2,6 +2,8 @@ package at.rags.morpheus;
 
 import android.util.ArrayMap;
 
+import java.util.HashMap;
+
 /**
  * Extend this resource to your custom Object you want to map.
  * You can set custom json object names and relationships via the provided annotations.
@@ -15,16 +17,14 @@ import android.util.ArrayMap;
  */
 public class Resource {
   private String Id;
-
   private Links links;
+  private HashMap<String, Object> meta;
 
-  private ArrayMap<String, Object> meta;
-
-  public ArrayMap<String, Object> getMeta() {
+  public HashMap<String, Object> getMeta() {
     return meta;
   }
 
-  public void setMeta(ArrayMap<String, Object> meta) {
+  public void setMeta(HashMap<String, Object> meta) {
     this.meta = meta;
   }
 

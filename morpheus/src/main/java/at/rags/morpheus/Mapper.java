@@ -295,7 +295,7 @@ public class Mapper {
       }
 
       try {
-        error.setMeta(mAttributeMapper.createArrayMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
+        error.setMeta(mAttributeMapper.createMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
       } catch (JSONException e) {
         Logger.debug("JSON object does not contain JSONObject meta");
       }

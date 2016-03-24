@@ -7,8 +7,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.rags.morpheus.Exceptions.NotExtendingResourceException;
-
 /**
  * Factory to create and map {@link Resource}.
  */
@@ -55,7 +53,7 @@ public class Factory {
 
     try {
       assert realObject != null;
-      realObject.setMeta(mapper.getAttributeMapper().createArrayMapFromJSONObject(dataObject.getJSONObject("meta")));
+      realObject.setMeta(mapper.getAttributeMapper().createMapFromJSONObject(dataObject.getJSONObject("meta")));
     } catch (Exception e) {
       Logger.debug("JSON data does not contain meta");
     }

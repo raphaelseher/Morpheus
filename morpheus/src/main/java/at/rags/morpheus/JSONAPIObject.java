@@ -2,6 +2,7 @@ package at.rags.morpheus;
 
 import android.util.ArrayMap;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public class JsonApiObject {
   private Resource resource;
   private List<Resource> resources;
   private List<Resource> included;
-  private ArrayMap<String, Object> meta;
+  private HashMap<String, Object> meta;
   private List<Error> errors;
   private Links links;
 
@@ -40,11 +41,11 @@ public class JsonApiObject {
     this.included = included;
   }
 
-  public ArrayMap<String, Object> getMeta() {
+  public HashMap<String, Object> getMeta() {
     return meta;
   }
 
-  public void setMeta(ArrayMap<String, Object> meta) {
+  public void setMeta(HashMap<String, Object> meta) {
     this.meta = meta;
   }
 

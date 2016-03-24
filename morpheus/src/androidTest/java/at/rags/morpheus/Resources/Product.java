@@ -2,6 +2,7 @@ package at.rags.morpheus.Resources;
 
 import android.util.ArrayMap;
 
+import java.util.HashMap;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.SerializeName;
@@ -18,7 +19,7 @@ public class Product extends Resource {
   @SerializeName("in-stock")
   private int inStock;
   @SerializeName("stores-availability")
-  private ArrayMap<String, Boolean> availability;
+  private HashMap<String, Boolean> availability;
 
   public String getName() {
     return name;
@@ -36,7 +37,7 @@ public class Product extends Resource {
     return inStock;
   }
 
-  public ArrayMap<String, Boolean> getAvailability() {
+  public HashMap<String, Boolean> getAvailability() {
     return availability;
   }
 }

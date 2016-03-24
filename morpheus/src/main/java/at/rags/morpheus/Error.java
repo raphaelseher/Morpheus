@@ -2,6 +2,8 @@ package at.rags.morpheus;
 
 import android.util.ArrayMap;
 
+import java.util.HashMap;
+
 /**
  * JSON:API error object.
  */
@@ -13,13 +15,13 @@ public class Error {
   private String detail;
   private Source source;
   private ErrorLinks links;
-  private ArrayMap<String, Object> meta;
+  private HashMap<String, Object> meta;
 
-  public ArrayMap<String, Object> getMeta() {
+  public HashMap<String, Object> getMeta() {
     return meta;
   }
 
-  public void setMeta(ArrayMap<String, Object> meta) {
+  public void setMeta(HashMap<String, Object> meta) {
     this.meta = meta;
   }
 

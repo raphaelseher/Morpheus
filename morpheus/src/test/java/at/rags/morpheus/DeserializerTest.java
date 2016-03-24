@@ -4,6 +4,8 @@ import android.util.ArrayMap;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.FalseResource;
 import at.rags.morpheus.TestResources.InterfaceArticle;
@@ -21,7 +23,7 @@ public class DeserializerTest {
 
   @Test
   public void testCreateObjectFromString() throws Exception {
-    ArrayMap<String, Class> mockMap = mock(ArrayMap.class);
+    HashMap<String, Class> mockMap = mock(HashMap.class);
     when(mockMap.get("articles")).thenReturn(Article.class);
     Deserializer.setRegisteredClasses(mockMap);
     Deserializer deserializer = new Deserializer();
@@ -34,7 +36,7 @@ public class DeserializerTest {
 
   @Test(expected = InstantiationException.class)
   public void testCreateObjectFromStringInstantiationException() throws Exception {
-    ArrayMap<String, Class> mockMap = mock(ArrayMap.class);
+    HashMap<String, Class> mockMap = mock(HashMap.class);
     when(mockMap.get("articles")).thenReturn(InterfaceArticle.class);
     Deserializer.setRegisteredClasses(mockMap);
     Deserializer deserializer = new Deserializer();
@@ -44,7 +46,7 @@ public class DeserializerTest {
 
   @Test(expected = NotExtendingResourceException.class)
   public void testCreateObjectFromStringClassCastException() throws Exception {
-    ArrayMap<String, Class> mockMap = mock(ArrayMap.class);
+    HashMap<String, Class> mockMap = mock(HashMap.class);
     when(mockMap.get("test")).thenReturn(FalseResource.class);
     Deserializer.setRegisteredClasses(mockMap);
     Deserializer deserializer = new Deserializer();

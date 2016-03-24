@@ -1,13 +1,12 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class AttributeMapper {
         mDeserializer.setField(jsonApiResource, field.getName(), list);
       } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
         JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
-        mDeserializer.setField(jsonApiResource, field.getName(), createArrayMapFromJSONObject(objectForMap));
+        mDeserializer.setField(jsonApiResource, field.getName(), createMapFromJSONObject(objectForMap));
       } else {
         mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
       }
@@ -79,8 +78,8 @@ public class AttributeMapper {
    * @param jsonObject JSONObject for meta.
    * @return ArrayMap with meta values.
    */
-  public ArrayMap<String, Object> createArrayMapFromJSONObject(JSONObject jsonObject) {
-    ArrayMap<String, Object> metaMap = new ArrayMap<>();
+  public HashMap<String, Object> createMapFromJSONObject(JSONObject jsonObject) {
+    HashMap<String, Object> metaMap = new HashMap<>();
 
     for(Iterator<String> iter = jsonObject.keys(); iter.hasNext();) {
       String key = iter.next();
