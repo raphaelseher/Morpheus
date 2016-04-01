@@ -12,7 +12,7 @@ ext {
     siteUrl = 'http://xamoom.github.io/Morpheus/'
     gitUrl = 'https://github.com/xamoom/Morpheus.git'
 
-    libraryVersion = '0.3.1'
+    libraryVersion = '0.3.2'
     developerId = 'xamoom-raphael'
     developerName = 'Raphael Seher'
     developerEmail = 'raphael@xamoom.com'
@@ -30,7 +30,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 3
-        versionName "0.3.1"
+        versionName "0.3.2"
     }
     buildTypes {
         release {
@@ -50,8 +50,6 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.10'
-
-    compile 'com.android.support:appcompat-v7:23.2.1'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
