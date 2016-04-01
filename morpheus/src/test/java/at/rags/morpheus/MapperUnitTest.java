@@ -223,10 +223,10 @@ public class MapperUnitTest {
     JSONObject jsonObject = mock(JSONObject.class);
     JSONObject relationObject = mock(JSONObject.class);
     JSONObject authorObject = mock(JSONObject.class);
-    List<Resource> included = new ArrayList<>();
 
     Author author = new Author();
     author.setId("1");
+    author.setName("Name");
 
     when(mockDeserializer.createObjectFromString(anyString())).thenReturn(author);
     when(jsonObject.getJSONObject(eq("author"))).thenReturn(relationObject);
@@ -239,7 +239,7 @@ public class MapperUnitTest {
         any(JSONObject.class))).thenReturn(author);
 
     Article article = new Article();
-    Article mappedArticle = (Article)mapper.mapRelations(article, jsonObject, included);
+    Article mappedArticle = (Article)mapper.mapRelations(article, jsonObject, null);
 
     ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
@@ -247,7 +247,8 @@ public class MapperUnitTest {
 
     Author resultAuthor = (Author)objectArgumentCaptor.getValue();
     assertEquals(resultAuthor.getId(), "1");
-    assertNull(resultAuthor.getName());
+    assertEquals(resultAuthor.getName(), "Name");
+    assertNotNull(mappedArticle);
   }
 
   @Test

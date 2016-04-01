@@ -109,6 +109,10 @@ public class Mapper {
    * @return Object with mapped fields.
    */
   public Resource mapAttributes(Resource object, JSONObject attributesJsonObject) {
+    if (attributesJsonObject == null) {
+      return object;
+    }
+
     for (Field field : object.getClass().getDeclaredFields()) {
       // get the right attribute name
       String jsonFieldName = field.getName();
@@ -195,6 +199,10 @@ public class Mapper {
    * @return Relation of included resource.
    */
   public Resource matchIncludedToRelation(Resource object, List<Resource> included) {
+    if (included == null) {
+      return object;
+    }
+
     for (Resource resource : included) {
       if (object.getId().equals(resource.getId()) && object.getClass().equals(resource.getClass())) {
         return resource;
