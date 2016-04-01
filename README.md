@@ -10,7 +10,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.3.1'
+ compile 'com.xamoom.android:morpheus:0.3.2'
  ```
 
 ## Usage
@@ -71,4 +71,4 @@ At the moment Morpheus maps
 You can write your own AttributeMapper by extending `AttributeMapper.java` and initialize Morpheus with your mapper.
 
 # Contribution
-If you want to contritbute: make your changes and do a pull request.
+If you want to contribute: make your changes and do a pull request.
