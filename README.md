@@ -51,7 +51,7 @@ Log.v(TAG, "Article Id: " + article.getId())
 ```
 
 # Development status
-Morpheus can):
+Morpheus can:
 
 * deserialize data object or array
 * deserialize relationships
