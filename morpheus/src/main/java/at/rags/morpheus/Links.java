@@ -1,70 +1,75 @@
 package at.rags.morpheus;
 
 /**
- * Created by kwaky on 20/04/16.
+ * Links object.
+ *
+ * @see JsonApiObject
+ * @see Resource
+ * @author kwaky
  */
 public class Links {
-    public String selfLink;
-    public String related;
-    public String first;
-    public String last;
-    public String prev;
-    public String next;
-    public String about;
 
-    public String getSelfLink() {
-        return selfLink;
-    }
+  private String selfLink;
+  private String related;
+  private String first;
+  private String last;
+  private String prev;
+  private String next;
+  private String about;
 
-    public void setSelfLink(String selfLink) {
-        this.selfLink = selfLink;
-    }
+  public String getSelfLink() {
+    return selfLink;
+  }
 
-    public String getRelated() {
-        return related;
-    }
+  public void setSelfLink(String selfLink) {
+    this.selfLink = selfLink;
+  }
 
-    public void setRelated(String related) {
-        this.related = related;
-    }
+  public String getRelated() {
+    return related;
+  }
 
-    public String getFirst() {
-        return first;
-    }
+  public void setRelated(String related) {
+    this.related = related;
+  }
 
-    public void setFirst(String first) {
-        this.first = first;
-    }
+  public String getFirst() {
+    return first;
+  }
 
-    public String getLast() {
-        return last;
-    }
+  public void setFirst(String first) {
+    this.first = first;
+  }
 
-    public void setLast(String last) {
-        this.last = last;
-    }
+  public String getLast() {
+    return last;
+  }
 
-    public String getPrev() {
-        return prev;
-    }
+  public void setLast(String last) {
+    this.last = last;
+  }
 
-    public void setPrev(String prev) {
-        this.prev = prev;
-    }
+  public String getPrev() {
+    return prev;
+  }
 
-    public String getNext() {
-        return next;
-    }
+  public void setPrev(String prev) {
+    this.prev = prev;
+  }
 
-    public void setNext(String next) {
-        this.next = next;
-    }
+  public String getNext() {
+    return next;
+  }
 
-    public String getAbout() {
-        return about;
-    }
+  public void setNext(String next) {
+    this.next = next;
+  }
 
-    public void setAbout(String about) {
-        this.about = about;
-    }
+  public String getAbout() {
+    return about;
+  }
+
+  public void setAbout(String about) {
+    this.about = about;
+  }
 }

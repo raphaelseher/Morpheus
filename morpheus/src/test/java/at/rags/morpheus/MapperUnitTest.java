@@ -55,12 +55,12 @@ public class MapperUnitTest {
 
     Links links = mMapper.mapLinks(jsonObject);
 
-    assertTrue(links.selfLink.equals("www.self.com"));
-    assertTrue(links.related.equals("www.related.com"));
-    assertTrue(links.first.equals("www.first.com"));
-    assertTrue(links.last.equals("www.last.com"));
-    assertTrue(links.prev.equals("www.prev.com"));
-    assertTrue(links.next.equals("www.next.com"));
+    assertTrue(links.getSelfLink().equals("www.self.com"));
+    assertTrue(links.getRelated().equals("www.related.com"));
+    assertTrue(links.getFirst().equals("www.first.com"));
+    assertTrue(links.getLast().equals("www.last.com"));
+    assertTrue(links.getPrev().equals("www.prev.com"));
+    assertTrue(links.getNext().equals("www.next.com"));
   }
 
   @Test
@@ -75,14 +75,13 @@ public class MapperUnitTest {
 
     Links links = mMapper.mapLinks(jsonObject);
 
-    assertNull(links.selfLink);
-    assertNull(links.related);
-    assertNull(links.first);
-    assertNull(links.last);
-    assertNull(links.prev);
-    assertNull(links.next);
+    assertNull(links.getSelfLink());
+    assertNull(links.getRelated());
+    assertNull(links.getFirst());
+    assertNull(links.getLast());
+    assertNull(links.getPrev());
+    assertNull(links.getNext());
   }
-
 
   @Test
   public void testMapId() throws Exception {

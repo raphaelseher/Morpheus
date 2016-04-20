@@ -45,37 +45,37 @@ public class Mapper {
   public Links mapLinks(JSONObject linksJsonObject) {
     Links links = new Links();
     try {
-      links.selfLink = linksJsonObject.getString("self");
+      links.setSelfLink(linksJsonObject.getString("self"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain self");
     }
 
     try {
-      links.related = linksJsonObject.getString("related");
+      links.setRelated(linksJsonObject.getString("related"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain related");
     }
 
     try {
-      links.first = linksJsonObject.getString("first");
+      links.setFirst(linksJsonObject.getString("first"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain first");
     }
 
     try {
-      links.last = linksJsonObject.getString("last");
+      links.setLast(linksJsonObject.getString("last"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain last");
     }
 
     try {
-      links.prev = linksJsonObject.getString("prev");
+      links.setPrev(linksJsonObject.getString("prev"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain prev");
     }
 
     try {
-      links.next = linksJsonObject.getString("next");
+      links.setNext(linksJsonObject.getString("next"));
     } catch (JSONException e) {
       Logger.debug("JSON link does not contain next");
     }
