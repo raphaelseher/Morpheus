@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="11dce723-8640-4087-9a04-b839eeb29fce" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Links.java" afterPath="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Links.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java" afterPath="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java" afterPath="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java" />
-    </list>
+    <list default="true" id="11dce723-8640-4087-9a04-b839eeb29fce" name="Default" comment="" />
     <ignored path="Morpheus.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
