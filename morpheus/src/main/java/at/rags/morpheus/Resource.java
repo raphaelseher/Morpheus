@@ -45,12 +45,3 @@ public class Resource {
   }
 }
 
-class Links {
-  public String selfLink;
-  public String related;
-  public String first;
-  public String last;
-  public String prev;
-  public String next;
-  public String about;
-}
