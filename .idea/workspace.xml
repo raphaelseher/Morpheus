@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11dce723-8640-4087-9a04-b839eeb29fce" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/morpheus/build.gradle" afterPath="$PROJECT_DIR$/morpheus/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/morpheus/morpheus.iml" afterPath="$PROJECT_DIR$/morpheus/morpheus.iml" />
     </list>
     <ignored path="Morpheus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,8 +134,8 @@
           <file leaf-file-name="MapperUnitTest.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.38909775">
-                  <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
+                <state vertical-scroll-proportion="0.5582707">
+                  <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -154,8 +158,8 @@
           <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/morpheus/build.gradle">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.50751877">
-                  <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+                <state vertical-scroll-proportion="0.39097744">
+                  <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
                   <folding />
                 </state>
               </provider>
@@ -2142,7 +2146,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5841941002000" />
+        <entry key="$PROJECT_DIR$" value="5842114115000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2635,10 +2639,10 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/AttributeMapper.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Factory.java" />
-        <option value="$PROJECT_DIR$/morpheus/build.gradle" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Links.java" />
         <option value="$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java" />
         <option value="$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Mapper.java" />
+        <option value="$PROJECT_DIR$/morpheus/build.gradle" />
       </list>
     </option>
   </component>
@@ -2650,7 +2654,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="29" />
+    <option name="x" value="-1411" />
     <option name="y" value="23" />
     <option name="width" value="1411" />
     <option name="height" value="877" />
@@ -2662,7 +2666,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -2701,56 +2705,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="morpheus" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="morpheus" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -3241,6 +3195,9 @@
     <history-entry file="MapperUnitTest - 2016.04.20 at 19h 38m 47s.xml">
       <configuration name="MapperUnitTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MapperUnitTest - 2016.04.20 at 20h 18m 21s.xml">
+      <configuration name="MapperUnitTest" configurationId="JUnit" />
+    </history-entry>
     <history-entry file="MorpheusMappingTests___ - 2016.04.19 at 19h 19m 37s.xml">
       <configuration name="MorpheusMappingTests..." configurationId="AndroidTestRunConfigurationType" />
     </history-entry>
@@ -3264,7 +3221,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="29" y="23" width="1411" height="877" extended-state="6" />
+    <frame x="-1411" y="23" width="1411" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3694,14 +3651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38909775">
-          <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/morpheus/src/main/java/at/rags/morpheus/Links.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3718,10 +3667,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/morpheus/src/test/java/at/rags/morpheus/MapperUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5582707">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/morpheus/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50751877">
-          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.39097744">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
           <folding />
         </state>
       </provider>
