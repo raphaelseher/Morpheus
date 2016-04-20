@@ -139,8 +139,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertNotNull(jsonApiObject.getResource());
     Article article = (Article) jsonApiObject.getResource();
     assertNotNull(article.getLinks());
-    assertTrue(article.getLinks().selfLink.equals("http://example.com/articles/1"));
-    assertNull(article.getLinks().related);
+    assertTrue(article.getLinks().getSelfLink().equals("http://example.com/articles/1"));
+    assertNull(article.getLinks().getRelated());
   }
 
   @Test
@@ -154,10 +154,10 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
     assertNotNull(jsonApiObject.getLinks());
-    assertTrue(jsonApiObject.getLinks().selfLink.equals("http://example.com/articles"));
-    assertTrue(jsonApiObject.getLinks().next.equals("http://example.com/articles?page[offset]=2"));
-    assertTrue(jsonApiObject.getLinks().last.equals("http://example.com/articles?page[offset]=10"));
-    assertNull(jsonApiObject.getLinks().related);
+    assertTrue(jsonApiObject.getLinks().getSelfLink().equals("http://example.com/articles"));
+    assertTrue(jsonApiObject.getLinks().getNext().equals("http://example.com/articles?page[offset]=2"));
+    assertTrue(jsonApiObject.getLinks().getLast().equals("http://example.com/articles?page[offset]=10"));
+    assertNull(jsonApiObject.getLinks().getRelated());
   }
 
   @Test
