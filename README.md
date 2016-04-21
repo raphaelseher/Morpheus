@@ -1,6 +1,7 @@
 # Morpheus
 
- [ ![Download](https://api.bintray.com/packages/xamoom/maven/Morpheus/images/download.svg) ](https://bintray.com/xamoom/maven/Morpheus/_latestVersion)
+ [![Download](https://api.bintray.com/packages/xamoom/maven/Morpheus/images/download.svg) ](https://bintray.com/xamoom/maven/Morpheus/_latestVersion)
+ [![Build Status](https://travis-ci.org/xamoom/Morpheus.svg?branch=master)](https://travis-ci.org/xamoom/Morpheus)
 
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
