@@ -8,13 +8,9 @@ script:
   - ./gradlew :morpheus:test :morpheus:connectedAndroidTest
 android:
   components:
-    # - platform-tools
-    # - tools
-
-    # The BuildTools version used by your project
+    - platform-tools
+    - tools
     - build-tools-23.0.3
-
-    # The SDK version used to compile your project
     - android-23
 
     # Specify at least one system image,
