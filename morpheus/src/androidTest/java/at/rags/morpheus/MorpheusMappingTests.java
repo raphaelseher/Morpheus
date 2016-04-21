@@ -136,6 +136,10 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     JsonApiObject jsonApiObject =
         morpheus.parse(loadJSONFromAsset(R.raw.article));
 
+    assertEquals(jsonApiObject.getLinks().getSelfLink(), "http://example.com/articles");
+    assertEquals(jsonApiObject.getLinks().getNext(), "http://example.com/articles?page[offset]=2");
+    assertEquals(jsonApiObject.getLinks().getLast(), "http://example.com/articles?page[offset]=10");
+
     assertNotNull(jsonApiObject.getResource());
     Article article = (Article) jsonApiObject.getResource();
     assertNotNull(article.getLinks());
