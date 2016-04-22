@@ -1,5 +1,8 @@
 package at.rags.morpheus;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Links object.
  *
@@ -7,8 +10,7 @@ package at.rags.morpheus;
  * @see Resource
  * @author kwaky
  */
-public class Links {
-
+public class Links implements Parcelable {
   private String selfLink;
   private String related;
   private String first;
@@ -16,6 +18,31 @@ public class Links {
   private String prev;
   private String next;
   private String about;
+
+  public Links() {
+  }
+
+  protected Links(Parcel in) {
+    selfLink = in.readString();
+    related = in.readString();
+    first = in.readString();
+    last = in.readString();
+    prev = in.readString();
+    next = in.readString();
+    about = in.readString();
+  }
+
+  public static final Creator<Links> CREATOR = new Creator<Links>() {
+    @Override
+    public Links createFromParcel(Parcel in) {
+      return new Links(in);
+    }
+
+    @Override
+    public Links[] newArray(int size) {
+      return new Links[size];
+    }
+  };
 
   public String getSelfLink() {
     return selfLink;
@@ -71,5 +98,21 @@ public class Links {
 
   public void setAbout(String about) {
     this.about = about;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(selfLink);
+    dest.writeString(related);
+    dest.writeString(first);
+    dest.writeString(last);
+    dest.writeString(prev);
+    dest.writeString(next);
+    dest.writeString(about);
   }
 }
