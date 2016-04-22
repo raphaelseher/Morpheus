@@ -211,6 +211,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertTrue(product.getInStock() == 9);
     assertTrue(product.getAvailability().get("Store 1"));
     assertFalse(product.getAvailability().get("Store 3"));
+    assertEquals(product.getLocation().getLat(), 14.202323);
+    assertEquals(product.getLocation().getLon(), 12.04995);
   }
 
   @Test

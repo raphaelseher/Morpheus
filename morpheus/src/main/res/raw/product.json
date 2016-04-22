@@ -15,7 +15,11 @@
       "stores-availability":{
         "Store 1":true,
         "Store 2":true,
-        "Store 3":false}
+        "Store 3":false},
+      "location":{
+        "lat":14.202323,
+        "lon":12.04995
+      }
     },
     "links": {
       "self": "http://example.com/products/123456"

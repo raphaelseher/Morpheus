@@ -20,6 +20,7 @@ public class Product extends Resource {
   private int inStock;
   @SerializeName("stores-availability")
   private HashMap<String, Boolean> availability;
+  private Location location;
 
   public String getName() {
     return name;
@@ -39,5 +40,9 @@ public class Product extends Resource {
 
   public HashMap<String, Boolean> getAvailability() {
     return availability;
+  }
+
+  public Location getLocation() {
+    return location;
   }
 }
