@@ -46,14 +46,9 @@ public class AttributeMapper {
         List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName));
         mDeserializer.setField(jsonApiResource, field.getName(), list);
       } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
-        if (field.getType() != null) {
-          Gson gson = new Gson();
-          Object obj = gson.fromJson(attributesJsonObject.get(jsonFieldName).toString(), field.getType());
-          mDeserializer.setField(jsonApiResource, field.getName(), obj);
-        } else {
-          JSONObject objectForMap = attributesJsonObject.getJSONObject(jsonFieldName);
-          mDeserializer.setField(jsonApiResource, field.getName(), createMapFromJSONObject(objectForMap));
-        }
+        Gson gson = new Gson();
+        Object obj = gson.fromJson(attributesJsonObject.get(jsonFieldName).toString(), field.getType());
+        mDeserializer.setField(jsonApiResource, field.getName(), obj);
       } else {
         mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
       }
