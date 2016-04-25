@@ -19,7 +19,12 @@
       "location":{
         "lat":14.202323,
         "lon":12.04995
-      }
+      },
+      "authors":[
+        {
+          "first-name":"raphael"
+        }
+      ]
     },
     "links": {
       "self": "http://example.com/products/123456"

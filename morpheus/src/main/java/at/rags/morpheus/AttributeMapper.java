@@ -1,12 +1,17 @@
 package at.rags.morpheus;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,7 +48,7 @@ public class AttributeMapper {
   public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
     try {
       if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-        List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName));
+        List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
         mDeserializer.setField(jsonApiResource, field.getName(), list);
       } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
         Gson gson = new Gson();
@@ -63,16 +68,30 @@ public class AttributeMapper {
    * @param jsonArray JSONArray with values.
    * @return List<Object> of JSONArray values.
    */
-  private List<Object> createListFromJSONArray(JSONArray jsonArray) {
-    List<Object> attributeAsList = new ArrayList<>();
-    for (int i = 0; jsonArray.length() > i; i++) {
-      try {
-        attributeAsList.add(jsonArray.get(i));
-      } catch (JSONException e) {
-        Logger.debug("JSONArray does not contain Object at index " + i);
+  private List<Object> createListFromJSONArray(JSONArray jsonArray, Field field) {
+    Type genericFieldType = field.getGenericType();
+    List<Object> objectArrayList = new ArrayList<>();
+
+    if(genericFieldType instanceof ParameterizedType) {
+      ParameterizedType aType = (ParameterizedType) genericFieldType;
+      Type[] fieldArgTypes = aType.getActualTypeArguments();
+      for (Type fieldArgType : fieldArgTypes) {
+        final Class fieldArgClass = (Class) fieldArgType;
+        System.out.println("fieldArgClass = " + fieldArgClass);
+
+        for (int i = 0; jsonArray.length() > i; i++) {
+          Object obj = null;
+          try {
+            obj = new Gson().fromJson(jsonArray.get(i).toString(), fieldArgClass);
+          } catch (JSONException e) {
+            Logger.debug("JSONArray does not contain index " + i + ".");
+          }
+          objectArrayList.add(obj);
+        }
       }
     }
-    return attributeAsList;
+
+    return objectArrayList;
   }
 
   /**

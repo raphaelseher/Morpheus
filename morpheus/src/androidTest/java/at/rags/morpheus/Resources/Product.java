@@ -21,6 +21,7 @@ public class Product extends Resource {
   @SerializeName("stores-availability")
   private HashMap<String, Boolean> availability;
   private Location location;
+  private List<Author> authors;
 
   public String getName() {
     return name;
@@ -44,5 +45,9 @@ public class Product extends Resource {
 
   public Location getLocation() {
     return location;
+  }
+
+  public List<Author> getAuthors() {
+    return authors;
   }
 }

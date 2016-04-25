@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
@@ -213,6 +214,9 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertFalse(product.getAvailability().get("Store 3"));
     assertEquals(product.getLocation().getLat(), 14.202323);
     assertEquals(product.getLocation().getLon(), 12.04995);
+    assertEquals(product.getAuthors().size(), 1);
+    assertEquals(product.getAuthors().get(0).getClass(), Author.class);
+    assertEquals(product.getAuthors().get(0).getFirstName(), "raphael");
   }
 
   @Test
