@@ -11,7 +11,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.3.2'
+ compile 'com.xamoom.android:morpheus:0.4.0'
  ```
 
 ## Usage
@@ -19,12 +19,12 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.h
 Prepare your resources
 
 1. extend Resource
-2. Use @SerializeName() annotation when your field name differs from the json.
+2. Use @SerializedName() annotation when your field name differs from the json.
 3. Create relationship mapping with the @Relationship() annotation.
 
 ```java
 public class Article extends Resource {
-  @SerializeName("article-title")
+  @SerializedName("article-title")
   private String title;
   @Relationship("author")
   private Author author;
@@ -65,9 +65,8 @@ At the moment Morpheus maps
 * Strings -> `String`
 * Floats -> `double`
 * Booleans -> `boolean`
-* JSONArrays -> `List<Object>`
-* JSONObject -> `HashMap<String, Object>`
-
+* JSONArrays -> `List<Object>` (with Gson)
+* JSONObject -> `HashMap<String, Object>` (with Gson)
 
 You can write your own AttributeMapper by extending `AttributeMapper.java` and initialize Morpheus with your mapper.
 
