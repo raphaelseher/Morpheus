@@ -18,32 +18,13 @@ import java.util.Objects;
  * @see at.rags.morpheus.Annotations.SerializeName
  * @see at.rags.morpheus.Annotations.Relationship
  */
-public class Resource implements Parcelable {
+public class Resource {
   private String Id;
   private Links links;
   private HashMap<String, Object> meta;
 
   public Resource() {
   }
-
-  protected Resource(Parcel in) {
-    Id = in.readString();
-    meta = new HashMap<>();
-    in.readMap(meta, Object.class.getClassLoader());
-    links = in.readParcelable(Links.class.getClassLoader());
-  }
-
-  public static final Creator<Resource> CREATOR = new Creator<Resource>() {
-    @Override
-    public Resource createFromParcel(Parcel in) {
-      return new Resource(in);
-    }
-
-    @Override
-    public Resource[] newArray(int size) {
-      return new Resource[size];
-    }
-  };
 
   public HashMap<String, Object> getMeta() {
     return meta;
@@ -67,18 +48,6 @@ public class Resource implements Parcelable {
 
   public void setId(String id) {
     Id = id;
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(Id);
-    dest.writeMap(meta);
-    dest.writeParcelable(links, flags);
   }
 }
 
