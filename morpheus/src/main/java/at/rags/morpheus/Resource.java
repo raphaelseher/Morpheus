@@ -15,7 +15,7 @@ import java.util.Objects;
  * public class Article extends Resource { ... }
  * }</pre>
  *
- * @see at.rags.morpheus.Annotations.SerializeName
+ * @see com.google.gson.annotations.SerializedName
  * @see at.rags.morpheus.Annotations.Relationship
  */
 public class Resource {

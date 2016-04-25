@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
-import at.rags.morpheus.Annotations.SerializeName;
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 
 /**
@@ -118,8 +119,8 @@ public class Mapper {
       String jsonFieldName = field.getName();
       boolean isRelation = false;
       for (Annotation annotation : field.getAnnotations()) {
-        if (annotation.annotationType() == SerializeName.class) {
-          SerializeName serializeName = (SerializeName) annotation;
+        if (annotation.annotationType() == SerializedName.class) {
+          SerializedName serializeName = (SerializedName) annotation;
           jsonFieldName = serializeName.value();
         }
         if (annotation.annotationType() == Relationship.class) {
@@ -327,8 +328,8 @@ public class Mapper {
     for (Field field : clazz.getDeclaredFields()) {
       String fieldName = field.getName();
       for (Annotation annotation : field.getDeclaredAnnotations()) {
-        if (annotation.annotationType() == SerializeName.class) {
-          SerializeName serializeName = (SerializeName)annotation;
+        if (annotation.annotationType() == SerializedName.class) {
+          SerializedName serializeName = (SerializedName)annotation;
           fieldName = serializeName.value();
         }
         if (annotation.annotationType() == Relationship.class) {

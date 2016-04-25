@@ -2,16 +2,17 @@ package at.rags.morpheus.TestResources;
 
 import android.util.ArrayMap;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
 import at.rags.morpheus.Resource;
-import at.rags.morpheus.Annotations.SerializeName;
 
 public class Article extends Resource {
 
   private String title;
-  @SerializeName("public")
+  @SerializedName("public")
   private boolean publicStatus;
   private List<String> tags;
   private ArrayMap<String, String> map;

@@ -1,10 +1,10 @@
 package at.rags.morpheusexample.JsonApiResources;
 
-import at.rags.morpheus.Annotations.SerializeName;
+import com.google.gson.annotations.SerializedName;
 
 public class Article extends MyResource {
 
-  @SerializeName(value = "title")
+  @SerializedName(value = "title")
   private String title;
 
   public String getTitle() {

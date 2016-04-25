@@ -1,14 +1,15 @@
 package at.rags.morpheus.Resources;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import at.rags.morpheus.Annotations.Relationship;
 import at.rags.morpheus.Resource;
-import at.rags.morpheus.Annotations.SerializeName;
 
 public class Article extends Resource {
 
-  @SerializeName("title")
+  @SerializedName("title")
   private String title;
 
   @Relationship("author")

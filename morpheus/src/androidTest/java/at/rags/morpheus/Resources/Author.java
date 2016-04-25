@@ -2,7 +2,6 @@ package at.rags.morpheus.Resources;
 
 import com.google.gson.annotations.SerializedName;
 
-import at.rags.morpheus.Annotations.SerializeName;
 import at.rags.morpheus.Resource;
 
 /**
@@ -10,14 +9,13 @@ import at.rags.morpheus.Resource;
  */
 public class Author extends Resource {
 
-  @SerializeName("first-name")
   @SerializedName("first-name")
   private String firstName;
 
-  @SerializeName("last-name")
+  @SerializedName("last-name")
   private String lastName;
 
-  @SerializeName("twitter")
+  @SerializedName("twitter")
   private String twitterHandle;
 
   public String getFirstName() {

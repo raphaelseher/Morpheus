@@ -41,7 +41,9 @@ public class Deserializer {
     Class objectClass = registeredClasses.get(resourceName);
     try {
       return (Resource) objectClass.newInstance();
-    } catch (InstantiationException | IllegalAccessException e) {
+    } catch (InstantiationException e) {
+      throw e;
+    } catch(IllegalAccessException e) {
       throw e;
     } catch (ClassCastException e) {
       throw new NotExtendingResourceException(objectClass + " is not inheriting Resource");
