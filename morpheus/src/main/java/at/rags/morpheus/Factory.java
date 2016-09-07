@@ -35,13 +35,12 @@ public class Factory {
     try {
       realObject = mapper.mapId(realObject, dataObject);
     } catch (Exception e) {
-      e.printStackTrace();
+      Logger.debug("JSON data does not contain id");
     }
-
+    
     try {
       realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
     } catch (Exception e) {
-      e.printStackTrace();
       Logger.debug("JSON data does not contain attributes");
     }
 

@@ -315,7 +315,7 @@ public class Mapper {
     return errors;
   }
 
-  //helper
+  // helper
 
   /**
    * Get the annotated relationship names.
