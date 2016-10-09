@@ -433,13 +433,27 @@ public class Mapper {
     return relationNames;
   }
 
+  private String nameForResourceClass(Class clazz) throws Exception {
+     for (String key : Deserializer.getRegisteredClasses().keySet()) {
+      if (Deserializer.getRegisteredClasses().get(key) == clazz) {
+        return key;
+      }
+    }
+
+    throw new Exception("Class " + clazz.getSimpleName() + " not registered.");
+  }
+
   // getter
 
   public Deserializer getDeserializer() {
-    return mDeserializer;
+    return deserializer;
   }
 
   public AttributeMapper getAttributeMapper() {
-    return mAttributeMapper;
+    return attributeMapper;
+  }
+
+  public Serializer getSerializer() {
+    return serializer;
   }
 }
