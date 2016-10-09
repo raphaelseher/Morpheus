@@ -95,7 +95,7 @@ public class AttributeMapper {
   }
 
   /**
-   * Will loop through JSONObject and return values as arrayMap.
+   * Will loop through JSONObject and return values as map.
    *
    * @param jsonObject JSONObject for meta.
    * @return HashMap with meta values.
