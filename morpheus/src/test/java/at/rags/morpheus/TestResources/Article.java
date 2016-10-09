@@ -78,4 +78,16 @@ public class Article extends Resource {
   public List<Author> getAuthors() {
     return authors;
   }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public void setAuthor(Author author) {
+    this.author = author;
+  }
+
+  public void setAuthors(List<Author> authors) {
+    this.authors = authors;
+  }
 }
