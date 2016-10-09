@@ -23,17 +23,20 @@ import at.rags.morpheus.Exceptions.NotExtendingResourceException;
  */
 public class Mapper {
 
-  private Deserializer mDeserializer;
-  private AttributeMapper mAttributeMapper;
+  private Deserializer deserializer;
+  private Serializer serializer;
+  private AttributeMapper attributeMapper;
 
   public Mapper() {
-    mDeserializer = new Deserializer();
-    mAttributeMapper = new AttributeMapper();
+    deserializer = new Deserializer();
+    serializer = new Serializer();
+    attributeMapper = new AttributeMapper();
   }
 
-  public Mapper(Deserializer deserializer, AttributeMapper attributeMapper) {
-    mDeserializer = deserializer;
-    mAttributeMapper = attributeMapper;
+  public Mapper(Deserializer deserializer, Serializer serializer, AttributeMapper attributeMapper) {
+    this.deserializer = deserializer;
+    this.serializer = serializer;
+    this.attributeMapper = attributeMapper;
   }
 
   //TODO map href and meta (http://jsonapi.org/format/#document-links)
@@ -94,7 +97,7 @@ public class Mapper {
    */
   public Resource mapId(Resource object, JSONObject jsonDataObject) throws NotExtendingResourceException {
     try {
-      return mDeserializer.setIdField(object, jsonDataObject.get("id"));
+      return deserializer.setIdField(object, jsonDataObject.get("id"));
     } catch (JSONException e) {
       Logger.debug("JSON data does not contain id.");
     }
@@ -132,7 +135,7 @@ public class Mapper {
         continue;
       }
 
-      mAttributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
+      attributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
     }
 
     return object;
@@ -169,7 +172,7 @@ public class Mapper {
 
         relationObject = matchIncludedToRelation(relationObject, included);
 
-        mDeserializer.setField(object, relationshipNames.get(relationship), relationObject);
+        deserializer.setField(object, relationshipNames.get(relationship), relationObject);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -182,7 +185,7 @@ public class Mapper {
 
         relationArray = matchIncludedToRelation(relationArray, included);
 
-        mDeserializer.setField(object, relationshipNames.get(relationship), relationArray);
+        deserializer.setField(object, relationshipNames.get(relationship), relationArray);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -304,7 +307,7 @@ public class Mapper {
       }
 
       try {
-        error.setMeta(mAttributeMapper.createMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
+        error.setMeta(attributeMapper.createMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
       } catch (JSONException e) {
         Logger.debug("JSON object does not contain JSONObject meta");
       }
@@ -313,6 +316,94 @@ public class Mapper {
     }
 
     return errors;
+  }
+
+  public HashMap<String, ArrayList> createDataFromJsonResources(List<Resource> resources, boolean includeAttributes) {
+    String resourceName = null;
+    try {
+      resourceName = nameForResourceClass(resources.get(0).getClass());
+    } catch (Exception e) {
+      Logger.debug(e.getMessage());
+      return null;
+    }
+
+    HashMap<String, ArrayList> data = new HashMap<>();
+
+    ArrayList<HashMap<String, Object>> dataArray = new ArrayList<>();
+
+    for (Resource resource : resources) {
+      HashMap<String, Object> attributes = serializer.getFieldsAsDictionary(resource);
+
+      HashMap<String, Object> resourceRepresentation = new HashMap<>();
+      resourceRepresentation.put("type", resourceName);
+      resourceRepresentation.put("id", resource.getId());
+      if (includeAttributes) {
+        resourceRepresentation.put("attributes", attributes);
+      }
+
+      dataArray.add(resourceRepresentation);
+    }
+
+    data.put("data", dataArray);
+
+    return data;
+  }
+
+  public HashMap<String, Object> createDataFromJsonResource(Resource resource,
+                                                            boolean includeAttributes) {
+    String resourceName = null;
+    try {
+      resourceName = nameForResourceClass(resource.getClass());
+    } catch (Exception e) {
+      Logger.debug(e.getMessage());
+      return null;
+    }
+
+    HashMap<String, Object> resourceRepresentation = new HashMap<>();
+    resourceRepresentation.put("type", resourceName);
+    resourceRepresentation.put("id", resource.getId());
+    if (includeAttributes) {
+      HashMap<String, Object> attributes = serializer.getFieldsAsDictionary(resource);
+      resourceRepresentation.put("attributes", attributes);
+    }
+
+    HashMap<String, Object> relationships = createRelationshipsFromResource(resource);
+    if (relationships != null) {
+      resourceRepresentation.put("relationships", relationships);
+    }
+
+    HashMap<String, Object> data = new HashMap<>();
+    data.put("data", resourceRepresentation);
+
+    return data;
+  }
+
+  public HashMap<String, Object> createRelationshipsFromResource(Resource resource) {
+    HashMap<String, Object> relations = serializer.getRelationships(resource);
+    HashMap<String, Object> relationships = new HashMap<>();
+
+    for (String relationshipName : relations.keySet()) {
+      Object relationObject = relations.get(relationshipName);
+      if (relationObject instanceof Resource) {
+        HashMap<String, Object> data = createDataFromJsonResource((Resource) relationObject, false);
+        if (data != null) {
+          relationships.put(relationshipName, data);
+        }
+      }
+
+      if (relationObject instanceof ArrayList) {
+        HashMap data = createDataFromJsonResources((List) relationObject, false);
+        if (data != null) {
+          relationships.put(relationshipName, data);
+        }
+      }
+    }
+
+    if (relationships.isEmpty()) {
+      relationships = null;
+    }
+
+    return relationships;
   }
 
   // helper
