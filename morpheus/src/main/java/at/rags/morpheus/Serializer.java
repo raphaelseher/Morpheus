@@ -27,13 +27,24 @@ public class Serializer {
    * @return hashMap of field names and values.
    */
   public HashMap<String, Object> getFieldsAsDictionary(Resource resource) {
-    HashMap<String, Object> fieldDict = new HashMap<>();
+    HashMap<String, Object> fieldDict = null;
 
     for (Field field : resource.getClass().getDeclaredFields()) {
       String fieldName = null;
 
       if (field.isAnnotationPresent(Relationship.class)) {
         continue;
+      }
+
+      Object fieldValue = null;
+      try {
+        field.setAccessible(true);
+        fieldValue = field.get(resource);
+        if (fieldValue == null) {
+          continue;
+        }
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
       }
 
       if (field.isAnnotationPresent(SerializedName.class)) {
@@ -44,12 +55,11 @@ public class Serializer {
         fieldName = field.getName();
       }
 
-      try {
-        field.setAccessible(true);
-        fieldDict.put(fieldName, field.get(resource));
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
+      if (fieldDict == null) {
+        fieldDict = new HashMap<>();
       }
+
+      fieldDict.put(fieldName, fieldValue);
     }
 
     return fieldDict;

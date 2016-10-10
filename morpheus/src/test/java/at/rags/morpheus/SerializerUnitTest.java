@@ -21,6 +21,7 @@ import at.rags.morpheus.TestResources.Author;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 /**
  * Created by raphaelseher on 16/09/16.
@@ -61,6 +62,19 @@ public class SerializerUnitTest {
 
     assertNotNull(map);
     assertEquals(checkMap.toString(), map.toString());
+  }
+
+  @Test
+  public void testGetFieldsAsDictionaryWithoutAttributes() {
+    Author author = new Author();
+    author.setId("id");
+
+    Map<String, Object> checkMap = new HashMap<>();
+    checkMap.put("id", "id");
+
+    Map<String, Object> map = serializer.getFieldsAsDictionary(author);
+
+    assertNull(map);
   }
 
   @Test
