@@ -23,6 +23,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -385,6 +386,36 @@ public class MapperUnitTest {
 
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(article, true);
+
+    assertEquals(output.toString(), checkData.toString());
+  }
+
+  @Test
+  public void testCreateDataFromJsonResourceWithLinks() {
+    Deserializer.registerResourceClass("authors", Author.class);
+
+    Author author = new Author();
+    author.setId("id");
+
+    Links links = new Links();
+    links.setSelfLink("self.com");
+    links.setRelated("related.com");
+    author.setLinks(links);
+
+    HashMap<String, Object> linkMap = new HashMap<>();
+    linkMap.put("self", "self.com");
+    linkMap.put("related", "related.com");
+
+    HashMap<String, Object> authorMap = new HashMap<>();
+    authorMap.put("id","id");
+    authorMap.put("type", "authors");
+    authorMap.put("links", linkMap);
+
+    HashMap<String, Object> checkData = new HashMap<>();
+    checkData.put("data", authorMap);
+
+    HashMap<String, Object> output = mapper
+        .createDataFromJsonResource(author, true);
 
     assertEquals(output.toString(), checkData.toString());
   }

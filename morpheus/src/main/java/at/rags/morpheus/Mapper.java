@@ -364,12 +364,19 @@ public class Mapper {
     resourceRepresentation.put("id", resource.getId());
     if (includeAttributes) {
       HashMap<String, Object> attributes = serializer.getFieldsAsDictionary(resource);
-      resourceRepresentation.put("attributes", attributes);
+      if (attributes != null) {
+        resourceRepresentation.put("attributes", attributes);
+      }
     }
 
     HashMap<String, Object> relationships = createRelationshipsFromResource(resource);
     if (relationships != null) {
       resourceRepresentation.put("relationships", relationships);
+    }
+
+    if (resource.getLinks() != null) {
+      resourceRepresentation.put("links",
+          createLinksFromResource(resource));
     }
 
     HashMap<String, Object> data = new HashMap<>();
