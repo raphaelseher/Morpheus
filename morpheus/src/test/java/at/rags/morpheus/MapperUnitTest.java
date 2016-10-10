@@ -425,4 +425,32 @@ public class MapperUnitTest {
 
     assertEquals(null, output);
   }
+
+  @Test
+  public void testCreateLinksFromResource() {
+    HashMap<String, Object> checkLinks = new HashMap<>();
+    checkLinks.put("self", "selflink.com");
+    checkLinks.put("related", "related.com");
+    checkLinks.put("first", "first.com");
+    checkLinks.put("last", "last.com");
+    checkLinks.put("prev", "prev.com");
+    checkLinks.put("next", "next.com");
+    checkLinks.put("about", "about.com");
+
+    Resource resource = new Resource();
+    Links links = new Links();
+    links.setSelfLink("selflink.com");
+    links.setRelated("related.com");
+    links.setFirst("first.com");
+    links.setLast("last.com");
+    links.setPrev("prev.com");
+    links.setNext("next.com");
+    links.setAbout("about.com");
+    resource.setLinks(links);
+
+    HashMap<String, Object> linksFromResource =
+        mapper.createLinksFromResource(resource);
+
+    assertEquals(linksFromResource, checkLinks);
+  }
 }

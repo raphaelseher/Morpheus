@@ -12,7 +12,7 @@ import android.os.Parcelable;
  */
 public class Links {
   private String selfLink;
-  private String related;
+  private String related; // TODO: related can also have a meta
   private String first;
   private String last;
   private String prev;

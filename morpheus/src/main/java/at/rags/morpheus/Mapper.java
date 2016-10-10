@@ -406,6 +406,38 @@ public class Mapper {
     return relationships;
   }
 
+  public HashMap<String, Object> createLinksFromResource(Resource resource) {
+    HashMap<String, Object> links = null;
+
+    Links resourceLinks = resource.getLinks();
+    if (resourceLinks != null) {
+      links = new HashMap<>();
+      if (resourceLinks.getSelfLink() != null) {
+        links.put("self", resourceLinks.getSelfLink());
+      }
+      if (resourceLinks.getRelated() != null) {
+        links.put("related", resourceLinks.getRelated());
+      }
+      if (resourceLinks.getFirst() != null) {
+        links.put("first", resourceLinks.getFirst());
+      }
+      if (resourceLinks.getLast() != null) {
+        links.put("last", resourceLinks.getLast());
+      }
+      if (resourceLinks.getPrev() != null) {
+        links.put("prev", resourceLinks.getPrev());
+      }
+      if (resourceLinks.getNext() != null) {
+        links.put("next", resourceLinks.getNext());
+      }
+      if (resourceLinks.getAbout() != null) {
+        links.put("about", resourceLinks.getAbout());
+      }
+    }
+
+    return links;
+  }
+
   // helper
 
   /**
