@@ -1,0 +1,34 @@
+{
+  "links": {
+    "self": "http://example.com/products",
+    "next": "http://example.com/products?page[site]=2",
+    "last": "http://example.com/products?page[site]=89"
+  },
+  "data": [{
+    "type": "products",
+    "id": 123456,
+    "attributes": {
+      "product-name-description": "Really fancy stuff",
+      "product-name": "Fancy new roboter",
+      "categories": ["roboter", "home", "tech"],
+      "price":999.75,
+      "in-stock":9,
+      "stores-availability":{
+        "Store 1":true,
+        "Store 2":true,
+        "Store 3":false},
+      "location":{
+        "lat":14.202323,
+        "lon":12.04995
+      },
+      "authors":[
+        {
+          "first-name":"raphael"
+        }
+      ]
+    },
+    "links": {
+      "self": "http://example.com/products/123456"
+    }
+  }]
+}

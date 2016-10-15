@@ -11,6 +11,8 @@ import at.rags.morpheus.Resource;
  * Created by raphaelseher on 08/03/16.
  */
 public class Product extends Resource {
+  @SerializedName("product-name-description")
+  private String nameDescription;
   @SerializedName("product-name")
   private String name;
   private List<String> categories;
@@ -21,6 +23,10 @@ public class Product extends Resource {
   private HashMap<String, Boolean> availability;
   private Location location;
   private List<Author> authors;
+
+  public String getNameDescription() {
+    return nameDescription;
+  }
 
   public String getName() {
     return name;

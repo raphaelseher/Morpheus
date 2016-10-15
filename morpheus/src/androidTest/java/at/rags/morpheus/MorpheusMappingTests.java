@@ -8,7 +8,6 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
@@ -246,6 +245,19 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertNull(jsonApiObject.getErrors().get(2).getSource().getParameter());
     assertEquals(jsonApiObject.getErrors().get(2).getTitle(), "The backend responded with an error");
     assertEquals(jsonApiObject.getErrors().get(2).getDetail(), "Reputation service not responding after three requests.");
+  }
+
+  @Test
+  public void testSubStringFieldNames() throws Exception {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("products", Product.class);
+
+    JsonApiObject jsonApiObject =
+        morpheus.parse(loadJSONFromAsset(R.raw.same_name_fields_product));
+    Product product = (Product) jsonApiObject.getResources().get(0);
+
+    assertEquals(product.getNameDescription(), "Really fancy stuff");
+    assertEquals(product.getName(), "Fancy new roboter");
   }
 
   private String loadJSONFromAsset(int file) {
