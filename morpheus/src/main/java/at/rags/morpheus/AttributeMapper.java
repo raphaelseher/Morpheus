@@ -1,10 +1,8 @@
 package at.rags.morpheus;
 
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
+import com.google.gson.JsonSyntaxException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,8 +55,8 @@ public class AttributeMapper {
       } else {
         mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
       }
-    } catch (JSONException e) {
-      Logger.debug("JSON attributes does not contain " + jsonFieldName);
+    } catch (IllegalArgumentException | JsonSyntaxException | JSONException e) {
+      Logger.debug("JSON attributes does not contain " + jsonFieldName+" "+e.getLocalizedMessage());
     }
   }
 
