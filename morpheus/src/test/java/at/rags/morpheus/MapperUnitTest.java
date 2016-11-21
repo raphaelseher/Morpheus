@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.util.ArraySet;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
@@ -31,9 +34,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by raphaelseher on 09/03/16.
- */
 public class MapperUnitTest {
 
   private Mapper mapper;
@@ -41,6 +41,7 @@ public class MapperUnitTest {
   @Before
   public void setup() {
     mapper = new Mapper();
+    Deserializer.setRegisteredClasses(new HashMap<String, Class>());
   }
 
   @Test
@@ -328,6 +329,7 @@ public class MapperUnitTest {
     HashMap output = mapper
         .createDataFromJsonResources((List)authors, true);
 
+    assertNotNull(output);
     assertEquals(output.toString(), checkData.toString());
   }
 
@@ -350,6 +352,7 @@ public class MapperUnitTest {
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(author, true);
 
+    assertNotNull(output);
     assertEquals(output.toString(), checkData.toString());
   }
 
@@ -387,6 +390,7 @@ public class MapperUnitTest {
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(article, true);
 
+    assertNotNull(output);
     assertEquals(output.toString(), checkData.toString());
   }
 
@@ -417,6 +421,7 @@ public class MapperUnitTest {
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(author, true);
 
+    assertNotNull(output);
     assertEquals(output.toString(), checkData.toString());
   }
 
