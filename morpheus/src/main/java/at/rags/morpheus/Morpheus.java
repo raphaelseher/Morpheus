@@ -26,7 +26,7 @@ public class Morpheus {
   }
 
   public Morpheus(AttributeMapper attributeMapper) {
-    mapper = new Mapper(new Deserializer(), attributeMapper);
+    mapper = new Mapper(new Deserializer(), new Serializer(), attributeMapper);
     Factory.setMapper(mapper);
   }
 
