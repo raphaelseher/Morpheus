@@ -12,7 +12,7 @@ ext {
     siteUrl = 'http://xamoom.github.io/Morpheus/'
     gitUrl = 'https://github.com/xamoom/Morpheus.git'
 
-    libraryVersion = '0.4.1'
+    libraryVersion = '0.4.2'
     developerId = 'xamoom-raphael'
     developerName = 'Raphael Seher'
     developerEmail = 'raphael@xamoom.com'
@@ -30,7 +30,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 5
-        versionName "0.4.1"
+        versionName "0.4.2"
     }
     buildTypes {
         release {
@@ -54,5 +54,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
 }
 
-//apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/bintrayv1.gradle'
