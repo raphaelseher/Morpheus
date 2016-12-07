@@ -19,8 +19,11 @@ public class Product extends Resource {
   private double price;
   @SerializedName("in-stock")
   private int inStock;
+  @SerializedName("string-int")
+  private int stringInt;
   @SerializedName("stores-availability")
   private HashMap<String, Boolean> availability;
+  private boolean available = false;
   private Location location;
   private List<Author> authors;
 
@@ -54,5 +57,13 @@ public class Product extends Resource {
 
   public List<Author> getAuthors() {
     return authors;
+  }
+
+  public int getStringInt() {
+    return stringInt;
+  }
+
+  public boolean isAvailable() {
+    return available;
   }
 }

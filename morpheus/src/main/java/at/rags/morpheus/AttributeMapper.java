@@ -3,10 +3,13 @@ package at.rags.morpheus;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -45,15 +48,21 @@ public class AttributeMapper {
    */
   public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
     try {
+      Gson gson = new Gson();
       if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
         List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
         mDeserializer.setField(jsonApiResource, field.getName(), list);
       } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
-        Gson gson = new Gson();
         Object obj = gson.fromJson(attributesJsonObject.get(jsonFieldName).toString(), field.getType());
         mDeserializer.setField(jsonApiResource, field.getName(), obj);
       } else {
-        mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
+        String valuesAsString = attributesJsonObject.get(jsonFieldName).toString();
+        if (field.getType() == String.class) {
+          mDeserializer.setField(jsonApiResource, field.getName(), valuesAsString);
+        } else {
+          Object obj = gson.fromJson(valuesAsString, field.getType());
+          mDeserializer.setField(jsonApiResource, field.getName(), obj);
+        }
       }
     } catch (IllegalArgumentException | JsonSyntaxException | JSONException e) {
       Logger.debug("JSON attributes does not contain " + jsonFieldName+" "+e.getLocalizedMessage());

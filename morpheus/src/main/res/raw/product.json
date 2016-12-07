@@ -12,6 +12,8 @@
       "categories": ["roboter", "home", "tech"],
       "price":999.75,
       "in-stock":9,
+      "string-int":"5",
+      "available":"true",
       "stores-availability":{
         "Store 1":true,
         "Store 2":true,
