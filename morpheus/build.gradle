@@ -52,5 +52,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/bintrayv1.gradle'
