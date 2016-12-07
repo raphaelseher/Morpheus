@@ -12,7 +12,7 @@ ext {
     siteUrl = 'http://xamoom.github.io/Morpheus/'
     gitUrl = 'https://github.com/xamoom/Morpheus.git'
 
-    libraryVersion = '0.4.2'
+    libraryVersion = '0.4.3'
     developerId = 'xamoom-raphael'
     developerName = 'Raphael Seher'
     developerEmail = 'raphael@xamoom.com'
@@ -30,7 +30,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 5
-        versionName "0.4.2"
+        versionName "0.4.3"
     }
     buildTypes {
         release {
