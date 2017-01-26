@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.lang.ref.SoftReference;
@@ -35,11 +38,21 @@ import static org.mockito.Mockito.when;
 public class MapperUnitTest {
 
   private Mapper mapper;
+  private Mapper newMapper;
+  private Deserializer mockDeserializer;
+  private Serializer mockSerializer;
+  private AttributeMapper mockAttributeMapper;
 
   @Before
   public void setup() {
     mapper = new Mapper();
     Deserializer.setRegisteredClasses(new HashMap<String, Class>());
+
+    mockDeserializer = Mockito.mock(Deserializer.class);
+    mockSerializer = Mockito.mock(Serializer.class);
+    mockAttributeMapper = Mockito.mock(AttributeMapper.class);
+
+    newMapper = new Mapper(mockDeserializer, mockSerializer, mockAttributeMapper);
   }
 
   @Test
@@ -321,14 +334,11 @@ public class MapperUnitTest {
     dataArray.add(authorMap);
     dataArray.add(authorMap);
 
-    HashMap<String, ArrayList> checkData = new HashMap<>();
-    checkData.put("data", dataArray);
-
-    HashMap output = mapper
+    ArrayList<HashMap<String, Object>> output = mapper
         .createDataFromJsonResources((List)authors, true);
 
     assertNotNull(output);
-    assertEquals(output.toString(), checkData.toString());
+    assertEquals(output.toString(), dataArray.toString());
   }
 
   @Test
@@ -344,14 +354,12 @@ public class MapperUnitTest {
     authorMap.put("type", "authors");
     authorMap.put("attributes", mapper.getSerializer().getFieldsAsDictionary(author));
 
-    HashMap<String, Object> checkData = new HashMap<>();
-    checkData.put("data", authorMap);
-
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(author, true);
 
     assertNotNull(output);
-    assertEquals(output.toString(), checkData.toString());
+    assertEquals(3, output.size());
+    assertEquals(output.toString(), authorMap.toString());
   }
 
   @Test
@@ -373,8 +381,11 @@ public class MapperUnitTest {
     article.setTags(null);
     article.setAuthor(author);
 
+    HashMap<String, Object> relationDataMap = new HashMap<>();
+    relationDataMap.put("data", mapper.createDataFromJsonResource(author, false));
+
     HashMap<String, Object> relationMap = new HashMap<>();
-    relationMap.put("author", mapper.createDataFromJsonResource(author, false));
+    relationMap.put("author", relationDataMap);
 
     HashMap<String, Object> articleMap = new HashMap<>();
     articleMap.put("id","articleId");
@@ -382,14 +393,12 @@ public class MapperUnitTest {
     articleMap.put("attributes", mapper.getSerializer().getFieldsAsDictionary(article));
     articleMap.put("relationships", relationMap);
 
-    HashMap<String, Object> checkData = new HashMap<>();
-    checkData.put("data", articleMap);
 
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(article, true);
 
     assertNotNull(output);
-    assertEquals(output.toString(), checkData.toString());
+    assertEquals(output.toString(), articleMap.toString());
   }
 
   @Test
@@ -413,14 +422,11 @@ public class MapperUnitTest {
     authorMap.put("type", "authors");
     authorMap.put("links", linkMap);
 
-    HashMap<String, Object> checkData = new HashMap<>();
-    checkData.put("data", authorMap);
-
     HashMap<String, Object> output = mapper
         .createDataFromJsonResource(author, true);
 
     assertNotNull(output);
-    assertEquals(output.toString(), checkData.toString());
+    assertEquals(authorMap.toString(), output.toString());
   }
 
   @Test
@@ -438,7 +444,10 @@ public class MapperUnitTest {
 
     HashMap<String, Object> authorMap = new HashMap<>();
 
-    authorMap.put("author", mapper.createDataFromJsonResource(author, false));
+    HashMap<String, Object> relationDataMap = new HashMap<>();
+    relationDataMap.put("data", mapper.createDataFromJsonResource(author, false));
+
+    authorMap.put("author", relationDataMap);
 
     HashMap<String, Object> output = mapper.createRelationshipsFromResource(article);
 
@@ -486,5 +495,45 @@ public class MapperUnitTest {
         mapper.createLinksFromResource(resource);
 
     assertEquals(linksFromResource, checkLinks);
+  }
+
+  @Test
+  public void testCreateIncluded() {
+    Deserializer.registerResourceClass("authors", Author.class);
+    Deserializer.registerResourceClass("articles", Article.class);
+
+    Author author = new Author();
+    author.setId("authorId");
+    author.setName("Hans");
+
+    ArrayList<Author> authors = new ArrayList<>();
+    authors.add(author);
+    authors.add(author);
+
+    Article article = new Article();
+    article.setId("articleId");
+    article.setTitle("Some title");
+    article.setAuthor(author);
+    article.setAuthors(authors);
+
+    HashMap<String, Object> relations = new HashMap<>();
+    relations.put("author", author);
+    relations.put("authors", authors);
+
+    ArrayList<HashMap<String, Object>> checkIncluded = new ArrayList<>();
+    HashMap<String, Object> authorData = new HashMap<>();
+    authorData.put("name", "Hans");
+    checkIncluded.add(authorData);
+
+    Mockito.stub(mockSerializer.getRelationships(eq(article))).toReturn(relations);
+    Mockito.stub(mockSerializer.getFieldsAsDictionary(eq(author))).toReturn(authorData);
+
+    ArrayList<HashMap<String, Object>> included = newMapper.createIncluded(article);
+
+    assertNotNull(included);
+    assertEquals(3, included.size());
+    assertEquals("authors", included.get(0).get("type"));
+    assertEquals("authorId", included.get(0).get("id"));
+    assertEquals(authorData, included.get(0).get("attributes"));
   }
 }

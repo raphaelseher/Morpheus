@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import at.rags.morpheus.Annotations.Relationship;
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
@@ -318,7 +319,8 @@ public class Mapper {
     return errors;
   }
 
-  public HashMap<String, ArrayList> createDataFromJsonResources(List<Resource> resources, boolean includeAttributes) {
+  public ArrayList<HashMap<String, Object>> createDataFromJsonResources(List<Resource> resources,
+                                                                           boolean includeAttributes) {
     String resourceName = null;
     try {
       resourceName = nameForResourceClass(resources.get(0).getClass());
@@ -326,8 +328,6 @@ public class Mapper {
       Logger.debug(e.getMessage());
       return null;
     }
-
-    HashMap<String, ArrayList> data = new HashMap<>();
 
     ArrayList<HashMap<String, Object>> dataArray = new ArrayList<>();
 
@@ -344,9 +344,7 @@ public class Mapper {
       dataArray.add(resourceRepresentation);
     }
 
-    data.put("data", dataArray);
-
-    return data;
+    return dataArray;
   }
 
   public HashMap<String, Object> createDataFromJsonResource(Resource resource,
@@ -379,10 +377,7 @@ public class Mapper {
           createLinksFromResource(resource));
     }
 
-    HashMap<String, Object> data = new HashMap<>();
-    data.put("data", resourceRepresentation);
-
-    return data;
+    return resourceRepresentation;
   }
 
   public HashMap<String, Object> createRelationshipsFromResource(Resource resource) {
@@ -394,14 +389,18 @@ public class Mapper {
       if (relationObject instanceof Resource) {
         HashMap<String, Object> data = createDataFromJsonResource((Resource) relationObject, false);
         if (data != null) {
-          relationships.put(relationshipName, data);
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", data);
+          relationships.put(relationshipName, dataObject);
         }
       }
 
       if (relationObject instanceof ArrayList) {
-        HashMap data = createDataFromJsonResources((List) relationObject, false);
-        if (data != null) {
-          relationships.put(relationshipName, data);
+        ArrayList dataArray = createDataFromJsonResources((List) relationObject, false);
+        if (dataArray != null) {
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", dataArray);
+          relationships.put(relationshipName, dataObject);
         }
       }
     }
@@ -444,6 +443,32 @@ public class Mapper {
 
     return links;
   }
+
+
+  public ArrayList<HashMap<String, Object>> createIncluded(Resource resource) {
+    HashMap<String, Object> relations = serializer.getRelationships(resource);
+    ArrayList<HashMap<String, Object>> includes = new ArrayList<>();
+
+    for (String relationshipName : relations.keySet()) {
+      Object relationObject = relations.get(relationshipName);
+      if (relationObject instanceof Resource) {
+        HashMap<String, Object> data = createDataFromJsonResource((Resource) relationObject, true);
+        if (data != null) {
+          includes.add(data);
+        }
+      }
+
+      if (relationObject instanceof ArrayList) {
+        ArrayList dataArray = createDataFromJsonResources((List) relationObject, true);
+        if (dataArray != null) {
+          includes.addAll(dataArray);
+        }
+      }
+    }
+
+    return includes;
+  }
+
 
   // helper
 
