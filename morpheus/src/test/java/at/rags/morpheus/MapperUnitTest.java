@@ -1,7 +1,5 @@
 package at.rags.morpheus;
 
-import android.util.ArraySet;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
