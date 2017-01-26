@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import at.rags.morpheus.Resources.Article;
@@ -247,6 +248,73 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertEquals(jsonApiObject.getErrors().get(2).getTitle(), "The backend responded with an error");
     assertEquals(jsonApiObject.getErrors().get(2).getDetail(), "Reputation service not responding after three requests.");
   }
+
+  @Test
+  public void testCreateJsonWithResource() {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("articles", Article.class);
+    Deserializer.registerResourceClass("people", Author.class);
+    Deserializer.registerResourceClass("comments", Comment.class);
+
+    String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[{\"id\":\"3\",\"type\":\"comments\"},{\"id\":\"3\",\"type\":\"comments\"}]},\"author\":{\"data\":{\"id\":\"2\",\"type\":\"people\"}}}}}";
+
+    Article article = new Article();
+    article.setId("1");
+    article.setTitle("Some title");
+
+    Author author = new Author();
+    author.setId("2");
+    author.setFirstName("Peter");
+    article.setAuthor(author);
+
+    Comment comment = new Comment();
+    comment.setId("3");
+    comment.setBody("body");
+
+    ArrayList<Comment> comments = new ArrayList<>();
+    comments.add(comment);
+    comments.add(comment);
+    article.setComments(comments);
+
+    JsonApiObject jsonApiObject = new JsonApiObject();
+    jsonApiObject.setResource(article);
+
+
+    String json = morpheus.createJson(jsonApiObject);
+
+
+    assertEquals(json, checkJson);
+  }
+
+  @Test
+  public void testCreateJsonWithResources() {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("articles", Article.class);
+    Deserializer.registerResourceClass("people", Author.class);
+    Deserializer.registerResourceClass("comments", Comment.class);
+
+    String checkJson = "{\"data\":[{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"},{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"}]}";
+
+    Article article = new Article();
+    article.setId("1");
+    article.setTitle("Some title");
+
+    ArrayList<Resource> articles = new ArrayList<>();
+    articles.add(article);
+    articles.add(article);
+
+    JsonApiObject jsonApiObject = new JsonApiObject();
+    jsonApiObject.setResources(articles);
+
+
+    String json = morpheus.createJson(jsonApiObject);
+
+
+    assertEquals(json, checkJson);
+  }
+
+
+  // helper
 
   private String loadJSONFromAsset(int file) {
     String json = null;

@@ -1,8 +1,14 @@
 package at.rags.morpheus;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Morpheus is a library to map JSON with the json:api specification format.
@@ -107,5 +113,26 @@ public class Morpheus {
     }
 
     return jsonApiObject;
+  }
+
+  public String createJson(JsonApiObject jsonApiObject) {
+    HashMap<String, Object> jsonMap = new HashMap<>();
+
+    if (jsonApiObject.getResource() != null) {
+      HashMap<String, Object> data = mapper.createDataFromJsonResource(jsonApiObject.getResource(), true);
+      if (data != null) {
+        jsonMap.put("data", data);
+      }
+    }
+
+    if (jsonApiObject.getResources() != null) {
+      ArrayList<HashMap<String, Object>> data = mapper.createDataFromJsonResources(jsonApiObject.getResources(), true);
+      if (data != null) {
+        jsonMap.put("data", data);
+      }
+    }
+
+    Gson gson = new Gson();
+    return gson.toJson(jsonMap);
   }
 }
