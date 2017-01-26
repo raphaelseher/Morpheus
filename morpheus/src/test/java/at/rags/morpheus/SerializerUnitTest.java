@@ -83,10 +83,15 @@ public class SerializerUnitTest {
     Author author = new Author();
     article.setAuthor(author);
 
+    ArrayList<Author> authors = new ArrayList<>();
+    authors.add(author);
+    authors.add(author);
+    article.setAuthors(authors);
+
 
     HashMap<String, Object> checkMap = new HashMap<>();
     checkMap.put("author", author);
-    checkMap.put("authors", null);
+    checkMap.put("authors", authors);
 
     HashMap<String, Object> output = serializer.getRelationships(article);
 
