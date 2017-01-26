@@ -88,12 +88,13 @@ public class SerializerUnitTest {
     authors.add(author);
     article.setAuthors(authors);
 
-
     HashMap<String, Object> checkMap = new HashMap<>();
     checkMap.put("author", author);
     checkMap.put("authors", authors);
 
+
     HashMap<String, Object> output = serializer.getRelationships(article);
+
 
     assertEquals(output.toString(), checkMap.toString());
   }

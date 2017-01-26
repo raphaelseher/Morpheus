@@ -35,4 +35,20 @@ public class Article extends Resource {
   public List<String> getTags() {
     return tags;
   }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setAuthor(Author author) {
+    this.author = author;
+  }
+
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
 }
