@@ -8,8 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Morpheus is a library to map JSON with the json:api specification format.
@@ -122,7 +120,7 @@ public class Morpheus {
     ArrayList<HashMap<String, Object>> included = new ArrayList();
 
     if (jsonApiObject.getResource() != null) {
-      HashMap<String, Object> data = mapper.createDataFromJsonResource(jsonApiObject.getResource(), true);
+      HashMap<String, Object> data = mapper.createData(jsonApiObject.getResource(), true);
       if (data != null) {
         jsonMap.put("data", data);
       }
@@ -133,7 +131,7 @@ public class Morpheus {
     }
 
     if (jsonApiObject.getResources() != null) {
-      ArrayList<HashMap<String, Object>> data = mapper.createDataFromJsonResources(jsonApiObject.getResources(), true);
+      ArrayList<HashMap<String, Object>> data = mapper.createData(jsonApiObject.getResources(), true);
       if (data != null) {
         jsonMap.put("data", data);
       }
