@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -115,13 +116,19 @@ public class Morpheus {
     return jsonApiObject;
   }
 
-  public String createJson(JsonApiObject jsonApiObject) {
+  public String createJson(JsonApiObject jsonApiObject, Boolean addIncluded) {
     HashMap<String, Object> jsonMap = new HashMap<>();
+
+    ArrayList<HashMap<String, Object>> included = new ArrayList();
 
     if (jsonApiObject.getResource() != null) {
       HashMap<String, Object> data = mapper.createDataFromJsonResource(jsonApiObject.getResource(), true);
       if (data != null) {
         jsonMap.put("data", data);
+      }
+
+      if (addIncluded) {
+        included.addAll(mapper.createIncluded(jsonApiObject.getResource()));
       }
     }
 
@@ -130,6 +137,16 @@ public class Morpheus {
       if (data != null) {
         jsonMap.put("data", data);
       }
+
+      if (addIncluded) {
+        for (Resource resource : jsonApiObject.getResources()) {
+          included.addAll(mapper.createIncluded(resource));
+        }
+      }
+    }
+
+    if (addIncluded) {
+      jsonMap.put("included", included);
     }
 
     Gson gson = new Gson();

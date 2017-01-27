@@ -256,7 +256,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[{\"id\":\"3\",\"type\":\"comments\"},{\"id\":\"3\",\"type\":\"comments\"}]},\"author\":{\"data\":{\"id\":\"2\",\"type\":\"people\"}}}}}";
+    String checkJson = "{\"included\":[{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"first-name\":\"Peter\"},\"id\":\"2\",\"type\":\"people\"}],\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[{\"id\":\"3\",\"type\":\"comments\"},{\"id\":\"3\",\"type\":\"comments\"}]},\"author\":{\"data\":{\"id\":\"2\",\"type\":\"people\"}}}}}";
 
     Article article = new Article();
     article.setId("1");
@@ -280,7 +280,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     jsonApiObject.setResource(article);
 
 
-    String json = morpheus.createJson(jsonApiObject);
+    String json = morpheus.createJson(jsonApiObject, true);
 
 
     assertEquals(json, checkJson);
@@ -307,7 +307,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     jsonApiObject.setResources(articles);
 
 
-    String json = morpheus.createJson(jsonApiObject);
+    String json = morpheus.createJson(jsonApiObject, true);
 
 
     assertEquals(json, checkJson);
