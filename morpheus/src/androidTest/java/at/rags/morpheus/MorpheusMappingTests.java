@@ -307,7 +307,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     jsonApiObject.setResources(articles);
 
 
-    String json = morpheus.createJson(jsonApiObject, true);
+    String json = morpheus.createJson(jsonApiObject, false);
 
 
     assertEquals(json, checkJson);
