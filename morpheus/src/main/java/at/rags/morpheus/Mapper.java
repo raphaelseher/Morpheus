@@ -351,6 +351,11 @@ public class Mapper {
         resourceRepresentation.put("attributes", attributes);
       }
 
+      HashMap<String, Object> relationships = createRelationships(resource);
+      if (relationships != null) {
+        resourceRepresentation.put("relationships", relationships);
+      }
+
       dataArray.add(resourceRepresentation);
     }
 

@@ -466,6 +466,55 @@ public class MapperUnitTest {
   }
 
   @Test
+  public void testCreateRelationshipsFromResources() {
+    Deserializer.registerResourceClass("authors", Author.class);
+    Deserializer.registerResourceClass("articles", Article.class);
+
+    Author author = new Author();
+    author.setId("authorId");
+    author.setName("Hans");
+
+    ArrayList<Author> authors = new ArrayList<>();
+    authors.add(author);
+    authors.add(author);
+
+    Article article = new Article();
+    article.setId("articleId");
+    article.setTitle("Some title");
+    article.setAuthor(author);
+    article.setAuthors(authors);
+
+    ArrayList<Resource> articles = new ArrayList<>();
+    articles.add(article);
+    articles.add(article);
+
+    HashMap<String, Object> relationships = new HashMap<>();
+    relationships.put("author", author);
+
+    Mockito.stub(mockSerializer.getFieldsAsDictionary(eq(author))).toReturn(null);
+    Mockito.stub(mockSerializer.getRelationships(eq(article))).toReturn(relationships);
+
+
+    ArrayList<HashMap<String, Object>> data = newMapper.createData(articles, false);
+
+
+    HashMap<String, Object> relationshipsMap =
+            (HashMap<String, Object>) data.get(0).get("relationships");
+    HashMap<String, Object> authorMap = (HashMap<String, Object>) relationshipsMap.get("author");
+    HashMap<String, Object> authorData =
+            (HashMap<String, Object>) authorMap.get("data");
+
+    assertNotNull(data);
+    assertNotNull(data.get(0).get("relationships"));
+    assertNotNull(relationshipsMap.get("author"));
+    assertNotNull(authorMap);
+    assertNotNull(authorData);
+    assertEquals(2, authorData.size());
+    assertEquals("authors", authorData.get("type"));
+    assertEquals("authorId", authorData.get("id"));
+  }
+
+  @Test
   public void testCreateLinksFromResource() {
     HashMap<String, Object> checkLinks = new HashMap<>();
     checkLinks.put("self", "selflink.com");
