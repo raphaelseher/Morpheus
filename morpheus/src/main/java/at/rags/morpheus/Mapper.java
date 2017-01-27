@@ -319,15 +319,14 @@ public class Mapper {
   }
 
   /**
-   * Create data json representation from resources.
+   * Create data representation from resources.
    * This will return the representation of the resources as list of maps. Every item contains
    * a map with the resource's id, type and relationships (if any). Attributes are only included
    * when 'includeAttributes' is true.
    *
-   * @param resources List of resources
-   * @param includeAttributes Add attributes map to representation
-   * @return List of maps, where every listItem is a data object with id, type,
-   * relationships (if any) and attributes (if includeAttributes)
+   * @param resources List of resources.
+   * @param includeAttributes Add attributes map to representation.
+   * @return ArrayList of Hashmaps<String, Object>.
    */
   public ArrayList<HashMap<String, Object>> createData(List<Resource> resources,
                                                        boolean includeAttributes) {
@@ -362,6 +361,15 @@ public class Mapper {
     return dataArray;
   }
 
+  /**
+   * Create data represenation from resource.
+   * This will return the repersentation of the resource. The map contains the id, type and
+   * relationships (if any). Attributes are only included when 'includeAttributes' is true.
+   *
+   * @param resource Resource to create data.
+   * @param includeAttributes Add attributes map to representation.
+   * @return Hashmaps<String, Object>.
+   */
   public HashMap<String, Object> createData(Resource resource,
                                             boolean includeAttributes) {
     String resourceName = null;
@@ -395,6 +403,15 @@ public class Mapper {
     return resourceRepresentation;
   }
 
+  /**
+   * Creates the relationships represenation from an resource.
+   * Will go through the relationships of a resource and return them as a map.
+   * The keys of the returned map will be the resource type of the relationship and the value a map
+   * of the data or a list of maps containing data of multiple relations.
+   *
+   * @param resource Resource to create relationships from.
+   * @return HashMap of related resource names with their data.
+   */
   public HashMap<String, Object> createRelationships(Resource resource) {
     HashMap<String, Object> relations = serializer.getRelationships(resource);
     HashMap<String, Object> relationships = new HashMap<>();
@@ -427,6 +444,12 @@ public class Mapper {
     return relationships;
   }
 
+  /**
+   * Returns a resources links as a map.
+   *
+   * @param resource Resource to get links from.
+   * @return Map of the links.
+   */
   public HashMap<String, Object> createLinks(Resource resource) {
     HashMap<String, Object> links = null;
 
@@ -459,7 +482,12 @@ public class Mapper {
     return links;
   }
 
-
+  /**
+   * Create the included as list of maps.
+   *
+   * @param resource Resource with relations.
+   * @return List of maps.
+   */
   public ArrayList<HashMap<String, Object>> createIncluded(Resource resource) {
     HashMap<String, Object> relations = serializer.getRelationships(resource);
     ArrayList<HashMap<String, Object>> includes = new ArrayList<>();

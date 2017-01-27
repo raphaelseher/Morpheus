@@ -114,6 +114,15 @@ public class Morpheus {
     return jsonApiObject;
   }
 
+  /**
+   * Get the serialized json from a JsonApiObject.
+   * Will parse resource(s) and relationships. If addIncluded is set to true, it will also
+   * add the relationships as included.
+   *
+   * @param jsonApiObject JsonApiObject to serialize.
+   * @param addIncluded Add includes for relationships.
+   * @return Json as String.
+   */
   public String createJson(JsonApiObject jsonApiObject, Boolean addIncluded) {
     HashMap<String, Object> jsonMap = new HashMap<>();
 
