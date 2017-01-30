@@ -222,6 +222,9 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertEquals(product.getAuthors().size(), 1);
     assertEquals(product.getAuthors().get(0).getClass(), Author.class);
     assertEquals(product.getAuthors().get(0).getFirstName(), "raphael");
+    assertEquals(product.getTimes().get(0), "9:14");
+    assertEquals(product.getTimes().get(1), "12 15");
+
   }
 
   @Test
@@ -368,7 +371,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
       is.close();
       json = new String(buffer, "UTF-8");
     } catch (IOException ex) {
-      ex.printStackTrace();
+      fail("Was not able to load raw resource: " + file);
     }
     return json;
   }

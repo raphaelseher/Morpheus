@@ -2,6 +2,8 @@ package at.rags.morpheus;
 
 import android.util.ArrayMap;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +60,7 @@ public class AttributeMapperUnitTest {
   public void testmapAttributeToObjectWithString() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
     Deserializer mockDeserializer = mock(Deserializer.class);
-    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer);
+    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer, new Gson());
     JSONArray jsonArray = mock(JSONArray.class);
 
     when(jsonObject.get("title")).thenReturn("My title");
@@ -76,7 +78,7 @@ public class AttributeMapperUnitTest {
   public void testmapAttributeToObjectJSONException() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
     Deserializer mockDeserializer = mock(Deserializer.class);
-    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer);
+    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer, new Gson());
     JSONArray jsonArray = mock(JSONArray.class);
 
     when(jsonArray.length()).thenReturn(3);
@@ -95,7 +97,7 @@ public class AttributeMapperUnitTest {
   public void testmapAttributeToObjectJSONArray() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
     Deserializer mockDeserializer = mock(Deserializer.class);
-    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer);
+    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer, new Gson());
     JSONArray jsonArray = mock(JSONArray.class);
 
     when(jsonArray.length()).thenReturn(3);
@@ -120,7 +122,7 @@ public class AttributeMapperUnitTest {
   public void testmapAttributeToObjectJSONObject() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
     Deserializer mockDeserializer = mock(Deserializer.class);
-    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer);
+    AttributeMapper attributeMapper = new AttributeMapper(mockDeserializer, new Gson());
     JSONObject mockJSONObject = mock(JSONObject.class);
     Iterator mockIter = mock(Iterator.class);
 
