@@ -1,10 +1,6 @@
 package at.rags.morpheus;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,17 +21,17 @@ import java.util.List;
  * You can create your own AttributeMapper and set it via {@link Morpheus#Morpheus(AttributeMapper)}.
  */
 public class AttributeMapper {
-  private Deserializer mDeserializer;
-  private Gson mGson;
+  private Deserializer deserializer;
+  private Gson gson;
 
   public AttributeMapper() {
-    mDeserializer = new Deserializer();
-    mGson = new Gson();
+    deserializer = new Deserializer();
+    gson = new Gson();
   }
 
   public AttributeMapper(Deserializer deserializer, Gson gson) {
-    mDeserializer = deserializer;
-    mGson = gson;
+    this.deserializer = deserializer;
+    this.gson = gson;
   }
 
   /**
@@ -69,13 +65,13 @@ public class AttributeMapper {
         Logger.debug(jsonFieldName + " is not an valid JSONArray.");
       }
 
-      mDeserializer.setField(jsonApiResource, field.getName(), list);
+      deserializer.setField(jsonApiResource, field.getName(), list);
 
     } else if (object.getClass() == JSONObject.class) {
-      Object obj = mGson.fromJson(object.toString(), field.getType());
-      mDeserializer.setField(jsonApiResource, field.getName(), obj);
+      Object obj = gson.fromJson(object.toString(), field.getType());
+      deserializer.setField(jsonApiResource, field.getName(), obj);
     } else {
-      mDeserializer.setField(jsonApiResource, field.getName(), object);
+      deserializer.setField(jsonApiResource, field.getName(), object);
     }
 
   }
@@ -113,7 +109,7 @@ public class AttributeMapper {
             obj = jsonObject.toString();
           } else {
             try {
-              obj = mGson.fromJson(jsonArray.get(i).toString(), fieldArgClass);
+              obj = gson.fromJson(jsonArray.get(i).toString(), fieldArgClass);
             } catch (JSONException e) {
               Logger.debug("JSONArray does not contain index " + i + ".");
             }
