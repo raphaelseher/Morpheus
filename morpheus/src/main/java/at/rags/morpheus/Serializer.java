@@ -44,7 +44,7 @@ public class Serializer {
           continue;
         }
       } catch (IllegalAccessException e) {
-        e.printStackTrace();
+        Logger.debug("Cannot access field: " + fieldName + ".");
       }
 
       if (field.isAnnotationPresent(SerializedName.class)) {
@@ -77,7 +77,7 @@ public class Serializer {
         try {
           relationships.put(relationship.value(), field.get(resource));
         } catch (IllegalAccessException e) {
-          e.printStackTrace();
+          Logger.debug("Cannot access field: " + field.getName() + ".");
         }
       }
     }
