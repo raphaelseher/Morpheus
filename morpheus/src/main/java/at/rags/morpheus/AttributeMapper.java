@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,21 +46,36 @@ public class AttributeMapper {
    * @param field Field that will be set.
    * @param jsonFieldName Name of the json-field in attributesJsonObject to get data from.
    */
-  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
+  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject,
+                                   Field field, String jsonFieldName) {
+
+    Object object = null;
     try {
-      if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-        List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
-        mDeserializer.setField(jsonApiResource, field.getName(), list);
-      } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
-        Gson gson = new Gson();
-        Object obj = gson.fromJson(attributesJsonObject.get(jsonFieldName).toString(), field.getType());
-        mDeserializer.setField(jsonApiResource, field.getName(), obj);
-      } else {
-        mDeserializer.setField(jsonApiResource, field.getName(), attributesJsonObject.get(jsonFieldName));
-      }
+      object = attributesJsonObject.get(jsonFieldName);
     } catch (JSONException e) {
       Logger.debug("JSON attributes does not contain " + jsonFieldName);
+      return;
     }
+
+    if (object instanceof JSONArray) {
+
+      List<Object> list = null;
+      try {
+        list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
+      } catch (JSONException e) {
+        Logger.debug(jsonFieldName + " is not an valid JSONArray.");
+      }
+
+      mDeserializer.setField(jsonApiResource, field.getName(), list);
+
+    } else if (object.getClass() == JSONObject.class) {
+      Gson gson = new Gson();
+      Object obj = gson.fromJson(object.toString(), field.getType());
+      mDeserializer.setField(jsonApiResource, field.getName(), obj);
+    } else {
+      mDeserializer.setField(jsonApiResource, field.getName(), object);
+    }
+
   }
 
   /**
@@ -77,15 +93,30 @@ public class AttributeMapper {
       Type[] fieldArgTypes = aType.getActualTypeArguments();
       for (Type fieldArgType : fieldArgTypes) {
         final Class fieldArgClass = (Class) fieldArgType;
-        System.out.println("fieldArgClass = " + fieldArgClass);
 
         for (int i = 0; jsonArray.length() > i; i++) {
           Object obj = null;
+          Object jsonObject = null;
+
           try {
-            obj = new Gson().fromJson(jsonArray.get(i).toString(), fieldArgClass);
+            jsonObject = jsonArray.get(i);
           } catch (JSONException e) {
             Logger.debug("JSONArray does not contain index " + i + ".");
+            continue;
           }
+
+          // if this is a String, it wont use gson because it can throw a malformed json exception
+          // that case happens if there is a String with ":" in it.
+          if (fieldArgClass == String.class) {
+            obj = jsonObject.toString();
+          } else {
+            try {
+              obj = new Gson().fromJson(jsonArray.get(i).toString(), fieldArgClass);
+            } catch (JSONException e) {
+              Logger.debug("JSONArray does not contain index " + i + ".");
+            }
+          }
+
           objectArrayList.add(obj);
         }
       }

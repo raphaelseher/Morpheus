@@ -218,6 +218,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertEquals(product.getAuthors().size(), 1);
     assertEquals(product.getAuthors().get(0).getClass(), Author.class);
     assertEquals(product.getAuthors().get(0).getFirstName(), "raphael");
+    assertNotNull(product.getTimes());
   }
 
   @Test
