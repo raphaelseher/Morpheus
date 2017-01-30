@@ -49,4 +49,32 @@ public class Product extends Resource {
   public List<Author> getAuthors() {
     return authors;
   }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setCategories(List<String> categories) {
+    this.categories = categories;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  public void setInStock(int inStock) {
+    this.inStock = inStock;
+  }
+
+  public void setAvailability(HashMap<String, Boolean> availability) {
+    this.availability = availability;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
+  }
+
+  public void setAuthors(List<Author> authors) {
+    this.authors = authors;
+  }
 }

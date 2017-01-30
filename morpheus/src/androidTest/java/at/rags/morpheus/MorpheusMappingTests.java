@@ -2,6 +2,7 @@ package at.rags.morpheus;
 
 import android.test.InstrumentationTestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -9,11 +10,14 @@ import org.junit.runners.JUnit4;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
 import at.rags.morpheus.Resources.Comment;
+import at.rags.morpheus.Resources.Location;
 import at.rags.morpheus.Resources.Product;
 
 @RunWith(JUnit4.class)
@@ -250,7 +254,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   }
 
   @Test
-  public void testCreateJsonWithResource() {
+  public void testCreateJsonWithResourceRelationsIncluded() {
     Morpheus morpheus = new Morpheus();
     Deserializer.registerResourceClass("articles", Article.class);
     Deserializer.registerResourceClass("people", Author.class);
@@ -287,7 +291,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
   }
 
   @Test
-  public void testCreateJsonWithResources() {
+  public void testCreateJsonWithResourcesRelations() {
     Morpheus morpheus = new Morpheus();
     Deserializer.registerResourceClass("articles", Article.class);
     Deserializer.registerResourceClass("people", Author.class);
@@ -305,6 +309,44 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
 
     JsonApiObject jsonApiObject = new JsonApiObject();
     jsonApiObject.setResources(articles);
+
+
+    String json = morpheus.createJson(jsonApiObject, false);
+
+
+    assertEquals(json, checkJson);
+  }
+
+  @Test
+  public void testCreateJsonAttributes() {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("products", Product.class);
+
+    String checkJson = "{\"data\":{\"attributes\":{\"stores-availability\":{\"there\":false,\"here\":true},\"price\":10.3,\"in-stock\":10,\"location\":{\"lat\":10.3,\"lon\":9.7},\"product-name\":\"robot\",\"categories\":[\"one\",\"two\"]},\"id\":\"10203\",\"type\":\"products\"}}";
+
+    List<String> categories = new ArrayList<>();
+    categories.add("one");
+    categories.add("two");
+
+    HashMap<String, Boolean> availability = new HashMap<>();
+    availability.put("here", true);
+    availability.put("there", false);
+
+    Location location = new Location();
+    location.setLat(10.3);
+    location.setLon(9.7);
+
+    Product product = new Product();
+    product.setId("10203");
+    product.setName("robot");
+    product.setCategories(categories);
+    product.setPrice(10.3);
+    product.setInStock(10);
+    product.setAvailability(availability);
+    product.setLocation(location);
+
+    JsonApiObject jsonApiObject = new JsonApiObject();
+    jsonApiObject.setResource(product);
 
 
     String json = morpheus.createJson(jsonApiObject, false);
