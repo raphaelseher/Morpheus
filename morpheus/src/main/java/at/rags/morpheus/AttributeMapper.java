@@ -26,13 +26,16 @@ import java.util.List;
  */
 public class AttributeMapper {
   private Deserializer mDeserializer;
+  private Gson mGson;
 
   public AttributeMapper() {
     mDeserializer = new Deserializer();
+    mGson = new Gson();
   }
 
-  public AttributeMapper(Deserializer deserializer) {
+  public AttributeMapper(Deserializer deserializer, Gson gson) {
     mDeserializer = deserializer;
+    mGson = gson;
   }
 
   /**
@@ -69,8 +72,7 @@ public class AttributeMapper {
       mDeserializer.setField(jsonApiResource, field.getName(), list);
 
     } else if (object.getClass() == JSONObject.class) {
-      Gson gson = new Gson();
-      Object obj = gson.fromJson(object.toString(), field.getType());
+      Object obj = mGson.fromJson(object.toString(), field.getType());
       mDeserializer.setField(jsonApiResource, field.getName(), obj);
     } else {
       mDeserializer.setField(jsonApiResource, field.getName(), object);
@@ -111,7 +113,7 @@ public class AttributeMapper {
             obj = jsonObject.toString();
           } else {
             try {
-              obj = new Gson().fromJson(jsonArray.get(i).toString(), fieldArgClass);
+              obj = mGson.fromJson(jsonArray.get(i).toString(), fieldArgClass);
             } catch (JSONException e) {
               Logger.debug("JSONArray does not contain index " + i + ".");
             }
