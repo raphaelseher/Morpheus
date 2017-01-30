@@ -327,7 +327,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
       is.close();
       json = new String(buffer, "UTF-8");
     } catch (IOException ex) {
-      ex.printStackTrace();
+      fail("Was not able to load raw resource: " + file);
     }
     return json;
   }
