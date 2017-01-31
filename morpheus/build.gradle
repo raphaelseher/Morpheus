@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+def versionString = "0.5.0"
+
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'Morpheus'
@@ -12,7 +14,7 @@ ext {
     siteUrl = 'http://xamoom.github.io/Morpheus/'
     gitUrl = 'https://github.com/xamoom/Morpheus.git'
 
-    libraryVersion = '0.4.1'
+    libraryVersion = versionString
     developerId = 'xamoom-raphael'
     developerName = 'Raphael Seher'
     developerEmail = 'raphael@xamoom.com'
@@ -29,8 +31,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 5
-        versionName "0.4.1"
+        versionCode 6
+        versionName versionString
     }
     buildTypes {
         release {
