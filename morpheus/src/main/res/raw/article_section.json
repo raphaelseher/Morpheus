@@ -1,0 +1,1 @@
+{"data":{"attributes":{"tags":["main","dev"],"title":"JSON API paints my bikeshed!"},"id":"1","type":"articles","relationships":{"comments":{"data":[{"id":"5","type":"comments"},{"id":"12","type":"comments"}]},"author":{"data":{"id":"9","type":"people"}}}}}

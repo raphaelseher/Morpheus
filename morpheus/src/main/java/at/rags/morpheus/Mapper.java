@@ -23,17 +23,20 @@ import at.rags.morpheus.Exceptions.NotExtendingResourceException;
  */
 public class Mapper {
 
-  private Deserializer mDeserializer;
-  private AttributeMapper mAttributeMapper;
+  private Deserializer deserializer;
+  private Serializer serializer;
+  private AttributeMapper attributeMapper;
 
   public Mapper() {
-    mDeserializer = new Deserializer();
-    mAttributeMapper = new AttributeMapper();
+    deserializer = new Deserializer();
+    serializer = new Serializer();
+    attributeMapper = new AttributeMapper();
   }
 
-  public Mapper(Deserializer deserializer, AttributeMapper attributeMapper) {
-    mDeserializer = deserializer;
-    mAttributeMapper = attributeMapper;
+  public Mapper(Deserializer deserializer, Serializer serializer, AttributeMapper attributeMapper) {
+    this.deserializer = deserializer;
+    this.serializer = serializer;
+    this.attributeMapper = attributeMapper;
   }
 
   //TODO map href and meta (http://jsonapi.org/format/#document-links)
@@ -94,7 +97,7 @@ public class Mapper {
    */
   public Resource mapId(Resource object, JSONObject jsonDataObject) throws NotExtendingResourceException {
     try {
-      return mDeserializer.setIdField(object, jsonDataObject.get("id"));
+      return deserializer.setIdField(object, jsonDataObject.get("id"));
     } catch (JSONException e) {
       Logger.debug("JSON data does not contain id.");
     }
@@ -132,7 +135,7 @@ public class Mapper {
         continue;
       }
 
-      mAttributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
+      attributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
     }
 
     return object;
@@ -169,7 +172,7 @@ public class Mapper {
 
         relationObject = matchIncludedToRelation(relationObject, included);
 
-        mDeserializer.setField(object, relationshipNames.get(relationship), relationObject);
+        deserializer.setField(object, relationshipNames.get(relationship), relationObject);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -182,7 +185,7 @@ public class Mapper {
 
         relationArray = matchIncludedToRelation(relationArray, included);
 
-        mDeserializer.setField(object, relationshipNames.get(relationship), relationArray);
+        deserializer.setField(object, relationshipNames.get(relationship), relationArray);
       } catch (JSONException e) {
         Logger.debug("JSON relationship does not contain data");
       }
@@ -304,7 +307,7 @@ public class Mapper {
       }
 
       try {
-        error.setMeta(mAttributeMapper.createMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
+        error.setMeta(attributeMapper.createMapFromJSONObject(errorJsonObject.getJSONObject("meta")));
       } catch (JSONException e) {
         Logger.debug("JSON object does not contain JSONObject meta");
       }
@@ -314,6 +317,201 @@ public class Mapper {
 
     return errors;
   }
+
+  /**
+   * Create data representation from resources.
+   * This will return the representation of the resources as list of maps. Every item contains
+   * a map with the resource's id, type and relationships (if any). Attributes are only included
+   * when 'includeAttributes' is true.
+   *
+   * @param resources List of resources.
+   * @param includeAttributes Add attributes map to representation.
+   * @return ArrayList of Hashmaps<String, Object>.
+   */
+  public ArrayList<HashMap<String, Object>> createData(List<Resource> resources,
+                                                       boolean includeAttributes) {
+    String resourceName = null;
+    try {
+      resourceName = nameForResourceClass(resources.get(0).getClass());
+    } catch (Exception e) {
+      Logger.debug(e.getMessage());
+      return null;
+    }
+
+    ArrayList<HashMap<String, Object>> dataArray = new ArrayList<>();
+
+    for (Resource resource : resources) {
+      HashMap<String, Object> attributes = serializer.getFieldsAsDictionary(resource);
+
+      HashMap<String, Object> resourceRepresentation = new HashMap<>();
+      resourceRepresentation.put("type", resourceName);
+      resourceRepresentation.put("id", resource.getId());
+      if (includeAttributes) {
+        resourceRepresentation.put("attributes", attributes);
+      }
+
+      HashMap<String, Object> relationships = createRelationships(resource);
+      if (relationships != null) {
+        resourceRepresentation.put("relationships", relationships);
+      }
+
+      dataArray.add(resourceRepresentation);
+    }
+
+    return dataArray;
+  }
+
+  /**
+   * Create data represenation from resource.
+   * This will return the repersentation of the resource. The map contains the id, type and
+   * relationships (if any). Attributes are only included when 'includeAttributes' is true.
+   *
+   * @param resource Resource to create data.
+   * @param includeAttributes Add attributes map to representation.
+   * @return Hashmaps<String, Object>.
+   */
+  public HashMap<String, Object> createData(Resource resource,
+                                            boolean includeAttributes) {
+    String resourceName = null;
+    try {
+      resourceName = nameForResourceClass(resource.getClass());
+    } catch (Exception e) {
+      Logger.debug(e.getMessage());
+      return null;
+    }
+
+    HashMap<String, Object> resourceRepresentation = new HashMap<>();
+    resourceRepresentation.put("type", resourceName);
+    resourceRepresentation.put("id", resource.getId());
+    if (includeAttributes) {
+      HashMap<String, Object> attributes = serializer.getFieldsAsDictionary(resource);
+      if (attributes != null) {
+        resourceRepresentation.put("attributes", attributes);
+      }
+    }
+
+    HashMap<String, Object> relationships = createRelationships(resource);
+    if (relationships != null) {
+      resourceRepresentation.put("relationships", relationships);
+    }
+
+    if (resource.getLinks() != null) {
+      resourceRepresentation.put("links",
+          createLinks(resource));
+    }
+
+    return resourceRepresentation;
+  }
+
+  /**
+   * Creates the relationships represenation from an resource.
+   * Will go through the relationships of a resource and return them as a map.
+   * The keys of the returned map will be the resource type of the relationship and the value a map
+   * of the data or a list of maps containing data of multiple relations.
+   *
+   * @param resource Resource to create relationships from.
+   * @return HashMap of related resource names with their data.
+   */
+  public HashMap<String, Object> createRelationships(Resource resource) {
+    HashMap<String, Object> relations = serializer.getRelationships(resource);
+    HashMap<String, Object> relationships = new HashMap<>();
+
+    for (String relationshipName : relations.keySet()) {
+      Object relationObject = relations.get(relationshipName);
+      if (relationObject instanceof Resource) {
+        HashMap<String, Object> data = createData((Resource) relationObject, false);
+        if (data != null) {
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", data);
+          relationships.put(relationshipName, dataObject);
+        }
+      }
+
+      if (relationObject instanceof ArrayList) {
+        ArrayList dataArray = createData((List) relationObject, false);
+        if (dataArray != null) {
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", dataArray);
+          relationships.put(relationshipName, dataObject);
+        }
+      }
+    }
+
+    if (relationships.isEmpty()) {
+      relationships = null;
+    }
+
+    return relationships;
+  }
+
+  /**
+   * Returns a resources links as a map.
+   *
+   * @param resource Resource to get links from.
+   * @return Map of the links.
+   */
+  public HashMap<String, Object> createLinks(Resource resource) {
+    HashMap<String, Object> links = null;
+
+    Links resourceLinks = resource.getLinks();
+    if (resourceLinks != null) {
+      links = new HashMap<>();
+      if (resourceLinks.getSelfLink() != null) {
+        links.put("self", resourceLinks.getSelfLink());
+      }
+      if (resourceLinks.getRelated() != null) {
+        links.put("related", resourceLinks.getRelated());
+      }
+      if (resourceLinks.getFirst() != null) {
+        links.put("first", resourceLinks.getFirst());
+      }
+      if (resourceLinks.getLast() != null) {
+        links.put("last", resourceLinks.getLast());
+      }
+      if (resourceLinks.getPrev() != null) {
+        links.put("prev", resourceLinks.getPrev());
+      }
+      if (resourceLinks.getNext() != null) {
+        links.put("next", resourceLinks.getNext());
+      }
+      if (resourceLinks.getAbout() != null) {
+        links.put("about", resourceLinks.getAbout());
+      }
+    }
+
+    return links;
+  }
+
+  /**
+   * Create the included as list of maps.
+   *
+   * @param resource Resource with relations.
+   * @return List of maps.
+   */
+  public ArrayList<HashMap<String, Object>> createIncluded(Resource resource) {
+    HashMap<String, Object> relations = serializer.getRelationships(resource);
+    ArrayList<HashMap<String, Object>> includes = new ArrayList<>();
+
+    for (String relationshipName : relations.keySet()) {
+      Object relationObject = relations.get(relationshipName);
+      if (relationObject instanceof Resource) {
+        HashMap<String, Object> data = createData((Resource) relationObject, true);
+        if (data != null) {
+          includes.add(data);
+        }
+      }
+
+      if (relationObject instanceof ArrayList) {
+        ArrayList dataArray = createData((List) relationObject, true);
+        if (dataArray != null) {
+          includes.addAll(dataArray);
+        }
+      }
+    }
+
+    return includes;
+  }
+
 
   // helper
 
@@ -342,13 +540,27 @@ public class Mapper {
     return relationNames;
   }
 
+  private String nameForResourceClass(Class clazz) throws Exception {
+     for (String key : Deserializer.getRegisteredClasses().keySet()) {
+      if (Deserializer.getRegisteredClasses().get(key) == clazz) {
+        return key;
+      }
+    }
+
+    throw new Exception("Class " + clazz.getSimpleName() + " not registered.");
+  }
+
   // getter
 
   public Deserializer getDeserializer() {
-    return mDeserializer;
+    return deserializer;
   }
 
   public AttributeMapper getAttributeMapper() {
-    return mAttributeMapper;
+    return attributeMapper;
+  }
+
+  public Serializer getSerializer() {
+    return serializer;
   }
 }

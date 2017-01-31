@@ -17,7 +17,7 @@ public class JsonApiObject {
 
   //getters & setters
 
-  public Object getResource() {
+  public Resource getResource() {
     return resource;
   }
 

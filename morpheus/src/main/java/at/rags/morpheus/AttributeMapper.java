@@ -1,15 +1,11 @@
 package at.rags.morpheus;
 
-
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,14 +21,17 @@ import java.util.List;
  * You can create your own AttributeMapper and set it via {@link Morpheus#Morpheus(AttributeMapper)}.
  */
 public class AttributeMapper {
-  private Deserializer mDeserializer;
+  private Deserializer deserializer;
+  private Gson gson;
 
   public AttributeMapper() {
-    mDeserializer = new Deserializer();
+    deserializer = new Deserializer();
+    gson = new Gson();
   }
 
-  public AttributeMapper(Deserializer deserializer) {
-    mDeserializer = deserializer;
+  public AttributeMapper(Deserializer deserializer, Gson gson) {
+    this.deserializer = deserializer;
+    this.gson = gson;
   }
 
   /**
@@ -46,27 +45,35 @@ public class AttributeMapper {
    * @param field Field that will be set.
    * @param jsonFieldName Name of the json-field in attributesJsonObject to get data from.
    */
-  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject, Field field, String jsonFieldName) {
+  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject,
+                                   Field field, String jsonFieldName) {
+
+    Object object = null;
     try {
-      Gson gson = new Gson();
-      if (attributesJsonObject.get(jsonFieldName).getClass() == JSONArray.class) {
-        List<Object> list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
-        mDeserializer.setField(jsonApiResource, field.getName(), list);
-      } else if (attributesJsonObject.get(jsonFieldName).getClass() == JSONObject.class) {
-        Object obj = gson.fromJson(attributesJsonObject.get(jsonFieldName).toString(), field.getType());
-        mDeserializer.setField(jsonApiResource, field.getName(), obj);
-      } else {
-        String valuesAsString = attributesJsonObject.get(jsonFieldName).toString();
-        if (field.getType() == String.class) {
-          mDeserializer.setField(jsonApiResource, field.getName(), valuesAsString);
-        } else {
-          Object obj = gson.fromJson(valuesAsString, field.getType());
-          mDeserializer.setField(jsonApiResource, field.getName(), obj);
-        }
-      }
-    } catch (IllegalArgumentException | JsonSyntaxException | JSONException e) {
-      Logger.debug("JSON attributes does not contain " + jsonFieldName+" "+e.getLocalizedMessage());
+      object = attributesJsonObject.get(jsonFieldName);
+    } catch (JSONException e) {
+      Logger.debug("JSON attributes does not contain " + jsonFieldName);
+      return;
     }
+
+    if (object instanceof JSONArray) {
+
+      List<Object> list = null;
+      try {
+        list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
+      } catch (JSONException e) {
+        Logger.debug(jsonFieldName + " is not an valid JSONArray.");
+      }
+
+      deserializer.setField(jsonApiResource, field.getName(), list);
+
+    } else if (object.getClass() == JSONObject.class) {
+      Object obj = gson.fromJson(object.toString(), field.getType());
+      deserializer.setField(jsonApiResource, field.getName(), obj);
+    } else {
+      deserializer.setField(jsonApiResource, field.getName(), object);
+    }
+
   }
 
   /**
@@ -84,15 +91,30 @@ public class AttributeMapper {
       Type[] fieldArgTypes = aType.getActualTypeArguments();
       for (Type fieldArgType : fieldArgTypes) {
         final Class fieldArgClass = (Class) fieldArgType;
-        System.out.println("fieldArgClass = " + fieldArgClass);
 
         for (int i = 0; jsonArray.length() > i; i++) {
           Object obj = null;
+          Object jsonObject = null;
+
           try {
-            obj = new Gson().fromJson(jsonArray.get(i).toString(), fieldArgClass);
+            jsonObject = jsonArray.get(i);
           } catch (JSONException e) {
             Logger.debug("JSONArray does not contain index " + i + ".");
+            continue;
           }
+
+          // if this is a String, it wont use gson because it can throw a malformed json exception
+          // that case happens if there is a String with ":" in it.
+          if (fieldArgClass == String.class) {
+            obj = jsonObject.toString();
+          } else {
+            try {
+              obj = gson.fromJson(jsonArray.get(i).toString(), fieldArgClass);
+            } catch (JSONException e) {
+              Logger.debug("JSONArray does not contain index " + i + ".");
+            }
+          }
+
           objectArrayList.add(obj);
         }
       }
@@ -102,7 +124,7 @@ public class AttributeMapper {
   }
 
   /**
-   * Will loop through JSONObject and return values as arrayMap.
+   * Will loop through JSONObject and return values as map.
    *
    * @param jsonObject JSONObject for meta.
    * @return HashMap with meta values.

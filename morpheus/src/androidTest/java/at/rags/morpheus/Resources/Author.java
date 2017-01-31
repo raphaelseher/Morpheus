@@ -29,4 +29,16 @@ public class Author extends Resource {
   public String getTwitterHandle() {
     return twitterHandle;
   }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public void setTwitterHandle(String twitterHandle) {
+    this.twitterHandle = twitterHandle;
+  }
 }

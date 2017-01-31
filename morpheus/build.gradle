@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+def versionString = "0.5.0"
+
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'Morpheus'
@@ -12,7 +14,7 @@ ext {
     siteUrl = 'http://xamoom.github.io/Morpheus/'
     gitUrl = 'https://github.com/xamoom/Morpheus.git'
 
-    libraryVersion = '0.4.3'
+    libraryVersion = versionString
     developerId = 'xamoom-raphael'
     developerName = 'Raphael Seher'
     developerEmail = 'raphael@xamoom.com'
@@ -23,14 +25,14 @@ ext {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 5
-        versionName "0.4.3"
+        targetSdkVersion 22
+        versionCode 6
+        versionName versionString
     }
     buildTypes {
         release {
@@ -44,11 +46,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'org.mockito:mockito-core:1.10.10'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.10'
+
     compile 'com.google.code.gson:gson:2.6.2'
 }
 

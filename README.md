@@ -6,12 +6,12 @@
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
 
-Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/index.html).
+Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/0.5.0/index.html).
 
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.4.3'
+ compile 'com.xamoom.android:morpheus:0.5.0'
  ```
 
 ## Usage
@@ -32,7 +32,7 @@ public class Article extends Resource {
   private List<Comment> comments;
 }
 ```
-Deserialize your data
+### Deserialize
 
 1. Create a Morpheus instance
 2. Register your resources
@@ -51,6 +51,18 @@ Article article = (Article)jsonApiObject.getResources().get(0);
 Log.v(TAG, "Article Id: " + article.getId())
 ```
 
+### Serialize
+
+```java
+Morpheus morpheus = new Morpheus();
+Deserializer.registerResourceClass("products", Product.class);
+
+JsonApiObject jsonApiObject = new JsonApiObject();
+jsonApiObject.setResource(product);
+
+String json = morpheus.createJson(jsonApiObject, false);
+```
+
 # Development status
 Morpheus can:
 
@@ -58,6 +70,7 @@ Morpheus can:
 * deserialize relationships
 * map includes to relationships
 * deserialize links, meta, errors
+* serialize resources with their relationships and includes
 
 # Data Attribute Mapping
 At the moment Morpheus maps
