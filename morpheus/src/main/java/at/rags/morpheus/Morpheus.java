@@ -1,6 +1,7 @@
 package at.rags.morpheus;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,7 +157,7 @@ public class Morpheus {
       jsonMap.put("included", included);
     }
 
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().serializeNulls().create();
     return gson.toJson(jsonMap);
   }
 }
