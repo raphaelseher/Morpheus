@@ -363,7 +363,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     Deserializer.registerResourceClass("people", Author.class);
     Deserializer.registerResourceClass("comments", Comment.class);
 
-    String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":[],\"author\":null}}}";
+    String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[]},\"author\":{\"data\":null}}}}";
 
     Article article = new Article();
     article.setId("1");
