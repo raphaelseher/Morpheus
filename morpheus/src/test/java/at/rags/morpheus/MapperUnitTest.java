@@ -9,10 +9,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.Article;
@@ -556,10 +558,12 @@ public class MapperUnitTest {
 
     assertNotNull(data);
     assertNotNull(data.get(0).get("relationships"));
-    assertNull(relationshipsMap.get("author"));
+    HashMap<String, Object> authorData = (HashMap<String, Object>) relationshipsMap.get("author");
+    assertNull(authorData.get("data"));
 
-    ArrayList<Object> relationAuthors = (ArrayList<Object>) relationshipsMap.get("authors");
-    assertEquals(0, relationAuthors.size());
+    HashMap<String, Object> relationAuthors = (HashMap<String, Object>) relationshipsMap.get("authors");
+    ArrayList<Object> relationData = (ArrayList<Object>) relationAuthors.get("data");
+    assertEquals(0, relationData.size());
   }
 
   @Test
