@@ -421,7 +421,9 @@ public class Mapper {
 
       if (relationObject instanceof Resource) {
         if (resource.getNullableRelationships().contains(relationshipName)) {
-          relationships.put(relationshipName, null);
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", null);
+          relationships.put(relationshipName, dataObject);
           continue;
         }
 
@@ -435,7 +437,9 @@ public class Mapper {
 
       if (relationObject instanceof ArrayList) {
         if (resource.getNullableRelationships().contains(relationshipName)) {
-          relationships.put(relationshipName, new ArrayList<Object>());
+          HashMap<String, Object> dataObject = new HashMap<>();
+          dataObject.put("data", new ArrayList<Object>());
+          relationships.put(relationshipName, dataObject);
           continue;
         }
 
