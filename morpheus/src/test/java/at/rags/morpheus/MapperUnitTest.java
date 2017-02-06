@@ -3,7 +3,6 @@ package at.rags.morpheus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -14,7 +13,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import at.rags.morpheus.Exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.Article;
@@ -22,6 +20,7 @@ import at.rags.morpheus.TestResources.Author;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
@@ -512,6 +511,55 @@ public class MapperUnitTest {
     assertEquals(2, authorData.size());
     assertEquals("authors", authorData.get("type"));
     assertEquals("authorId", authorData.get("id"));
+  }
+
+  @Test
+  public void testCreateRelationshipsNulling() {
+    Deserializer.registerResourceClass("authors", Author.class);
+    Deserializer.registerResourceClass("articles", Article.class);
+
+    Author author = new Author();
+    author.setId("authorId");
+    author.setName("Hans");
+
+    ArrayList<Author> authors = new ArrayList<>();
+    authors.add(author);
+    authors.add(author);
+
+    Article article = new Article();
+    article.setId("articleId");
+    article.setTitle("Some title");
+    article.setAuthor(author);
+    article.setAuthors(authors);
+
+    ArrayList<Resource> articles = new ArrayList<>();
+    articles.add(article);
+    articles.add(article);
+
+    HashMap<String, Object> relationships = new HashMap<>();
+    relationships.put("author", author);
+    relationships.put("authors", authors);
+
+    article.addRelationshipToNull("author");
+    article.addRelationshipToNull("authors");
+
+    Mockito.stub(mockSerializer.getFieldsAsDictionary(eq(author))).toReturn(null);
+    Mockito.stub(mockSerializer.getRelationships(eq(article))).toReturn(relationships);
+
+
+    ArrayList<HashMap<String, Object>> data = newMapper.createData(articles, false);
+
+
+    HashMap<String, Object> relationshipsMap =
+        (HashMap<String, Object>) data.get(0).get("relationships");
+
+
+    assertNotNull(data);
+    assertNotNull(data.get(0).get("relationships"));
+    assertNull(relationshipsMap.get("author"));
+
+    ArrayList<Object> relationAuthors = (ArrayList<Object>) relationshipsMap.get("authors");
+    assertEquals(0, relationAuthors.size());
   }
 
   @Test
