@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.1](https://github.com/xamoom/Morpheus/compare/v0.5.0...v0.5.1)
+
+* Added nulling relationhips to delete them
+
 ## [0.5.0](https://github.com/xamoom/Morpheus/compare/v0.4.3...v0.5.0)
 
 * Added serializing of objects
