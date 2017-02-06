@@ -2,7 +2,6 @@ package at.rags.morpheus;
 
 import android.test.InstrumentationTestCase;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -12,7 +11,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
@@ -358,6 +356,45 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertEquals(json, checkJson);
   }
 
+  @Test
+  public void testCreateJsonWithResourceRelationsNullify() {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("articles", Article.class);
+    Deserializer.registerResourceClass("people", Author.class);
+    Deserializer.registerResourceClass("comments", Comment.class);
+
+    String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":[],\"author\":null}}}";
+
+    Article article = new Article();
+    article.setId("1");
+    article.setTitle("Some title");
+
+    Author author = new Author();
+    author.setId("2");
+    author.setFirstName("Peter");
+    article.setAuthor(author);
+
+    Comment comment = new Comment();
+    comment.setId("3");
+    comment.setBody("body");
+
+    ArrayList<Comment> comments = new ArrayList<>();
+    comments.add(comment);
+    comments.add(comment);
+    article.setComments(comments);
+
+    article.addRelationshipToNull("author");
+    article.addRelationshipToNull("comments");
+
+    JsonApiObject jsonApiObject = new JsonApiObject();
+    jsonApiObject.setResource(article);
+
+
+    String json = morpheus.createJson(jsonApiObject, false);
+
+
+    assertEquals(json, checkJson);
+  }
 
   // helper
 
