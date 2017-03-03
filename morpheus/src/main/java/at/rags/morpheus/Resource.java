@@ -12,11 +12,11 @@ import java.util.HashMap;
  * }</pre>
  *
  * @see com.google.gson.annotations.SerializedName
- * @see at.rags.morpheus.Annotations.Relationship
+ * @see at.rags.morpheus.annotations.Relationship
  */
 public class Resource {
-  private String Id;
-  private Links links;
+  private String id;
+  private at.rags.morpheus.Links links;
   private HashMap<String, Object> meta;
 
   private ArrayList<String> nullableRelationships = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Resource {
     this.meta = meta;
   }
 
-  public Links getLinks() {
+  public at.rags.morpheus.Links getLinks() {
     return links;
   }
 
@@ -41,11 +41,11 @@ public class Resource {
   }
 
   public String getId() {
-    return Id;
+    return id;
   }
 
   public void setId(String id) {
-    Id = id;
+    this.id = id;
   }
 
   public ArrayList<String> getNullableRelationships() {

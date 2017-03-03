@@ -6,14 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import at.rags.morpheus.Annotations.Relationship;
-import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+import at.rags.morpheus.annotations.Relationship;
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
 
 /**
  * Mapper will map all different top-level members and will
@@ -46,8 +47,8 @@ public class Mapper {
    * @param linksJsonObject JSONObject from link.
    * @return Links with mapped values.
    */
-  public Links mapLinks(JSONObject linksJsonObject) {
-    Links links = new Links();
+  public at.rags.morpheus.Links mapLinks(JSONObject linksJsonObject) {
+    at.rags.morpheus.Links links = new at.rags.morpheus.Links();
     try {
       links.setSelfLink(linksJsonObject.getString("self"));
     } catch (JSONException e) {
@@ -151,7 +152,7 @@ public class Mapper {
    * @throws Exception when deserializer is not able to create instance.
    */
   public Resource mapRelations(Resource object, JSONObject jsonObject,
-                                       List<Resource> included) throws Exception {
+                               List<Resource> included) throws Exception {
     HashMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
 
     //going through relationship names annotated in Class

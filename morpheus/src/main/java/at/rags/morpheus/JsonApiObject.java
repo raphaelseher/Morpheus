@@ -1,10 +1,8 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
+import java.lang.*;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class JsonApiObject {
 
@@ -13,7 +11,7 @@ public class JsonApiObject {
   private List<Resource> included;
   private HashMap<String, Object> meta;
   private List<Error> errors;
-  private Links links;
+  private at.rags.morpheus.Links links;
 
   //getters & setters
 
@@ -57,7 +55,7 @@ public class JsonApiObject {
     this.errors = errors;
   }
 
-  public Links getLinks() {
+  public at.rags.morpheus.Links getLinks() {
     return links;
   }
 

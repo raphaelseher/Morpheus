@@ -1,4 +1,4 @@
-package at.rags.morpheus.Annotations;
+package at.rags.morpheus.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

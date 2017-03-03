@@ -1,4 +1,4 @@
-package at.rags.morpheus.Exceptions;
+package at.rags.morpheus.exceptions;
 
 /**
  * Created by raphaelseher on 09/03/16.

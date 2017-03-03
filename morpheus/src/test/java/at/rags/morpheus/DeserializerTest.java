@@ -1,12 +1,10 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
 import org.junit.Test;
 
 import java.util.HashMap;
 
-import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.FalseResource;
 import at.rags.morpheus.TestResources.InterfaceArticle;
 import at.rags.morpheus.TestResources.Article;

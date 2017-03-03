@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Factory to create and map {@link Resource}.
+ * Factory to create and map {@link at.rags.morpheus.Resource}.
  */
 public class Factory {
 
@@ -23,8 +23,8 @@ public class Factory {
    * @return Deserialized Object.
    * @throws Exception when deserializer is not able to create instance.
    */
-  public static Resource newObjectFromJSONObject(JSONObject dataObject, List<Resource> included) throws Exception {
-    Resource realObject = null;
+  public static at.rags.morpheus.Resource newObjectFromJSONObject(JSONObject dataObject, List<at.rags.morpheus.Resource> included) throws Exception {
+    at.rags.morpheus.Resource realObject = null;
 
     try {
       realObject = deserializer.createObjectFromString(getTypeFromJson(dataObject));
@@ -37,7 +37,7 @@ public class Factory {
     } catch (Exception e) {
       Logger.debug("JSON data does not contain id");
     }
-    
+
     try {
       realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
     } catch (Exception e) {
@@ -74,7 +74,7 @@ public class Factory {
    * @return List of deserialized objects.
    * @throws Exception when deserializer is not able to create instance.
    */
-  public static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included) throws Exception {
+  public static List<at.rags.morpheus.Resource> newObjectFromJSONArray(JSONArray dataArray, List<at.rags.morpheus.Resource> included) throws Exception {
     ArrayList<Resource> objects = new ArrayList<>();
 
     for (int i = 0; i < dataArray.length(); i++) {
@@ -114,10 +114,10 @@ public class Factory {
   }
 
   public static void setDeserializer(Deserializer deserializer) {
-    Factory.deserializer = deserializer;
+    at.rags.morpheus.Factory.deserializer = deserializer;
   }
 
   public static void setMapper(Mapper mapper) {
-    Factory.mapper = mapper;
+    at.rags.morpheus.Factory.mapper = mapper;
   }
 }

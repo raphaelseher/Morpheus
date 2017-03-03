@@ -1,19 +1,12 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
-import at.rags.morpheus.Annotations.Relationship;
+import at.rags.morpheus.annotations.Relationship;
 
 /**
  */

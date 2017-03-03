@@ -1,28 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
-def versionString = "0.5.2"
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'Morpheus'
-    publishedGroupId = 'com.xamoom.android'
-    libraryName = 'Morpheus'
-    artifact = 'morpheus'
-
-    libraryDescription = 'Morpheus is a JSONAPI deserializer for android that uses java reflection. You can define your own java classes to deserialize.'
-
-    siteUrl = 'http://xamoom.github.io/Morpheus/'
-    gitUrl = 'https://github.com/xamoom/Morpheus.git'
-
-    libraryVersion = versionString
-    developerId = 'xamoom-raphael'
-    developerName = 'Raphael Seher'
-    developerEmail = 'raphael@xamoom.com'
-
-    licenseName = 'The MIT License'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
-    allLicenses = ["MIT"]
-}
 
 android {
     compileSdkVersion 22
@@ -32,7 +10,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 22
         versionCode 6
-        versionName versionString
+        versionName "0.5.3"
     }
     buildTypes {
         release {
@@ -53,7 +31,35 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.10'
 
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "source"
+}
+
+publishing {
+    publications {
+        androidsdk(MavenPublication) {
+            groupId 'com.healthtap.androidsdk'
+            artifactId 'morpheus'
+            version android.defaultConfig.versionName
+            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/morpheus-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url "s3://healthtap-android.s3.amazonaws.com/repo"
+            credentials(AwsCredentials) {
+                accessKey AWS_ACCESS_KEY
+                secretKey AWS_SECRET_KEY
+            }
+        }
+    }
 }
 
 //apply from: 'https://raw.githubusercontent.com/xamoom-raphael/JCenter/master/installv1.gradle'

@@ -9,14 +9,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-import at.rags.morpheus.Exceptions.NotExtendingResourceException;
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.Article;
 import at.rags.morpheus.TestResources.Author;
 
