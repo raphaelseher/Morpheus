@@ -88,7 +88,7 @@ public class Deserializer {
     }
 
     try {
-      Field field = superClass.getDeclaredField("Id");
+      Field field = superClass.getDeclaredField("id");
       field.setAccessible(true);
       if (data instanceof String) {
         field.set(resourceObject, data);
@@ -98,7 +98,7 @@ public class Deserializer {
     } catch (NoSuchFieldException e) {
       Logger.debug("No field Id found. That should not happened.");
     } catch (IllegalAccessException e) {
-      Logger.debug("Could not access field Id");
+      Logger.debug("Could not access field id");
     }
 
     return resourceObject;
