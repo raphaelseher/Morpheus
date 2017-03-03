@@ -11,7 +11,7 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/0.5.1/i
 ## Install
 
  ```java
- compile 'com.xamoom.android:morpheus:0.5.2'
+ compile 'com.healthtap.androidsdk:morpheus:0.5.3'
  ```
 
 ## Usage
