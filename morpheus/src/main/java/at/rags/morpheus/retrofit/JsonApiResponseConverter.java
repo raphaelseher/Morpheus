@@ -11,9 +11,6 @@ import at.rags.morpheus.Morpheus;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-/**
- * Created by wuhaoouyang on 3/2/17.
- */
 
 class JsonApiResponseConverter<T> implements Converter<ResponseBody, T> {
 

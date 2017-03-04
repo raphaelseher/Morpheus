@@ -17,17 +17,18 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
- * Created by wuhaoouyang on 3/2/17.
+ * Retrofit adapter factory. Register all possible {@link Resource}
+ * classes by calling {@link JsonApiConverterFactory#create(Class[])}.
+ * List of resources must be defined as {@code List<Resource>}
  */
 
 public class JsonApiConverterFactory extends Converter.Factory {
 
     private Morpheus morpheus;
 
-    public static at.rags.morpheus.retrofit.JsonApiConverterFactory create() {
-        return new at.rags.morpheus.retrofit.JsonApiConverterFactory();
-    }
-
+    /**
+     * Register all possible types extending {@link Resource}
+     */
     public static at.rags.morpheus.retrofit.JsonApiConverterFactory create(Class<? extends Resource>... types) {
         if (types != null) {
             for (Class type : types) {
@@ -45,28 +46,17 @@ public class JsonApiConverterFactory extends Converter.Factory {
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        Log.d("JSONApi", "type: " + type + "\nclass: " + type.getClass());
+//        Log.d("JSONApi", "type: " + type + "\nclass: " + type.getClass());
         if (type instanceof Class && Resource.class.isAssignableFrom((Class<?>) type)) {
-//            Class<?> typeClass = (Class<?>) type;
-//            String typeName = typeClass.getAnnotation(JsonApiType.class).value();
-//            Deserializer.registerResourceClass(typeName, typeClass);
-//            Field[] fields = typeClass.getFields();
-//            if (fields != null) {
-//                for (Field field : fields) {
-//                    if (Resource.class.isAssignableFrom(field.getType())) {
-//                        registerResourceClass(field.getType());
-//                    }
-//                }
-//            }
-            Log.d("JSONApi", "JSONApi Resource" + type);
+//            Log.d("JSONApi", "JSONApi Resource" + type);
             return new JsonApiResponseConverter<>(morpheus, (Class<?>) type);
         } else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
-            Log.d("JSONApi", "raw: " + parameterizedType.getRawType());
-            Log.d("JSONApi", "parameterized: " + parameterizedType.getActualTypeArguments()[0]);
+//            Log.d("JSONApi", "raw: " + parameterizedType.getRawType());
+//            Log.d("JSONApi", "parameterized: " + parameterizedType.getActualTypeArguments()[0]);
             if (parameterizedType.getRawType() == List.class
                 && Resource.class.isAssignableFrom((Class<?>) parameterizedType.getActualTypeArguments()[0])) {
-                Log.d("JSONApi", "JSONApi list Resource: " + type);
+//                Log.d("JSONApi", "JSONApi list Resource: " + type);
                 return new JsonApiResponseConverter<>(morpheus, (Class<?>) parameterizedType.getRawType());
             }
         }
