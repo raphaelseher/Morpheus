@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import at.rags.morpheus.Deserializer;
+import at.rags.morpheus.JsonApiObject;
 import at.rags.morpheus.Morpheus;
 import at.rags.morpheus.Resource;
 import at.rags.morpheus.annotations.JsonApiType;
@@ -19,6 +20,7 @@ import retrofit2.Retrofit;
 /**
  * Retrofit adapter factory. Register all possible {@link Resource}
  * classes by calling {@link JsonApiConverterFactory#create(Class[])}.
+ * \n
  * List of resources must be defined as {@code List<Resource>}
  */
 
@@ -47,9 +49,13 @@ public class JsonApiConverterFactory extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
 //        Log.d("JSONApi", "type: " + type + "\nclass: " + type.getClass());
-        if (type instanceof Class && Resource.class.isAssignableFrom((Class<?>) type)) {
+        if (type instanceof Class) {
 //            Log.d("JSONApi", "JSONApi Resource" + type);
-            return new JsonApiResponseConverter<>(morpheus, (Class<?>) type);
+            if (Resource.class.isAssignableFrom((Class<?>) type)) {
+                return new JsonApiResponseConverter<>(morpheus, (Class<?>) type);
+            } else if (JsonApiObject.class.isAssignableFrom((Class<?>) type)) {
+                return new JsonApiResponseConverter<>(morpheus, (Class<?>) type);
+            }
         } else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
 //            Log.d("JSONApi", "raw: " + parameterizedType.getRawType());

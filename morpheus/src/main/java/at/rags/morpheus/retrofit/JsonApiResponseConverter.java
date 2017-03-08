@@ -8,6 +8,7 @@ import java.util.List;
 
 import at.rags.morpheus.JsonApiObject;
 import at.rags.morpheus.Morpheus;
+import at.rags.morpheus.Resource;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
@@ -36,8 +37,10 @@ class JsonApiResponseConverter<T> implements Converter<ResponseBody, T> {
             JsonApiObject jsonApiObject = morpheus.parse(sb.toString());
             if (List.class.isAssignableFrom(typeClass)) {
                 return (T) jsonApiObject.getResources();
-            } else {
+            } else if (Resource.class.isAssignableFrom(typeClass)) {
                 return (T) jsonApiObject.getResource();
+            } else {
+                return (T) jsonApiObject;
             }
         } catch (Exception e) {
             Log.d("JSONApi", "Failed parsing JsonApi response.", e);
