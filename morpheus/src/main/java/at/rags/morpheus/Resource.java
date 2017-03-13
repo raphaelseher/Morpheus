@@ -121,7 +121,7 @@ public class Resource {
                     } else if (boolean.class.isAssignableFrom(field.getType())) {
                         jsonObject.addProperty(serializedName.value(), field.getBoolean(src));
                     } else if (String.class.equals(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), field.get(src).toString());
+                        jsonObject.addProperty(serializedName.value(), "" + field.get(src));
                     } else {
                         jsonObject.add(serializedName.value(), context.serialize(field.get(src)));
                     }

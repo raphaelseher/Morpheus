@@ -35,7 +35,7 @@ public class Deserializer {
    * @throws IllegalAccessException Throws exception when not able to create instance of class.
    * @throws NotExtendingResourceException Throws exception when not able to create instance of class.
    */
-  public Resource createObjectFromString(String resourceName) throws InstantiationException, IllegalAccessException, NotExtendingResourceException {
+  Resource createObjectFromString(String resourceName) throws InstantiationException, IllegalAccessException, NotExtendingResourceException {
     Class objectClass = registeredClasses.get(resourceName);
     try {
       return (Resource) objectClass.newInstance();
@@ -56,7 +56,7 @@ public class Deserializer {
    * @param data Data to set.
    * @return Resource with or without field set
    */
-  public Resource setField(Resource resourceObject, String fieldName, Object data) {
+  Resource setField(Resource resourceObject, String fieldName, Object data) {
     Field field = null;
     try {
       field = resourceObject.getClass().getDeclaredField(fieldName);
@@ -79,7 +79,7 @@ public class Deserializer {
    * @return ResourceObject with set Id as String.
    * @throws NotExtendingResourceException when none of the superclasses are {@link Resource}.
    */
-  public Resource setIdField(Resource resourceObject, Object data) throws NotExtendingResourceException {
+  Resource setIdField(Resource resourceObject, Object data) throws NotExtendingResourceException {
     Class superClass = null;
     try {
       superClass = getMorpheusResourceSuperClass(resourceObject);
@@ -127,11 +127,11 @@ public class Deserializer {
     return superClass;
   }
 
-  public static HashMap<String, Class> getRegisteredClasses() {
+  static HashMap<String, Class> getRegisteredClasses() {
     return registeredClasses;
   }
 
-  public static void setRegisteredClasses(HashMap<String, Class> registeredClasses) {
+  static void setRegisteredClasses(HashMap<String, Class> registeredClasses) {
     at.rags.morpheus.Deserializer.registeredClasses = registeredClasses;
   }
 }

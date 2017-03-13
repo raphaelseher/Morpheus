@@ -2,6 +2,8 @@ package at.rags.morpheus.retrofit;
 
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
 import at.rags.morpheus.JsonApiObject;
 import at.rags.morpheus.Morpheus;
 import at.rags.morpheus.Resource;
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
@@ -25,6 +28,7 @@ class JsonApiResponseConverter<T> implements Converter<ResponseBody, T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T convert(ResponseBody value) throws IOException {
         BufferedReader bfr = new BufferedReader(value.charStream());
         StringBuilder sb = new StringBuilder();
@@ -42,7 +46,9 @@ class JsonApiResponseConverter<T> implements Converter<ResponseBody, T> {
             } else {
                 return (T) jsonApiObject;
             }
-        } catch (Exception e) {
+        } catch (JSONException e) {
+            Log.d("JSONApi", "Failed parsing JsonApi response.", e);
+        } catch (NotExtendingResourceException e) {
             Log.d("JSONApi", "Failed parsing JsonApi response.", e);
         }
         return null;
