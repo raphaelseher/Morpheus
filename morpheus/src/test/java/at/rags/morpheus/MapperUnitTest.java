@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import at.rags.morpheus.TestResources.ChildArticle;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.TestResources.Article;
 import at.rags.morpheus.TestResources.Author;
@@ -143,11 +145,10 @@ public class MapperUnitTest {
   @Test
   public void testMapAttributesMapping() throws Exception {
     JSONObject jsonObject = mock(JSONObject.class);
-    JSONArray jsonArray = mock(JSONArray.class);
     AttributeMapper mockAttributeMapper = mock(AttributeMapper.class);
     Mapper mapper = new Mapper(new Deserializer(), new Serializer(), mockAttributeMapper);
 
-    Article article = new Article();
+    ChildArticle article = new ChildArticle();
     article.setId("1");
 
     mapper.mapAttributes(article, jsonObject);
@@ -155,17 +156,17 @@ public class MapperUnitTest {
     ArgumentCaptor<Field> fieldArgumentCaptor = ArgumentCaptor.forClass(Field.class);
 
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), any(Field.class), eq("title"));
+        any(Class.class), any(JSONObject.class), any(Field.class), eq("title"));
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), fieldArgumentCaptor.capture(), eq("public"));
+        any(Class.class), any(JSONObject.class), fieldArgumentCaptor.capture(), eq("public"));
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), any(Field.class), eq("tags"));
+        any(Class.class), any(JSONObject.class), any(Field.class), eq("tags"));
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), any(Field.class), eq("map"));
+        any(Class.class), any(JSONObject.class), any(Field.class), eq("map"));
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), any(Field.class), eq("version"));
+        any(Class.class), any(JSONObject.class), any(Field.class), eq("version"));
     verify(mockAttributeMapper).mapAttributeToObject(Matchers.<Resource>anyObject(),
-        any(JSONObject.class), any(Field.class), eq("price"));
+        any(Class.class), any(JSONObject.class), any(Field.class), eq("price"));
 
     assertEquals(fieldArgumentCaptor.getValue().getName(), "publicStatus");
   }

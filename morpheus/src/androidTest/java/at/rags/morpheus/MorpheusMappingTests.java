@@ -2,6 +2,7 @@ package at.rags.morpheus;
 
 import android.test.InstrumentationTestCase;
 
+import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,9 +15,11 @@ import java.util.List;
 
 import at.rags.morpheus.Resources.Article;
 import at.rags.morpheus.Resources.Author;
+import at.rags.morpheus.Resources.ChildArticle;
 import at.rags.morpheus.Resources.Comment;
 import at.rags.morpheus.Resources.Location;
 import at.rags.morpheus.Resources.Product;
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
 
 @RunWith(JUnit4.class)
 public class MorpheusMappingTests extends InstrumentationTestCase {
@@ -81,6 +84,17 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     assertEquals(article.getMeta().get("test-meta"), "yes");
   }
 
+  @Test
+  public void testWithParentAttributes() throws NotExtendingResourceException, JSONException {
+    Morpheus morpheus = new Morpheus();
+    Deserializer.registerResourceClass("child_article", ChildArticle.class);
+    String jsonString = "{\"data\":{\"attributes\":{\"title\":\"Some title\", \"child\":\"a child\"},\"id\":\"1\",\"type\":\"child_article\"}}";
+    JsonApiObject jsonApiObject = morpheus.parse(jsonString);
+    assertNotNull(jsonApiObject.getResource());
+    ChildArticle childArticle = (ChildArticle) jsonApiObject.getResource();
+    assertEquals("Some title", childArticle.getTitle());
+    assertEquals("a child", childArticle.getChild());
+  }
 
   @Test
   public void testRelationship() throws Exception {

@@ -39,13 +39,13 @@ public class AttributeMapper {
    * JSONArrays will get mapped as {@literal List<Object>}.
    * JSONObject will get mapped as {@literal ArrayMap<String, Object>}.
    * Everything else will get mapped without changes.
-   *
    * @param jsonApiResource Object extended with {@link Resource} that will get the field set.
+   * @param objClass
    * @param attributesJsonObject {@link JSONObject} with json:api attributes object
    * @param field Field that will be set.
    * @param jsonFieldName Name of the json-field in attributesJsonObject to get data from.
    */
-  public void mapAttributeToObject(Resource jsonApiResource, JSONObject attributesJsonObject,
+  public void mapAttributeToObject(Resource jsonApiResource, Class<? extends Resource> objClass, JSONObject attributesJsonObject,
                                    Field field, String jsonFieldName) {
 
     Object object = null;
@@ -71,7 +71,7 @@ public class AttributeMapper {
       Object obj = gson.fromJson(object.toString(), field.getType());
       deserializer.setField(jsonApiResource, field.getName(), obj);
     } else {
-      deserializer.setField(jsonApiResource, field.getName(), object);
+      deserializer.setField(jsonApiResource, objClass, field.getName(), object);
     }
 
   }

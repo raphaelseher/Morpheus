@@ -98,37 +98,41 @@ public class Resource {
                     jsonObject.addProperty("type", type.value());
                 }
             }
-            Field[] fields = src.getClass().getDeclaredFields();
+            Class srcClass = src.getClass();
+            while (srcClass != Resource.class) {
+                Field[] fields = srcClass.getDeclaredFields();
 //            Log.d("JSONApi", "class:" + src.getClass());
-            for (Field field : fields) {
-                SerializedName serializedName = field.getAnnotation(SerializedName.class);
-                if (serializedName == null) {
-                    continue;
-                }
+                for (Field field : fields) {
+                    SerializedName serializedName = field.getAnnotation(SerializedName.class);
+                    if (serializedName == null) {
+                        continue;
+                    }
 //                Log.d("JSONApi", "SerializedName:" + serializedName.value());
 //                Log.d("JSONApi", "Type:" + field.getType());
-                boolean accessible = field.isAccessible();
-                field.setAccessible(true);
-                try {
-                    if (int.class == field.getType()) {
-                        jsonObject.addProperty(serializedName.value(), field.getInt(src));
-                    } else if (long.class.equals(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), field.getLong(src));
-                    } else if (float.class.isAssignableFrom(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), field.getFloat(src));
-                    } else if (double.class.isAssignableFrom(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), field.getDouble(src));
-                    } else if (boolean.class.isAssignableFrom(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), field.getBoolean(src));
-                    } else if (String.class.equals(field.getType())) {
-                        jsonObject.addProperty(serializedName.value(), "" + field.get(src));
-                    } else {
-                        jsonObject.add(serializedName.value(), context.serialize(field.get(src)));
+                    boolean accessible = field.isAccessible();
+                    field.setAccessible(true);
+                    try {
+                        if (int.class == field.getType()) {
+                            jsonObject.addProperty(serializedName.value(), field.getInt(src));
+                        } else if (long.class.equals(field.getType())) {
+                            jsonObject.addProperty(serializedName.value(), field.getLong(src));
+                        } else if (float.class.isAssignableFrom(field.getType())) {
+                            jsonObject.addProperty(serializedName.value(), field.getFloat(src));
+                        } else if (double.class.isAssignableFrom(field.getType())) {
+                            jsonObject.addProperty(serializedName.value(), field.getDouble(src));
+                        } else if (boolean.class.isAssignableFrom(field.getType())) {
+                            jsonObject.addProperty(serializedName.value(), field.getBoolean(src));
+                        } else if (String.class.equals(field.getType())) {
+                            jsonObject.addProperty(serializedName.value(), "" + field.get(src));
+                        } else {
+                            jsonObject.add(serializedName.value(), context.serialize(field.get(src)));
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } finally {
+                        field.setAccessible(accessible);
                     }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } finally {
-                    field.setAccessible(accessible);
+                    srcClass = srcClass.getSuperclass();
                 }
             }
             return jsonObject;

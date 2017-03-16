@@ -120,25 +120,34 @@ class Mapper {
             return object;
         }
 
-        for (Field field : object.getClass().getDeclaredFields()) {
-            // get the right attribute name
-            String jsonFieldName = field.getName();
-            boolean isRelation = false;
-            for (Annotation annotation : field.getAnnotations()) {
-                if (annotation.annotationType() == SerializedName.class) {
-                    SerializedName serializeName = (SerializedName) annotation;
-                    jsonFieldName = serializeName.value();
+        Class objClass = object.getClass();
+        Class superClass;
+        while(true) {
+            superClass = objClass.getSuperclass();
+            for (Field field : objClass.getDeclaredFields()) {
+                // get the right attribute name
+                String jsonFieldName = field.getName();
+                boolean isRelation = false;
+                for (Annotation annotation : field.getAnnotations()) {
+                    if (annotation.annotationType() == SerializedName.class) {
+                        SerializedName serializeName = (SerializedName) annotation;
+                        jsonFieldName = serializeName.value();
+                    }
+                    if (annotation.annotationType() == Relationship.class) {
+                        isRelation = true;
+                    }
                 }
-                if (annotation.annotationType() == Relationship.class) {
-                    isRelation = true;
+
+                if (isRelation) {
+                    continue;
                 }
-            }
 
-            if (isRelation) {
-                continue;
+                attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
             }
-
-            attributeMapper.mapAttributeToObject(object, attributesJsonObject, field, jsonFieldName);
+            if (superClass == Resource.class) {
+                break;
+            }
+            objClass = superClass;
         }
 
         return object;

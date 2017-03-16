@@ -57,17 +57,33 @@ public class Deserializer {
    * @return Resource with or without field set
    */
   Resource setField(Resource resourceObject, String fieldName, Object data) {
+    return setField(resourceObject, resourceObject.getClass(), fieldName, data);
+  }
+
+  /**
+   * Sets the field of the resourceObject with the data.
+   *
+   * @param resourceObject Object with field to be set.
+   * @param fieldName Name of the field.
+   * @param data Data to set.
+   * @return Resource with or without field set
+   */
+  Resource setField(Resource resourceObject, Class<?> objClass, String fieldName, Object data) {
     Field field = null;
     try {
-      field = resourceObject.getClass().getDeclaredField(fieldName);
+      field = objClass.getDeclaredField(fieldName);
+      boolean accessible = field.isAccessible();
       field.setAccessible(true);
-      field.set(resourceObject, data);
+      try {
+        field.set(resourceObject, data);
+      } catch (IllegalAccessException e) {
+        Logger.debug("Could not access " + field.getName() + " field");
+      } finally {
+        field.setAccessible(accessible);
+      }
     } catch (NoSuchFieldException e) {
       Logger.debug("Field " + fieldName + " not found.");
-    } catch (IllegalAccessException e) {
-      Logger.debug("Could not access " + field.getName() + " field");
     }
-
     return resourceObject;
   }
 

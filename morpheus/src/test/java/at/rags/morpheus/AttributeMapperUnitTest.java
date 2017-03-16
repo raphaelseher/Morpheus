@@ -22,6 +22,7 @@ import at.rags.morpheus.TestResources.Article;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -67,11 +68,11 @@ public class AttributeMapperUnitTest {
 
     Article article = new Article();
     Field field = Article.class.getDeclaredField("title");
-    attributeMapper.mapAttributeToObject(article, jsonObject, field, "title");
+    attributeMapper.mapAttributeToObject(article, null, jsonObject, field, "title");
 
     ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("title"), stringArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), any(Class.class), eq("title"), stringArgumentCaptor.capture());
   }
 
   @Test
@@ -90,7 +91,7 @@ public class AttributeMapperUnitTest {
 
     Article article = new Article();
     Field field = Article.class.getDeclaredField("tags");
-    attributeMapper.mapAttributeToObject(article, jsonObject, field, "tags");
+    attributeMapper.mapAttributeToObject(article, null, jsonObject, field, "tags");
   }
 
   @Test
@@ -109,7 +110,7 @@ public class AttributeMapperUnitTest {
 
     Article article = new Article();
     Field field = Article.class.getDeclaredField("tags");
-    attributeMapper.mapAttributeToObject(article, jsonObject, field, "tags");
+    attributeMapper.mapAttributeToObject(article, null, jsonObject, field, "tags");
 
     ArgumentCaptor<ArrayList> listArgumentCaptor = ArgumentCaptor.forClass(ArrayList.class);
 
@@ -136,7 +137,7 @@ public class AttributeMapperUnitTest {
 
     Article article = new Article();
     Field field = Article.class.getDeclaredField("map");
-    attributeMapper.mapAttributeToObject(article, jsonObject, field, "map");
+    attributeMapper.mapAttributeToObject(article, null, jsonObject, field, "map");
 
     ArgumentCaptor<ArrayMap> mapArgumentCaptor = ArgumentCaptor.forClass(ArrayMap.class);
 
