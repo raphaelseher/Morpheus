@@ -10,6 +10,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -29,7 +30,7 @@ import at.rags.morpheus.annotations.JsonApiType;
  * @see com.google.gson.annotations.SerializedName
  * @see at.rags.morpheus.annotations.Relationship
  */
-public class Resource {
+public class Resource implements Serializable {
     private String id;
     private at.rags.morpheus.Links links;
     private HashMap<String, Object> meta;
