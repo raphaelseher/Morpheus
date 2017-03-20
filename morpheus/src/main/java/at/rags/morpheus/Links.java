@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import java.io.Serializable;
+
 /**
  * Links object.
  *
@@ -7,7 +9,7 @@ package at.rags.morpheus;
  * @see Resource
  * @author kwaky
  */
-public class Links {
+public class Links implements Serializable {
   private String selfLink;
   private String related; // TODO: related can also have a meta
   private String first;
