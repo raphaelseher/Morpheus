@@ -114,7 +114,7 @@ public class AttributeMapperUnitTest {
 
     ArgumentCaptor<ArrayList> listArgumentCaptor = ArgumentCaptor.forClass(ArrayList.class);
 
-    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("tags"), listArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), Matchers.<Class<ArrayList>>anyObject(), eq("tags"), listArgumentCaptor.capture());
     assertTrue(listArgumentCaptor.getValue().get(0).equals("Tag1"));
     assertTrue(listArgumentCaptor.getValue().get(1).equals("Tag2"));
   }
@@ -141,7 +141,7 @@ public class AttributeMapperUnitTest {
 
     ArgumentCaptor<ArrayMap> mapArgumentCaptor = ArgumentCaptor.forClass(ArrayMap.class);
 
-    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), eq("map"), mapArgumentCaptor.capture());
+    verify(mockDeserializer).setField(Matchers.<Resource>anyObject(), Matchers.<Class<Article>>anyObject(), eq("map"), mapArgumentCaptor.capture());
 
     assertNotNull(mapArgumentCaptor);
   }

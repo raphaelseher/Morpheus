@@ -54,12 +54,12 @@ public class AttributeMapper {
         Object object = null;
         try {
             object = attributesJsonObject.get(jsonFieldName);
-            if (objClass.getName().contains("Basic")) {
-                Log.d("wuhao", object.getClass() + ":" + object.toString());
-            }
         } catch (JSONException e) {
             Logger.debug(attributesJsonObject.toString() + " does not contain " + jsonFieldName);
             return;
+        }
+        if (objClass == null) {
+            objClass = jsonApiResource.getClass();
         }
 
         if (object instanceof JSONArray) {
