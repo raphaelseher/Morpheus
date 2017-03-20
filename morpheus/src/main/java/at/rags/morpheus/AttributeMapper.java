@@ -53,7 +53,7 @@ public class AttributeMapper {
         try {
             object = attributesJsonObject.get(jsonFieldName);
         } catch (JSONException e) {
-            Logger.debug("JSON attributes does not contain " + jsonFieldName);
+            Logger.debug(attributesJsonObject.toString() + " does not contain " + jsonFieldName);
             return;
         }
 
