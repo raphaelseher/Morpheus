@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -52,6 +54,9 @@ public class AttributeMapper {
         Object object = null;
         try {
             object = attributesJsonObject.get(jsonFieldName);
+            if (objClass.getName().contains("Basic")) {
+                Log.d("wuhao", object.getClass() + ":" + object.toString());
+            }
         } catch (JSONException e) {
             Logger.debug(attributesJsonObject.toString() + " does not contain " + jsonFieldName);
             return;
@@ -66,11 +71,11 @@ public class AttributeMapper {
                 Logger.debug(jsonFieldName + " is not an valid JSONArray.");
             }
 
-            deserializer.setField(jsonApiResource, field.getName(), list);
+            deserializer.setField(jsonApiResource, objClass, field.getName(), list);
 
         } else if (object.getClass() == JSONObject.class) {
             Object obj = gson.fromJson(object.toString(), field.getType());
-            deserializer.setField(jsonApiResource, field.getName(), obj);
+            deserializer.setField(jsonApiResource, objClass, field.getName(), obj);
         } else if (JSONObject.NULL != object) {
             deserializer.setField(jsonApiResource, objClass, field.getName(), object);
         }

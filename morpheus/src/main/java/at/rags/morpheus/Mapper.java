@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
