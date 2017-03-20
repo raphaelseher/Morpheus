@@ -20,6 +20,7 @@ import at.rags.morpheus.Resources.BasicPerson;
 import at.rags.morpheus.Resources.ChatRoom;
 import at.rags.morpheus.Resources.ChatSession;
 import at.rags.morpheus.Resources.ChildArticle;
+import at.rags.morpheus.Resources.ClinicalQueueItem;
 import at.rags.morpheus.Resources.Comment;
 import at.rags.morpheus.Resources.Location;
 import at.rags.morpheus.Resources.Product;
@@ -105,6 +106,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     @Test
     public void testComplicatedModel() throws NotExtendingResourceException, JSONException {
         Morpheus morpheus = new Morpheus();
+        Deserializer.registerResourceClass(ClinicalQueueItem.class.getAnnotation(JsonApiType.class).value(), ClinicalQueueItem.class);
         Deserializer.registerResourceClass(ChatSession.class.getAnnotation(JsonApiType.class).value(), ChatSession.class);
         Deserializer.registerResourceClass(ChatRoom.class.getAnnotation(JsonApiType.class).value(), ChatRoom.class);
         Deserializer.registerResourceClass(BasicExpert.class.getAnnotation(JsonApiType.class).value(), BasicExpert.class);
@@ -118,6 +120,15 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertEquals("1272", chatSession.getChatRoom().getId());
         assertEquals("7999209", chatSession.getChatRoom().getPin());
         assertEquals("initiated", chatSession.getState());
+        assertEquals("Addiction medicine", chatSession.getExpert().getSpecialty());
+        assertEquals("Dr. Expert", chatSession.getExpert().getName().getFullName());
+
+        // Nested includes test
+        jsonApiObject = morpheus.parse(loadJSONFromAsset(R.raw.clinicalqueue));
+        assertNotNull(jsonApiObject.getResources());
+        assertTrue(jsonApiObject.getResources().get(0) instanceof ClinicalQueueItem);
+        ClinicalQueueItem clinicalqueue = (ClinicalQueueItem) jsonApiObject.getResources().get(0);
+        assertEquals("9552780", clinicalqueue.getChatSession().getChatRoom().getPin());
     }
 
     @Test

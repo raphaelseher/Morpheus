@@ -1,5 +1,7 @@
 package at.rags.morpheus.Resources;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -15,5 +17,13 @@ public class ChatRoom extends Resource implements Serializable {
 
     public String getPin() {
         return pin;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new GsonBuilder()
+            .registerTypeAdapter(ChatRoom.class, new ResourceSerializer<ChatRoom>())
+            .create();
+        return gson.toJson(this);
     }
 }

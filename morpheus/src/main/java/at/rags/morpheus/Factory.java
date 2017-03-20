@@ -1,12 +1,17 @@
 package at.rags.morpheus;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import at.rags.morpheus.annotations.Relationship;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.exceptions.ResourceCreationException;
 
@@ -102,7 +107,27 @@ class Factory {
         // Pass included second time to resolve nested relationships
         if (included == null) {
             for (Resource object : objects) {
-                mapper.matchIncludedToRelation(object, objects);
+                Field[] fields = object.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    if (field.getAnnotation(Relationship.class) == null) {
+                        continue;
+                    }
+                    boolean isAccessible = field.isAccessible();
+                    field.setAccessible(true);
+                    try {
+                        Resource relation = (Resource) field.get(object);
+                        if (relation == null) {
+                            continue;
+                        }
+                        Resource mappedObj = mapper.matchIncludedToRelation(relation, objects);
+                        if (mappedObj != object) {
+                            deserializer.setField(object, field.getName(), mappedObj);
+                        }
+                    } catch (IllegalAccessException e) {
+                    } finally {
+                        field.setAccessible(isAccessible);
+                    }
+                }
             }
         }
         return objects;

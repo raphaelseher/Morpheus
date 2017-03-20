@@ -71,7 +71,7 @@ public class AttributeMapper {
         } else if (object.getClass() == JSONObject.class) {
             Object obj = gson.fromJson(object.toString(), field.getType());
             deserializer.setField(jsonApiResource, field.getName(), obj);
-        } else if (!JSONObject.NULL.equals(object)) {
+        } else if (JSONObject.NULL != object) {
             deserializer.setField(jsonApiResource, objClass, field.getName(), object);
         }
 

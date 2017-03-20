@@ -9,6 +9,12 @@
             "id" : "12618847"
           }
         },
+        "expert" : {
+          "data" : {
+            "type" : "Expert",
+            "id" : "67789969"
+          }
+        },
         "chat_room" : {
           "data" : {
             "type" : "ChatRoom",
@@ -62,6 +68,31 @@
           "city" : "Palo Alto",
           "postcode" : "12435647"
         }
+      }
+    },
+    {
+      "type" : "Expert",
+      "id" : "67789969",
+      "attributes" : {
+        "gender" : null,
+        "photo" : {
+          "large" : "expert_photo",
+          "thumb" : null
+        },
+        "dob" : "1954-01-01",
+        "name" : {
+          "given_name" : "Expert",
+          "family_name" : "Dr.",
+          "middle_name" : null,
+          "full_name" : "Dr. Expert"
+        },
+        "primary_external_id" : null,
+        "location" : {
+          "state" : "CA",
+          "city" : "Palo Alto",
+          "postcode" : "12435647"
+        },
+        "specialty" : "Addiction medicine"
       }
     },
     {

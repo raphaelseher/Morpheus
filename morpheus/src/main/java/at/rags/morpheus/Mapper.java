@@ -144,7 +144,7 @@ class Mapper {
 
                 attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
             }
-            if (superClass == Resource.class) {
+            if (superClass == Resource.class || superClass == Object.class) {
                 break;
             }
             objClass = superClass;

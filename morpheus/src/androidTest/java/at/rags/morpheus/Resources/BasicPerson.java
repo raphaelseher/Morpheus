@@ -37,12 +37,4 @@ public class BasicPerson extends Resource implements Serializable {
         return dob;
     }
 
-    @Override
-    public String toString() {
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(BasicPerson.class, new ResourceSerializer<BasicPerson>())
-            .setPrettyPrinting()
-            .create();
-        return gson.toJson(this);
-    }
 }
