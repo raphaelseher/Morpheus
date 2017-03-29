@@ -2,11 +2,14 @@ package at.rags.morpheus.retrofit;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import at.rags.morpheus.AttributeMapper;
 import at.rags.morpheus.Deserializer;
 import at.rags.morpheus.JsonApiObject;
 import at.rags.morpheus.Morpheus;
@@ -32,6 +35,13 @@ public class JsonApiConverterFactory extends Converter.Factory {
      * Register all possible types extending {@link Resource}
      */
     public static at.rags.morpheus.retrofit.JsonApiConverterFactory create(Class<? extends Resource>... types) {
+        return create(new Gson(), types);
+    }
+
+    /**
+     * Register all possible types extending {@link Resource}
+     */
+    public static at.rags.morpheus.retrofit.JsonApiConverterFactory create(Gson gson, Class<? extends Resource>... types) {
         if (types != null) {
             for (Class type : types) {
                 if (Resource.class.isAssignableFrom(type)) {
@@ -39,11 +49,11 @@ public class JsonApiConverterFactory extends Converter.Factory {
                 }
             }
         }
-        return new at.rags.morpheus.retrofit.JsonApiConverterFactory();
+        return new at.rags.morpheus.retrofit.JsonApiConverterFactory(gson);
     }
 
-    private JsonApiConverterFactory() {
-        morpheus = new Morpheus();
+    private JsonApiConverterFactory(Gson gson) {
+        morpheus = new Morpheus(new AttributeMapper(new Deserializer(), gson));
     }
 
     @Override
