@@ -1,5 +1,8 @@
 package at.rags.morpheus;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +12,7 @@ import java.io.Serializable;
  * @see Resource
  * @author kwaky
  */
-public class Links implements Serializable {
+public class Links implements Serializable, Parcelable {
   private String selfLink;
   private String related; // TODO: related can also have a meta
   private String first;
@@ -20,6 +23,28 @@ public class Links implements Serializable {
 
   public Links() {
   }
+
+  protected Links(Parcel in) {
+    selfLink = in.readString();
+    related = in.readString();
+    first = in.readString();
+    last = in.readString();
+    prev = in.readString();
+    next = in.readString();
+    about = in.readString();
+  }
+
+  public static final Creator<Links> CREATOR = new Creator<Links>() {
+    @Override
+    public Links createFromParcel(Parcel in) {
+      return new Links(in);
+    }
+
+    @Override
+    public Links[] newArray(int size) {
+      return new Links[size];
+    }
+  };
 
   public String getSelfLink() {
     return selfLink;
@@ -75,5 +100,21 @@ public class Links implements Serializable {
 
   public void setAbout(String about) {
     this.about = about;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(selfLink);
+    dest.writeString(related);
+    dest.writeString(first);
+    dest.writeString(last);
+    dest.writeString(prev);
+    dest.writeString(next);
+    dest.writeString(about);
   }
 }

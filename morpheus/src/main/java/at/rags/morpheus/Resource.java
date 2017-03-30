@@ -1,5 +1,7 @@
 package at.rags.morpheus;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -16,6 +18,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import at.rags.morpheus.annotations.JsonApiType;
 
@@ -30,7 +33,10 @@ import at.rags.morpheus.annotations.JsonApiType;
  * @see com.google.gson.annotations.SerializedName
  * @see at.rags.morpheus.annotations.Relationship
  */
-public class Resource implements Serializable {
+public class Resource implements Serializable, Parcelable {
+    private static final byte FLAG_HAS_META = 1;
+    private static final byte FLAG_NO_META = 0;
+
     private String id;
     private at.rags.morpheus.Links links;
     private HashMap<String, Object> meta;
@@ -39,6 +45,29 @@ public class Resource implements Serializable {
 
     public Resource() {
     }
+
+    protected Resource(Parcel in) {
+        id = in.readString();
+        links = in.readParcelable(at.rags.morpheus.Links.class.getClassLoader());
+        byte hasMeta = in.readByte();
+        if (hasMeta == FLAG_HAS_META) {
+            meta = new HashMap<>();
+            meta.put(in.readString(), in.readSerializable());
+        }
+        nullableRelationships = in.createStringArrayList();
+    }
+
+    public static final Creator<Resource> CREATOR = new Creator<Resource>() {
+        @Override
+        public Resource createFromParcel(Parcel in) {
+            return new Resource(in);
+        }
+
+        @Override
+        public Resource[] newArray(int size) {
+            return new Resource[size];
+        }
+    };
 
     public HashMap<String, Object> getMeta() {
         return meta;
@@ -84,6 +113,29 @@ public class Resource implements Serializable {
         }
 
         nullableRelationships.add(relationshipName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeParcelable(links, flags);
+        if (meta != null) {
+            dest.writeByte(FLAG_HAS_META);
+            for (Map.Entry<String, Object> entry : meta.entrySet()) {
+                Object value = entry.getValue();
+                if (value instanceof Serializable) {
+                    dest.writeSerializable((Serializable) value);
+                }
+            }
+        } else {
+            dest.writeByte(FLAG_NO_META);
+        }
+        dest.writeStringList(nullableRelationships);
     }
 
     public static class ResourceSerializer<T> implements JsonSerializer<T> {
