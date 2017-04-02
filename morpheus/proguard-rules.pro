@@ -16,4 +16,9 @@
 #   public *;
 #}
 
--keep class at.rags.morpheus.* { *; }
+-dontobfuscate
+-dontoptimize
+
+-dontwarn at.rags.morpheus.*
+
+-keep class at.rags.morpheus.** { *; }
