@@ -146,7 +146,7 @@ public class Resource implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
         Resource that = (Resource) obj;
         return this.id.equals(that.id);
