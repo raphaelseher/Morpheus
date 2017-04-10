@@ -140,12 +140,11 @@ class Mapper {
                     }
                 }
 
-                if (isRelation) {
-                    continue;
+                if (!isRelation) {
+                    attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
                 }
-
-                attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
             }
+
             if (superClass == Resource.class || superClass == Object.class) {
                 break;
             }

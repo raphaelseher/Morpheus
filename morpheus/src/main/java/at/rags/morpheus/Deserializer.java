@@ -78,6 +78,8 @@ public class Deserializer {
                 field.set(resourceObject, data);
             } catch (IllegalAccessException e) {
                 Logger.debug("Could not access " + field.getName() + " field");
+            } catch (RuntimeException e) {
+                Logger.debug("Could not set " + field.getName() + " field");
             } finally {
                 field.setAccessible(accessible);
             }

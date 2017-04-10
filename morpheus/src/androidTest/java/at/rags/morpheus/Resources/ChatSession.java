@@ -17,6 +17,19 @@ public class ChatSession extends Resource implements Serializable {
     public static final String STATE_STARTED = "started";
     public static final String STATE_ENDED = "ended";
 
+    @Relationship("patient")
+    @SerializedName("patient")
+    private BasicPerson patient;
+    @Relationship("expert")
+    @SerializedName("expert")
+    private BasicExpert expert;
+    @Relationship("requested_expert")
+    @SerializedName("requested_expert")
+    private BasicExpert requestedExpert;
+    @Relationship("chat_room")
+    @SerializedName("chat_room")
+    private ChatRoom chatRoom;
+
     @SerializedName("start_time")
     private int startTime;
     @SerializedName("end_time")
@@ -33,15 +46,6 @@ public class ChatSession extends Resource implements Serializable {
     private String consultGeoCountry;
     @SerializedName("concierge_appointment_id")
     private String appointmentId;
-
-    @Relationship("patient")
-    private BasicPerson patient;
-    @Relationship("expert")
-    private BasicExpert expert;
-    @Relationship("requested_expert")
-    private BasicExpert requestedExpert;
-    @Relationship("chat_room")
-    private ChatRoom chatRoom;
 
     public String getState() {
         return state;
