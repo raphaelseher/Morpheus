@@ -51,6 +51,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertTrue(jsonApiObject.getResources().get(0).getClass() == Article.class);
         Article article = (Article) jsonApiObject.getResources().get(0);
         assertTrue(article.getId().equals("1"));
+        assertEquals("articles", article.getType());
         assertTrue(article.getTitle().equals("JSON API paints my bikeshed!"));
     }
 

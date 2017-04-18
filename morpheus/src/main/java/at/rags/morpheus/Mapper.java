@@ -111,6 +111,23 @@ class Mapper {
     }
 
     /**
+     * Map the Type from json to the object.
+     *
+     * @param object         Object of the class.
+     * @param jsonDataObject JSONObject of the dataNode.
+     * @return Object with mapped fields.
+     */
+    Resource mapType(Resource object, JSONObject jsonDataObject) {
+        try {
+            return deserializer.setTypeField(object, jsonDataObject.getString("type"));
+        } catch (JSONException e) {
+            Logger.debug("JSON data does not contain type.");
+        }
+
+        return object;
+    }
+
+    /**
      * Maps the attributes of json to the object.
      *
      * @param object               Object of the class.

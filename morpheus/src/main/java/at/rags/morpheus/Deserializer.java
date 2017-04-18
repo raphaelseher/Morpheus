@@ -122,6 +122,10 @@ public class Deserializer {
         return resourceObject;
     }
 
+    Resource setTypeField(Resource resourceObject, Object data) {
+        return setField(resourceObject, Resource.class, "type", data);
+    }
+
     /**
      * Returns the superclass if instance of {@link Resource}.
      *

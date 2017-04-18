@@ -36,6 +36,7 @@ import at.rags.morpheus.annotations.JsonApiType;
 public class Resource implements Serializable {
 
     private String id;
+    private String type;
     private at.rags.morpheus.Links links;
     private HashMap<String, Object> meta;
 
@@ -68,6 +69,14 @@ public class Resource implements Serializable {
         this.id = id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public ArrayList<String> getNullableRelationships() {
         return nullableRelationships;
     }
@@ -98,10 +107,7 @@ public class Resource implements Serializable {
             if (src instanceof Resource) {
                 Resource resource = (Resource) src;
                 jsonObject.addProperty("id", resource.getId());
-                JsonApiType type = src.getClass().getAnnotation(JsonApiType.class);
-                if (type != null) {
-                    jsonObject.addProperty("type", type.value());
-                }
+                jsonObject.addProperty("type", resource.getType());
             }
             Class srcClass = src.getClass();
 //            while (srcClass != null && srcClass != Resource.class) {

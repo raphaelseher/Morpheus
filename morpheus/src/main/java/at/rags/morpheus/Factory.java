@@ -53,6 +53,12 @@ class Factory {
         }
 
         try {
+            realObject = mapper.mapType(realObject, dataObject);
+        } catch (Exception e) {
+            Logger.debug("JSON data does not contain type");
+        }
+
+        try {
             realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
         } catch (Exception e) {
             Logger.debug("JSON data does not contain attributes");

@@ -204,6 +204,7 @@ public class MapperUnitTest {
 
     Author author = new Author();
     author.setId("1");
+    author.setType("author");
 
     when(mockDeserializer.createObjectFromString(anyString())).thenReturn(author);
     when(jsonObject.getJSONObject(eq("author"))).thenReturn(relationObject);
@@ -213,6 +214,8 @@ public class MapperUnitTest {
     when(authorObject.getString("type")).thenReturn("author");
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
     when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
+        any(JSONObject.class))).thenReturn(author);
+    when(mockDeserializer.setTypeField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author);
 
     Article article = new Article();
@@ -239,6 +242,7 @@ public class MapperUnitTest {
 
     Author author = new Author();
     author.setId("1");
+    author.setType("author");
     author.setName("Name");
 
     when(mockDeserializer.createObjectFromString(anyString())).thenReturn(author);
@@ -249,6 +253,8 @@ public class MapperUnitTest {
     when(authorObject.getString("type")).thenReturn("author");
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
     when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
+        any(JSONObject.class))).thenReturn(author);
+    when(mockDeserializer.setTypeField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author);
 
     Article article = new Article();
@@ -283,6 +289,7 @@ public class MapperUnitTest {
 
     Author author1 = new Author();
     author1.setId("1");
+    author1.setType("author");
 
     Author author2 = new Author();
     author2.setId("2");
@@ -296,6 +303,8 @@ public class MapperUnitTest {
     when(authorObjects.getJSONObject(1)).thenReturn(authorObject);
     when(authorObject.getJSONObject("links")).thenReturn(new JSONObject());
     when(mockDeserializer.setIdField(Matchers.<Resource>anyObject(),
+        any(JSONObject.class))).thenReturn(author1);
+    when(mockDeserializer.setTypeField(Matchers.<Resource>anyObject(),
         any(JSONObject.class))).thenReturn(author1);
 
     Article article = new Article();
