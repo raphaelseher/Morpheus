@@ -22,6 +22,7 @@ import at.rags.morpheus.Resources.ChatSession;
 import at.rags.morpheus.Resources.ChildArticle;
 import at.rags.morpheus.Resources.ClinicalQueueItem;
 import at.rags.morpheus.Resources.Comment;
+import at.rags.morpheus.Resources.Gender;
 import at.rags.morpheus.Resources.Location;
 import at.rags.morpheus.Resources.Product;
 import at.rags.morpheus.annotations.JsonApiType;
@@ -123,6 +124,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertEquals("initiated", chatSession.getState());
         assertEquals("Addiction medicine", chatSession.getExpert().getSpecialty());
         assertEquals("Dr. Expert", chatSession.getExpert().getName().getFullName());
+        assertEquals(Gender.MALE, chatSession.getPatient().getGender());
 
         // Nested includes test
         jsonApiObject = morpheus.parse(loadJSONFromAsset(R.raw.clinicalqueue));

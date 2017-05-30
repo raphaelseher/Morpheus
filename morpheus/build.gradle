@@ -4,13 +4,13 @@ apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 22
         versionCode 8
-        versionName "0.5.8"
+        versionName "0.5.9"
     }
     buildTypes {
         release {

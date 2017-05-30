@@ -17,7 +17,7 @@ public class BasicPerson extends Resource implements Serializable {
     @SerializedName("photo")
     private Photo photo;
     @SerializedName("gender")
-    private String gender;
+    private Gender gender;
     @SerializedName("dob")
     private String dob;
 
@@ -29,7 +29,7 @@ public class BasicPerson extends Resource implements Serializable {
         return photo;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 

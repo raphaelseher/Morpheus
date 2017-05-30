@@ -3,11 +3,16 @@ package at.rags.morpheus;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -15,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AttributeMapper is used to map the json:api attribute node to
@@ -77,6 +83,15 @@ public class AttributeMapper {
             Object obj = gson.fromJson(object.toString(), field.getType());
             deserializer.setField(jsonApiResource, objClass, field.getName(), obj);
         } else if (JSONObject.NULL != object) {
+            if (field.getType().isEnum()) {
+                JsonReader reader = gson.newJsonReader(new StringReader(object.toString()));
+                reader.setLenient(true);
+                try {
+                    object = gson.getAdapter(field.getType()).read(reader);
+                } catch (IOException e) {
+                    Logger.debug(jsonFieldName + " enum failed to read.");
+                }
+            }
             deserializer.setField(jsonApiResource, objClass, field.getName(), object);
         }
 

@@ -50,7 +50,7 @@
       "type" : "Person",
       "id" : "12618847",
       "attributes" : {
-        "gender" : null,
+        "gender" : "male",
         "photo" : {
           "large" : "https://webservices.healthtap.com/images/avatars/gallery/member14_medium.png",
           "thumb" : null
