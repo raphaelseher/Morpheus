@@ -9,13 +9,13 @@ env:
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
 
-before_script:
-  - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
+#before_script:
+#  - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
+#  - emulator -avd test -no-audio -no-window &
+#  - android-wait-for-emulator
 
 script:
-  - ./gradlew :morpheus:test :morpheus:connectedAndroidTest
+  - ./gradlew :morpheus:test # :morpheus:connectedAndroidTest
 
 android:
   components:
