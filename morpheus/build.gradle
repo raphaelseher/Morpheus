@@ -61,8 +61,12 @@ publishing {
         maven {
             url "s3://healthtap-android.s3.amazonaws.com/repo"
             credentials(AwsCredentials) {
-                accessKey AWS_ACCESS_KEY
-                secretKey AWS_SECRET_KEY
+                if (System.getenv("TRAVIS_CI")) {
+
+                } else {
+                    accessKey AWS_ACCESS_KEY
+                    secretKey AWS_SECRET_KEY
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=25.0.3
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
+    - TRAVIS_CI=1
 
 #before_script:
 #  - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
