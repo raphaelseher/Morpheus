@@ -2,7 +2,7 @@
 
 ##### NOTE: This is a customized version of original Morpheus
 
- [![Build Status](https://travis-ci.org/wuhao-ouyang/Morpheus?branch=master)](https://travis-ci.org/wuhao-ouyang/Morpheus)
+ [![Build Status](https://travis-ci.org/wuhao-ouyang/Morpheus.svg?branch=master)](https://travis-ci.org/wuhao-ouyang/Morpheus)
 
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
