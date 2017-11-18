@@ -1,4 +1,4 @@
-package at.rags.morpheusexample.JsonApiResources;
+package at.rags.morpheusexample.resources;
 
 import com.google.gson.annotations.SerializedName;
 

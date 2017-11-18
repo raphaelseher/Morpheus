@@ -5,10 +5,10 @@ import org.junit.Test;
 import java.util.HashMap;
 
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
-import at.rags.morpheus.TestResources.FalseResource;
-import at.rags.morpheus.TestResources.InterfaceArticle;
-import at.rags.morpheus.TestResources.Article;
-import at.rags.morpheus.TestResources.MultiExtendResource;
+import at.rags.morpheus.resources.FalseResource;
+import at.rags.morpheus.resources.InterfaceArticle;
+import at.rags.morpheus.resources.Article;
+import at.rags.morpheus.resources.MultiExtendResource;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

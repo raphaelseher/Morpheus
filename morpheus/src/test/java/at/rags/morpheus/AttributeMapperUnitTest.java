@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import at.rags.morpheus.TestResources.Article;
+import at.rags.morpheus.resources.Article;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

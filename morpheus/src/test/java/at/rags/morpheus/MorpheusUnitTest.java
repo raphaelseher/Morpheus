@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import at.rags.morpheus.TestResources.Author;
+import at.rags.morpheus.resources.Author;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

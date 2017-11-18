@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
@@ -15,10 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import at.rags.morpheus.TestResources.ChildArticle;
+import at.rags.morpheus.resources.ChildArticle;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
-import at.rags.morpheus.TestResources.Article;
-import at.rags.morpheus.TestResources.Author;
+import at.rags.morpheus.resources.Article;
+import at.rags.morpheus.resources.Author;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

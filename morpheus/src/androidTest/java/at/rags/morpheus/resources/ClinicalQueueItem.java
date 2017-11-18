@@ -1,7 +1,5 @@
-package at.rags.morpheus.Resources;
+package at.rags.morpheus.resources;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import at.rags.morpheus.Resource;

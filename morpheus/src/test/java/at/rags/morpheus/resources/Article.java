@@ -1,4 +1,4 @@
-package at.rags.morpheus.TestResources;
+package at.rags.morpheus.resources;
 
 import android.util.ArrayMap;
 

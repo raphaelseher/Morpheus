@@ -1,4 +1,4 @@
-package at.rags.morpheus.TestResources;
+package at.rags.morpheus.resources;
 
 import at.rags.morpheus.Resource;
 

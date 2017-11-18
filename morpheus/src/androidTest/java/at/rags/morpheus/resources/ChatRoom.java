@@ -1,4 +1,4 @@
-package at.rags.morpheus.Resources;
+package at.rags.morpheus.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

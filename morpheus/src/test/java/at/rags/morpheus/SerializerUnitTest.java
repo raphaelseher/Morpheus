@@ -2,7 +2,6 @@ package at.rags.morpheus;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.util.ArrayMap;
 
 import org.junit.Before;
@@ -11,13 +10,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import at.rags.morpheus.TestResources.Article;
-import at.rags.morpheus.TestResources.Author;
+import at.rags.morpheus.resources.Article;
+import at.rags.morpheus.resources.Author;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
