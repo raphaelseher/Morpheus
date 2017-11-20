@@ -1,7 +1,5 @@
 package at.rags.morpheus.retrofit;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.lang.annotation.Annotation;

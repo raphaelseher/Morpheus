@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.exceptions.ResourceCreationException;
@@ -67,7 +68,9 @@ public class Morpheus {
     //included
     try {
       JSONArray includedArray = jsonObject.getJSONArray("included");
-      jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
+      List<Resource> included = Factory.newObjectFromJSONArray(includedArray, null);
+      // Pass included second time to resolve nested relationships
+      jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, included));
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }

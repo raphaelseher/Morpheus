@@ -1,4 +1,4 @@
-package at.rags.morpheus.resources;
+package at.rags.morpheus.testresources;
 
 import com.google.gson.annotations.SerializedName;
 

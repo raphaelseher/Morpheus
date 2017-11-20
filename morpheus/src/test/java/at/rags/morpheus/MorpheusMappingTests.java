@@ -3,32 +3,39 @@ package at.rags.morpheus;
 import android.test.InstrumentationTestCase;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
+import org.skyscreamer.jsonassert.JSONAssert;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import at.rags.morpheus.resources.Article;
-import at.rags.morpheus.resources.Author;
-import at.rags.morpheus.resources.BasicExpert;
-import at.rags.morpheus.resources.BasicPerson;
-import at.rags.morpheus.resources.ChatRoom;
-import at.rags.morpheus.resources.ChatSession;
-import at.rags.morpheus.resources.ChildArticle;
-import at.rags.morpheus.resources.ClinicalQueueItem;
-import at.rags.morpheus.resources.Comment;
-import at.rags.morpheus.resources.Gender;
-import at.rags.morpheus.resources.Location;
-import at.rags.morpheus.resources.Product;
 import at.rags.morpheus.annotations.JsonApiType;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
+import at.rags.morpheus.testresources.Article;
+import at.rags.morpheus.testresources.Author;
+import at.rags.morpheus.testresources.BasicExpert;
+import at.rags.morpheus.testresources.BasicPerson;
+import at.rags.morpheus.testresources.ChatRoom;
+import at.rags.morpheus.testresources.ChatSession;
+import at.rags.morpheus.testresources.ChildArticle;
+import at.rags.morpheus.testresources.ClinicalQueueItem;
+import at.rags.morpheus.testresources.Comment;
+import at.rags.morpheus.testresources.Gender;
+import at.rags.morpheus.testresources.Location;
+import at.rags.morpheus.testresources.Product;
 
-@RunWith(JUnit4.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
 public class MorpheusMappingTests extends InstrumentationTestCase {
 
     @Test
@@ -46,7 +53,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.articles));
+            morpheus.parse(loadJSONFromResource("articles.json"));
 
         assertTrue(jsonApiObject.getResources().size() == 1);
         assertTrue(jsonApiObject.getResources().get(0).getClass() == Article.class);
@@ -64,7 +71,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertNotNull(jsonApiObject.getResource());
         assertTrue(jsonApiObject.getResource().getClass() == Article.class);
@@ -81,7 +88,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertNotNull(jsonApiObject.getResource());
         assertTrue(jsonApiObject.getResource().getClass() == Article.class);
@@ -106,7 +113,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     }
 
     @Test
-    public void testComplicatedModel() throws NotExtendingResourceException, JSONException {
+    public void testComplicatedModel() throws NotExtendingResourceException, JSONException, IOException {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass(ClinicalQueueItem.class.getAnnotation(JsonApiType.class).value(), ClinicalQueueItem.class);
         Deserializer.registerResourceClass(ChatSession.class.getAnnotation(JsonApiType.class).value(), ChatSession.class);
@@ -114,7 +121,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass(BasicExpert.class.getAnnotation(JsonApiType.class).value(), BasicExpert.class);
         Deserializer.registerResourceClass(BasicPerson.class.getAnnotation(JsonApiType.class).value(), BasicPerson.class);
 
-        JsonApiObject jsonApiObject = morpheus.parse(loadJSONFromAsset(R.raw.chatsession));
+        JsonApiObject jsonApiObject = morpheus.parse(loadJSONFromResource("chatsession.json"));
         assertNotNull(jsonApiObject.getResources());
         assertTrue(jsonApiObject.getResources().get(0) instanceof ChatSession);
         ChatSession chatSession = (ChatSession) jsonApiObject.getResources().get(0);
@@ -127,7 +134,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertEquals(Gender.MALE, chatSession.getPatient().getGender());
 
         // Nested includes test
-        jsonApiObject = morpheus.parse(loadJSONFromAsset(R.raw.clinicalqueue));
+        jsonApiObject = morpheus.parse(loadJSONFromResource("clinicalqueue.json"));
         assertNotNull(jsonApiObject.getResources());
         assertTrue(jsonApiObject.getResources().get(0) instanceof ClinicalQueueItem);
         ClinicalQueueItem clinicalqueue = (ClinicalQueueItem) jsonApiObject.getResources().get(0);
@@ -142,7 +149,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.articles));
+            morpheus.parse(loadJSONFromResource("articles.json"));
 
         assertTrue(jsonApiObject.getResources().size() == 1);
         assertTrue(jsonApiObject.getResources().get(0).getClass() == Article.class);
@@ -159,7 +166,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.articles));
+            morpheus.parse(loadJSONFromResource("articles.json"));
 
         assertTrue(jsonApiObject.getIncluded().size() == 3);
     }
@@ -172,7 +179,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertNotNull(jsonApiObject.getResource());
         Article article = (Article) jsonApiObject.getResource();
@@ -190,7 +197,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertEquals(jsonApiObject.getLinks().getSelfLink(), "http://example.com/articles");
         assertEquals(jsonApiObject.getLinks().getNext(), "http://example.com/articles?page[offset]=2");
@@ -211,7 +218,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertNotNull(jsonApiObject.getLinks());
         assertTrue(jsonApiObject.getLinks().getSelfLink().equals("http://example.com/articles"));
@@ -228,7 +235,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.articles));
+            morpheus.parse(loadJSONFromResource("articles.json"));
 
         assertNotNull(jsonApiObject.getMeta());
         assertTrue(jsonApiObject.getMeta().get("testmeta").equals("yes"));
@@ -242,7 +249,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("comments", Comment.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.article));
+            morpheus.parse(loadJSONFromResource("article.json"));
 
         assertNotNull(jsonApiObject.getLinks());
         Article article = (Article) jsonApiObject.getResource();
@@ -257,7 +264,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("products", Product.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.product));
+            morpheus.parse(loadJSONFromResource("product.json"));
 
         Product product = (Product) jsonApiObject.getResources().get(0);
 
@@ -283,7 +290,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass("products", Product.class);
 
         JsonApiObject jsonApiObject =
-            morpheus.parse(loadJSONFromAsset(R.raw.error));
+            morpheus.parse(loadJSONFromResource("error.json"));
 
         assertNotNull(jsonApiObject.getErrors());
         assertEquals(jsonApiObject.getErrors().get(0).getStatus(), "403");
@@ -307,13 +314,13 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     }
 
     @Test
-    public void testCreateJsonWithResourceRelationsIncluded() {
+    public void testCreateJsonWithResourceRelationsIncluded() throws JSONException {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass("articles", Article.class);
         Deserializer.registerResourceClass("people", Author.class);
         Deserializer.registerResourceClass("comments", Comment.class);
 
-        String checkJson = "{\"included\":[{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"first-name\":\"Peter\"},\"id\":\"2\",\"type\":\"people\"}],\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[{\"id\":\"3\",\"type\":\"comments\"},{\"id\":\"3\",\"type\":\"comments\"}]},\"author\":{\"data\":{\"id\":\"2\",\"type\":\"people\"}}}}}";
+        JSONObject checkJson = new JSONObject("{\"included\":[{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"body\":\"body\"},\"id\":\"3\",\"type\":\"comments\"},{\"attributes\":{\"first-name\":\"Peter\"},\"id\":\"2\",\"type\":\"people\"}],\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[{\"id\":\"3\",\"type\":\"comments\"},{\"id\":\"3\",\"type\":\"comments\"}]},\"author\":{\"data\":{\"id\":\"2\",\"type\":\"people\"}}}}}");
 
         Article article = new Article();
         article.setId("1");
@@ -337,20 +344,20 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         jsonApiObject.setResource(article);
 
 
-        String json = morpheus.createJson(jsonApiObject, true);
+        JSONObject json = new JSONObject(morpheus.createJson(jsonApiObject, true));
 
 
-        assertEquals(json, checkJson);
+        JSONAssert.assertEquals(json, checkJson, true);
     }
 
     @Test
-    public void testCreateJsonWithResourcesRelations() {
+    public void testCreateJsonWithResourcesRelations() throws JSONException {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass("articles", Article.class);
         Deserializer.registerResourceClass("people", Author.class);
         Deserializer.registerResourceClass("comments", Comment.class);
 
-        String checkJson = "{\"data\":[{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"},{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"}]}";
+        JSONObject checkJson = new JSONObject("{\"data\":[{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"},{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\"}]}");
 
         Article article = new Article();
         article.setId("1");
@@ -364,18 +371,18 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         jsonApiObject.setResources(articles);
 
 
-        String json = morpheus.createJson(jsonApiObject, false);
+        JSONObject json = new JSONObject(morpheus.createJson(jsonApiObject, false));
 
 
-        assertEquals(json, checkJson);
+        JSONAssert.assertEquals(json, checkJson, true);
     }
 
     @Test
-    public void testCreateJsonAttributes() {
+    public void testCreateJsonAttributes() throws JSONException {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass("products", Product.class);
 
-        String checkJson = "{\"data\":{\"attributes\":{\"stores-availability\":{\"there\":false,\"here\":true},\"price\":10.3,\"in-stock\":10,\"location\":{\"lat\":10.3,\"lon\":9.7},\"product-name\":\"robot\",\"categories\":[\"one\",\"two\"]},\"id\":\"10203\",\"type\":\"products\"}}";
+        JSONObject checkJson = new JSONObject("{\"data\":{\"attributes\":{\"stores-availability\":{\"there\":false,\"here\":true},\"price\":10.3,\"in-stock\":10,\"location\":{\"lat\":10.3,\"lon\":9.7},\"product-name\":\"robot\",\"categories\":[\"one\",\"two\"]},\"id\":\"10203\",\"type\":\"products\"}}");
 
         List<String> categories = new ArrayList<>();
         categories.add("one");
@@ -402,20 +409,19 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         jsonApiObject.setResource(product);
 
 
-        String json = morpheus.createJson(jsonApiObject, false);
+        JSONObject json = new JSONObject(morpheus.createJson(jsonApiObject, false));
 
-
-        assertEquals(json, checkJson);
+        JSONAssert.assertEquals(json, checkJson, true);
     }
 
     @Test
-    public void testCreateJsonWithResourceRelationsNullify() {
+    public void testCreateJsonWithResourceRelationsNullify() throws JSONException {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass("articles", Article.class);
         Deserializer.registerResourceClass("people", Author.class);
         Deserializer.registerResourceClass("comments", Comment.class);
 
-        String checkJson = "{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[]},\"author\":{\"data\":null}}}}";
+        JSONObject checkJson = new JSONObject("{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[]},\"author\":{\"data\":null}}}}");
 
         Article article = new Article();
         article.setId("1");
@@ -442,10 +448,10 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         jsonApiObject.setResource(article);
 
 
-        String json = morpheus.createJson(jsonApiObject, false);
+        JSONObject json = new JSONObject(morpheus.createJson(jsonApiObject, false));
 
 
-        assertEquals(json, checkJson);
+        JSONAssert.assertEquals(json, checkJson, true);
     }
 
     // helper
@@ -453,7 +459,7 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     private String loadJSONFromAsset(int file) {
         String json = null;
         try {
-            InputStream is = getInstrumentation().getContext().getResources().openRawResource(file);
+            InputStream is = RuntimeEnvironment.application.getResources().openRawResource(file);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -463,5 +469,15 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
             fail("Was not able to load raw resource: " + file);
         }
         return json;
+    }
+
+    private String loadJSONFromResource(String fileName) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(MorpheusMappingTests.class.getClassLoader().getResourceAsStream(fileName)));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        return sb.toString();
     }
 }

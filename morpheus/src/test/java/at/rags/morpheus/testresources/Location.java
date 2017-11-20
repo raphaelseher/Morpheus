@@ -1,4 +1,4 @@
-package at.rags.morpheus.resources;
+package at.rags.morpheus.testresources;
 
 /**
  * Created by raphaelseher on 22/04/16.

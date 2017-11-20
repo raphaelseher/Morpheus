@@ -1,10 +1,6 @@
 package at.rags.morpheus;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
@@ -20,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * AttributeMapper is used to map the json:api attribute node to

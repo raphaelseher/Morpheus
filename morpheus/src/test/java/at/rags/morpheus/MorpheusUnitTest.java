@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 import at.rags.morpheus.resources.Author;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import at.rags.morpheus.annotations.Relationship;
 import at.rags.morpheus.Resource;
+import at.rags.morpheus.annotations.Relationship;
 
 public class Article extends Resource {
 

@@ -19,7 +19,6 @@ import java.util.Iterator;
 
 import at.rags.morpheus.resources.Article;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;

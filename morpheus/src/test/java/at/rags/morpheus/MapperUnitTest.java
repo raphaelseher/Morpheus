@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import at.rags.morpheus.resources.ChildArticle;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.resources.Article;
 import at.rags.morpheus.resources.Author;
+import at.rags.morpheus.resources.ChildArticle;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -35,18 +35,16 @@ public class MapperUnitTest {
 
   private Mapper mapper;
   private Mapper newMapper;
-  private Deserializer mockDeserializer;
   private Serializer mockSerializer;
-  private AttributeMapper mockAttributeMapper;
 
   @Before
   public void setup() {
     mapper = new Mapper();
     Deserializer.setRegisteredClasses(new HashMap<String, Class>());
 
-    mockDeserializer = Mockito.mock(Deserializer.class);
+    Deserializer mockDeserializer = Mockito.mock(Deserializer.class);
     mockSerializer = Mockito.mock(Serializer.class);
-    mockAttributeMapper = Mockito.mock(AttributeMapper.class);
+    AttributeMapper mockAttributeMapper = Mockito.mock(AttributeMapper.class);
 
     newMapper = new Mapper(mockDeserializer, mockSerializer, mockAttributeMapper);
   }
