@@ -4,11 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.rags.morpheus.annotations.Relationship;
 import at.rags.morpheus.exceptions.NotExtendingResourceException;
 import at.rags.morpheus.exceptions.ResourceCreationException;
 
@@ -26,15 +24,17 @@ class Factory {
      * @param dataObject JSONObject from data
      * @param included   {@literal List<Resource>} from includes to automatic match them.
      * @return Deserialized Object.
-     * @throws ResourceCreationException when deserializer is not able to create instance.
+     * @throws ResourceCreationException     when deserializer is not able to create instance.
      * @throws NotExtendingResourceException when deserializer is not able to create instance.
      */
     static Resource newObjectFromJSONObject(JSONObject dataObject, List<at.rags.morpheus.Resource> included)
-        throws ResourceCreationException, NotExtendingResourceException{
+        throws ResourceCreationException, NotExtendingResourceException {
         at.rags.morpheus.Resource realObject = null;
 
+        if (dataObject == null || dataObject.isNull("type")) return null;
+        String type = dataObject.optString("type");
         try {
-            realObject = deserializer.createObjectFromString(getTypeFromJson(dataObject));
+            realObject = deserializer.createObjectFromString(type);
         } catch (IllegalAccessException e) {
             throw new ResourceCreationException(e);
         } catch (InstantiationException e) {
@@ -43,34 +43,25 @@ class Factory {
             throw e;
         }
 
-        try {
-            realObject = mapper.mapId(realObject, dataObject);
-        } catch (Exception e) {
-            Logger.debug("JSON data does not contain id");
-        }
-
-        try {
-            realObject = mapper.mapType(realObject, dataObject);
-        } catch (Exception e) {
-            Logger.debug("JSON data does not contain type");
-        }
-
+        if (realObject == null) return null;
+        realObject = mapper.mapId(realObject, dataObject);
+        realObject = mapper.mapType(realObject, dataObject);
         try {
             realObject = mapper.mapAttributes(realObject, dataObject.getJSONObject("attributes"));
-        } catch (Exception e) {
-            Logger.debug("JSON data does not contain attributes");
+        } catch (JSONException e) {
+            Logger.debug("JSON does not contain attributes");
         }
 
         try {
             realObject = mapper.mapRelations(realObject, dataObject.getJSONObject("relationships"), included);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             Logger.debug("JSON data does not contain relationships");
         }
 
         try {
             assert realObject != null;
             realObject.setMeta(mapper.getAttributeMapper().createMapFromJSONObject(dataObject.getJSONObject("meta")));
-        } catch (Exception e) {
+        } catch (JSONException e) {
             Logger.debug("JSON data does not contain meta");
         }
 
@@ -89,11 +80,11 @@ class Factory {
      * @param dataArray JSONArray of the data node.
      * @param included  {@literal List<Resource>} from includes to automatic match them.
      * @return List of deserialized objects.
-     * @throws ResourceCreationException when deserializer is not able to create instance.
+     * @throws ResourceCreationException     when deserializer is not able to create instance.
      * @throws NotExtendingResourceException when deserializer is not able to create instance.
      */
     static List<Resource> newObjectFromJSONArray(JSONArray dataArray, List<Resource> included)
-        throws ResourceCreationException, NotExtendingResourceException{
+        throws ResourceCreationException, NotExtendingResourceException {
         ArrayList<Resource> objects = new ArrayList<>();
 
         for (int i = 0; i < dataArray.length(); i++) {
@@ -104,30 +95,15 @@ class Factory {
             } catch (JSONException e) {
                 Logger.debug("Was not able to get dataArray[" + i + "] as JSONObject.");
             }
-            objects.add(newObjectFromJSONObject(jsonObject, included));
+            Resource resource = newObjectFromJSONObject(jsonObject, included);
+            if (resource != null) objects.add(resource);
         }
         return objects;
     }
 
     // helper
 
-    /**
-     * Get the type of the data message.
-     *
-     * @param object JSONObject.
-     * @return Name of the json type.
-     */
-    static String getTypeFromJson(JSONObject object) {
-        String type = null;
-        try {
-            type = object.getString("type");
-        } catch (JSONException e) {
-            Logger.debug("JSON data does not contain type");
-        }
-        return type;
-    }
-
-    public static void setDeserializer(Deserializer deserializer) {
+    static void setDeserializer(Deserializer deserializer) {
         at.rags.morpheus.Factory.deserializer = deserializer;
     }
 

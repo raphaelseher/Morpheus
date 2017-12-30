@@ -147,6 +147,7 @@ public class AttributeMapper {
      */
     public HashMap<String, Object> createMapFromJSONObject(JSONObject jsonObject) {
         HashMap<String, Object> metaMap = new HashMap<>();
+        if (jsonObject == null) return metaMap;
 
         for (Iterator<String> iter = jsonObject.keys(); iter.hasNext(); ) {
             String key = iter.next();

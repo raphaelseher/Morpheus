@@ -199,7 +199,9 @@ class Mapper {
                 relationDataObject = relationJsonObject.getJSONObject("data");
                 Resource relationObject = Factory.newObjectFromJSONObject(relationDataObject, null);
 
-                relationObject = matchIncludedToRelation(relationObject, included);
+                if (relationObject != null) {
+                    relationObject = matchIncludedToRelation(relationObject, included);
+                }
 
                 deserializer.setField(object, relationshipNames.get(relationship), relationObject);
             } catch (JSONException e) {
@@ -357,12 +359,8 @@ class Mapper {
      */
     ArrayList<HashMap<String, Object>> createData(List<Resource> resources, boolean includeAttributes) {
         String resourceName = null;
-        try {
-            resourceName = nameForResourceClass(resources.get(0).getClass());
-        } catch (Exception e) {
-            Logger.debug(e.getMessage());
-            return null;
-        }
+        resourceName = nameForResourceClass(resources.get(0).getClass());
+        if (resourceName == null) return null;
 
         ArrayList<HashMap<String, Object>> dataArray = new ArrayList<>();
 
@@ -398,12 +396,8 @@ class Mapper {
      */
     HashMap<String, Object> createData(Resource resource, boolean includeAttributes) {
         String resourceName = null;
-        try {
-            resourceName = nameForResourceClass(resource.getClass());
-        } catch (Exception e) {
-            Logger.debug(e.getMessage());
-            return null;
-        }
+        resourceName = nameForResourceClass(resource.getClass());
+        if (resourceName == null) return null;
 
         HashMap<String, Object> resourceRepresentation = new HashMap<>();
         resourceRepresentation.put("type", resourceName);
@@ -581,14 +575,14 @@ class Mapper {
         return relationNames;
     }
 
-    private String nameForResourceClass(Class clazz) throws Exception {
+    private String nameForResourceClass(Class clazz) {
         for (String key : Deserializer.getRegisteredClasses().keySet()) {
             if (Deserializer.getRegisteredClasses().get(key) == clazz) {
                 return key;
             }
         }
-
-        throw new Exception("Class " + clazz.getSimpleName() + " not registered.");
+        Logger.debug("Class " + clazz.getSimpleName() + " not registered.");
+        return null;
     }
 
     // getter

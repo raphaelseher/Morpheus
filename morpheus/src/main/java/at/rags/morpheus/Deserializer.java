@@ -37,6 +37,7 @@ public class Deserializer {
      */
     Resource createObjectFromString(String resourceName) throws InstantiationException, IllegalAccessException, NotExtendingResourceException {
         Class objectClass = registeredClasses.get(resourceName);
+        if (objectClass == null) return null;
         try {
             return (Resource) objectClass.newInstance();
         } catch (InstantiationException e) {

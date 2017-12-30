@@ -186,7 +186,7 @@ public class MapperUnitTest {
   @Test
   public void testMapRelationsObjectRelation() throws Exception {
     Deserializer mockDeserializer = mock(Deserializer.class);
-    Mapper mapper = new Mapper(mockDeserializer, null, null);
+    Mapper mapper = new Mapper(mockDeserializer, null, new AttributeMapper());
     Factory.setDeserializer(mockDeserializer);
     Factory.setMapper(mapper);
     JSONObject jsonObject = mock(JSONObject.class);
@@ -230,7 +230,7 @@ public class MapperUnitTest {
   @Test
   public void testMapRelationsObjectRelationWithoutInclude() throws Exception {
     Deserializer mockDeserializer = mock(Deserializer.class);
-    Mapper mapper = new Mapper(mockDeserializer, null, null);
+    Mapper mapper = new Mapper(mockDeserializer, null, new AttributeMapper());
     Factory.setDeserializer(mockDeserializer);
     Factory.setMapper(mapper);
     JSONObject jsonObject = mock(JSONObject.class);
@@ -270,7 +270,7 @@ public class MapperUnitTest {
   @Test
   public void testMapRelationsObjectsRelation() throws Exception {
     Deserializer mockDeserializer = mock(Deserializer.class);
-    Mapper mapper = new Mapper(mockDeserializer,null, null);
+    Mapper mapper = new Mapper(mockDeserializer,null, new AttributeMapper());
     Factory.setDeserializer(mockDeserializer);
     Factory.setMapper(mapper);
     JSONObject jsonObject = mock(JSONObject.class);
