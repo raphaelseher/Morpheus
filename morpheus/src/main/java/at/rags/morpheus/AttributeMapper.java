@@ -64,16 +64,19 @@ public class AttributeMapper {
         }
 
         if (object instanceof JSONArray) {
+            if (field.getType().isAssignableFrom(List.class)) {
+                List<Object> list = null;
+                try {
+                    list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
+                } catch (JSONException e) {
+                    Logger.debug(jsonFieldName + " is not an valid JSONArray.");
+                }
 
-            List<Object> list = null;
-            try {
-                list = createListFromJSONArray(attributesJsonObject.getJSONArray(jsonFieldName), field);
-            } catch (JSONException e) {
-                Logger.debug(jsonFieldName + " is not an valid JSONArray.");
+                deserializer.setField(jsonApiResource, objClass, field.getName(), list);
+            } else {
+                Object obj = gson.fromJson(object.toString(), field.getType());
+                deserializer.setField(jsonApiResource, objClass, field.getName(), obj);
             }
-
-            deserializer.setField(jsonApiResource, objClass, field.getName(), list);
-
         } else if (object.getClass() == JSONObject.class) {
             Object obj = gson.fromJson(object.toString(), field.getType());
             deserializer.setField(jsonApiResource, objClass, field.getName(), obj);

@@ -60,7 +60,7 @@ class Factory {
 
         try {
             assert realObject != null;
-            realObject.setMeta(mapper.getAttributeMapper().createMapFromJSONObject(dataObject.getJSONObject("meta")));
+            realObject.setMeta(dataObject.getJSONObject("meta"));
         } catch (JSONException e) {
             Logger.debug("JSON data does not contain meta");
         }

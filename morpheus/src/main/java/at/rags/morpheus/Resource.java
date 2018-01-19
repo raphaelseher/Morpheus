@@ -5,11 +5,12 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Extend this resource to your custom Object you want to map.
@@ -27,18 +28,18 @@ public class Resource implements Serializable {
     private String id;
     private String type;
     private at.rags.morpheus.Links links;
-    private HashMap<String, Object> meta;
+    private JSONObject meta;
 
     private ArrayList<String> nullableRelationships = new ArrayList<>();
 
     public Resource() {
     }
 
-    public HashMap<String, Object> getMeta() {
+    public JSONObject getMeta() {
         return meta;
     }
 
-    public void setMeta(HashMap<String, Object> meta) {
+    public void setMeta(JSONObject meta) {
         this.meta = meta;
     }
 

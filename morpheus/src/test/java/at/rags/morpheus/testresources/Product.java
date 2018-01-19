@@ -21,7 +21,7 @@ public class Product extends Resource {
   private HashMap<String, Boolean> availability;
   private Location location;
   private List<Author> authors;
-  private List<String> times;
+  private String[] times;
 
   public String getName() {
     return name;
@@ -79,11 +79,11 @@ public class Product extends Resource {
     this.authors = authors;
   }
 
-  public List<String> getTimes() {
+  public String[] getTimes() {
     return times;
   }
 
-  public void setTimes(List<String> times) {
+  public void setTimes(String[] times) {
     this.times = times;
   }
 }
