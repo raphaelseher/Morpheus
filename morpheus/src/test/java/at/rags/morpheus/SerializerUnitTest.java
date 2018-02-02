@@ -25,75 +25,75 @@ import static junit.framework.Assert.assertNull;
  */
 @RunWith(JUnit4.class)
 public class SerializerUnitTest {
-  private Serializer serializer;
+    private Serializer serializer;
 
-  @Before
-  public void setup() {
-    serializer = new Serializer();
-  }
+    @Before
+    public void setup() {
+        serializer = new Serializer();
+    }
 
-  @TargetApi(Build.VERSION_CODES.KITKAT)
-  @Test
-  public void testGetFieldsAsDictionary() {
-    Article article = new Article();
-    article.setTitle("title");
-    article.setPublicStatus(true);
-    ArrayList<String> tags = new ArrayList<String>();
-    tags.add("tag1");
-    article.setTags(tags);
-    ArrayMap<String, String> testmap = new ArrayMap<>();
-    testmap.put("key", "value");
-    article.setMap(testmap);
-    article.setVersion(1);
-    article.setPrice(1.0);
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Test
+    public void testGetFieldsAsDictionary() {
+        Article article = new Article();
+        article.setTitle("title");
+        article.setPublicStatus(true);
+        ArrayList<String> tags = new ArrayList<String>();
+        tags.add("tag1");
+        article.setTags(tags);
+        ArrayMap<String, String> testmap = new ArrayMap<>();
+        testmap.put("key", "value");
+        article.setMap(testmap);
+        article.setVersion(1);
+        article.setPrice(1.0);
 
-    Map<String, Object> checkMap = new HashMap<>();
-    checkMap.put("price", 1.0);
-    checkMap.put("public", "true");
-    checkMap.put("title", "title");
-    checkMap.put("map", testmap);
-    checkMap.put("version", 1);
-    checkMap.put("tags", tags);
+        Map<String, Object> checkMap = new HashMap<>();
+        checkMap.put("price", 1.0);
+        checkMap.put("public", "true");
+        checkMap.put("title", "title");
+        checkMap.put("map", testmap);
+        checkMap.put("version", 1);
+        checkMap.put("tags", tags);
 
-    Map<String, Object> map = serializer.getFieldsAsDictionary(article);
+        Map<String, Object> map = serializer.getFieldsAsDictionary(article);
 
-    assertNotNull(map);
-    assertEquals(checkMap.toString(), map.toString());
-  }
+        assertNotNull(map);
+        assertEquals(checkMap.toString(), map.toString());
+    }
 
-  @Test
-  public void testGetFieldsAsDictionaryWithoutAttributes() {
-    Author author = new Author();
-    author.setId("id");
+    @Test
+    public void testGetFieldsAsDictionaryWithoutAttributes() {
+        Author author = new Author();
+        author.setId("id");
 
-    Map<String, Object> checkMap = new HashMap<>();
-    checkMap.put("id", "id");
+        Map<String, Object> checkMap = new HashMap<>();
+        checkMap.put("id", "id");
 
-    Map<String, Object> map = serializer.getFieldsAsDictionary(author);
+        Map<String, Object> map = serializer.getFieldsAsDictionary(author);
 
-    assertNull(map);
-  }
+        assertNull(map);
+    }
 
-  @Test
-  public void testGetRelationships() {
-    Article article = new Article();
-    Author author = new Author();
-    article.setAuthor(author);
+    @Test
+    public void testGetRelationships() {
+        Article article = new Article();
+        Author author = new Author();
+        article.setAuthor(author);
 
-    ArrayList<Author> authors = new ArrayList<>();
-    authors.add(author);
-    authors.add(author);
-    article.setAuthors(authors);
+        ArrayList<Author> authors = new ArrayList<>();
+        authors.add(author);
+        authors.add(author);
+        article.setAuthors(authors);
 
-    HashMap<String, Object> checkMap = new HashMap<>();
-    checkMap.put("author", author);
-    checkMap.put("authors", authors);
-
-
-    HashMap<String, Object> output = serializer.getRelationships(article);
+        HashMap<String, Object> checkMap = new HashMap<>();
+        checkMap.put("author", author);
+        checkMap.put("authors", authors);
 
 
-    assertEquals(output.toString(), checkMap.toString());
-  }
+        HashMap<String, Object> output = serializer.getRelationships(article);
+
+
+        assertEquals(output.toString(), checkMap.toString());
+    }
 
 }

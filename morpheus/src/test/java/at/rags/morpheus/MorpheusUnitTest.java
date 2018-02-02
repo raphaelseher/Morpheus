@@ -17,23 +17,23 @@ import static org.mockito.Mockito.when;
  */
 public class MorpheusUnitTest {
 
-  private Morpheus morpheus;
+    private Morpheus morpheus;
 
-  @Before
-  public void setup() {
-    morpheus = new Morpheus();
+    @Before
+    public void setup() {
+        morpheus = new Morpheus();
 
-    HashMap<String, Class> mockMap = mock(HashMap.class);
-    when(mockMap.get("authors")).thenReturn(Author.class);
-    HashSet<String> set = new HashSet<>();
-    set.add("authors");
-    when(mockMap.keySet()).thenReturn(set);
-    Deserializer.setRegisteredClasses(mockMap);
-  }
+        HashMap<String, Class> mockMap = mock(HashMap.class);
+        when(mockMap.get("authors")).thenReturn(Author.class);
+        HashSet<String> set = new HashSet<>();
+        set.add("authors");
+        when(mockMap.keySet()).thenReturn(set);
+        Deserializer.setRegisteredClasses(mockMap);
+    }
 
-  @Test
-  public void testInit() throws Exception {
-    Morpheus morpheus = new Morpheus();
-    assertNotNull(morpheus);
-  }
+    @Test
+    public void testInit() throws Exception {
+        Morpheus morpheus = new Morpheus();
+        assertNotNull(morpheus);
+    }
 }

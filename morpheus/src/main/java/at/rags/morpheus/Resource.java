@@ -30,8 +30,6 @@ public class Resource implements Serializable {
     private at.rags.morpheus.Links links;
     private JSONObject meta;
 
-    private ArrayList<String> nullableRelationships = new ArrayList<>();
-
     public Resource() {
     }
 
@@ -65,28 +63,6 @@ public class Resource implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public ArrayList<String> getNullableRelationships() {
-        return nullableRelationships;
-    }
-
-    public void resetNullableRelationships() {
-        nullableRelationships.clear();
-    }
-
-    /**
-     * Add here your relationship name, if you want to null it while serializing.
-     * This can be used to remove relationships from your object.
-     *
-     * @param relationshipName Name of your relationship.
-     */
-    public void addRelationshipToNull(String relationshipName) {
-        if (relationshipName == null) {
-            return;
-        }
-
-        nullableRelationships.add(relationshipName);
     }
 
     public static class ResourceSerializer<T> implements JsonSerializer<T> {

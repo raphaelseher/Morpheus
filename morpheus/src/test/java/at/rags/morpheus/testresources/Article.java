@@ -4,51 +4,51 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import at.rags.morpheus.annotations.Relationship;
 import at.rags.morpheus.Resource;
+import at.rags.morpheus.annotations.Relationship;
 
 public class Article extends Resource {
 
-  @SerializedName("title")
-  private String title;
+    @SerializedName("title")
+    private String title;
 
-  @Relationship("author")
-  private Author author;
+    @Relationship("author")
+    private Author author;
 
-  @Relationship("comments")
-  private List<Comment> comments;
+    @Relationship("comments")
+    private List<Comment> comments;
 
-  private List<String> tags;
+    private List<String> tags;
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public Author getAuthor() {
-    return author;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public List<Comment> getComments() {
-    return comments;
-  }
+    public Author getAuthor() {
+        return author;
+    }
 
-  public List<String> getTags() {
-    return tags;
-  }
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-  public void setAuthor(Author author) {
-    this.author = author;
-  }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
-  public void setComments(List<Comment> comments) {
-    this.comments = comments;
-  }
+    public List<String> getTags() {
+        return tags;
+    }
 
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 }

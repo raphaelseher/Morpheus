@@ -414,46 +414,6 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         JSONAssert.assertEquals(json, checkJson, true);
     }
 
-    @Test
-    public void testCreateJsonWithResourceRelationsNullify() throws JSONException {
-        Morpheus morpheus = new Morpheus();
-        Deserializer.registerResourceClass("articles", Article.class);
-        Deserializer.registerResourceClass("people", Author.class);
-        Deserializer.registerResourceClass("comments", Comment.class);
-
-        JSONObject checkJson = new JSONObject("{\"data\":{\"attributes\":{\"title\":\"Some title\"},\"id\":\"1\",\"type\":\"articles\",\"relationships\":{\"comments\":{\"data\":[]},\"author\":{\"data\":null}}}}");
-
-        Article article = new Article();
-        article.setId("1");
-        article.setTitle("Some title");
-
-        Author author = new Author();
-        author.setId("2");
-        author.setFirstName("Peter");
-        article.setAuthor(author);
-
-        Comment comment = new Comment();
-        comment.setId("3");
-        comment.setBody("body");
-
-        ArrayList<Comment> comments = new ArrayList<>();
-        comments.add(comment);
-        comments.add(comment);
-        article.setComments(comments);
-
-        article.addRelationshipToNull("author");
-        article.addRelationshipToNull("comments");
-
-        JsonApiObject jsonApiObject = new JsonApiObject();
-        jsonApiObject.setResource(article);
-
-
-        JSONObject json = new JSONObject(morpheus.createJson(jsonApiObject, false));
-
-
-        JSONAssert.assertEquals(json, checkJson, true);
-    }
-
     // helper
 
     private String loadJSONFromAsset(int file) {

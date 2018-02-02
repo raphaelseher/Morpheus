@@ -439,12 +439,6 @@ class Mapper {
             Object relationObject = relations.get(relationshipName);
 
             if (relationObject instanceof Resource) {
-                if (resource.getNullableRelationships().contains(relationshipName)) {
-                    HashMap<String, Object> dataObject = new HashMap<>();
-                    dataObject.put("data", null);
-                    relationships.put(relationshipName, dataObject);
-                    continue;
-                }
 
                 HashMap<String, Object> data = createData((Resource) relationObject, false);
                 if (data != null) {
@@ -455,12 +449,6 @@ class Mapper {
             }
 
             if (relationObject instanceof ArrayList) {
-                if (resource.getNullableRelationships().contains(relationshipName)) {
-                    HashMap<String, Object> dataObject = new HashMap<>();
-                    dataObject.put("data", new ArrayList<Object>());
-                    relationships.put(relationshipName, dataObject);
-                    continue;
-                }
 
                 ArrayList dataArray = createData((List) relationObject, false);
                 if (dataArray != null) {

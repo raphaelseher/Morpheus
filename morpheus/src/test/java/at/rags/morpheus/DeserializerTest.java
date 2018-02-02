@@ -20,92 +20,92 @@ import static org.mockito.Mockito.when;
  */
 public class DeserializerTest {
 
-  @Test
-  public void testCreateObjectFromString() throws Exception {
-    HashMap<String, Class> mockMap = mock(HashMap.class);
-    when(mockMap.get("articles")).thenReturn(Article.class);
-    Deserializer.setRegisteredClasses(mockMap);
-    Deserializer deserializer = new Deserializer();
+    @Test
+    public void testCreateObjectFromString() throws Exception {
+        HashMap<String, Class> mockMap = mock(HashMap.class);
+        when(mockMap.get("articles")).thenReturn(Article.class);
+        Deserializer.setRegisteredClasses(mockMap);
+        Deserializer deserializer = new Deserializer();
 
-    Resource resource = deserializer.createObjectFromString("articles");
+        Resource resource = deserializer.createObjectFromString("articles");
 
-    assertNotNull(resource);
-    assertEquals(resource.getClass(), Article.class);
-  }
+        assertNotNull(resource);
+        assertEquals(resource.getClass(), Article.class);
+    }
 
-  @Test(expected = InstantiationException.class)
-  public void testCreateObjectFromStringInstantiationException() throws Exception {
-    HashMap<String, Class> mockMap = mock(HashMap.class);
-    when(mockMap.get("articles")).thenReturn(InterfaceArticle.class);
-    Deserializer.setRegisteredClasses(mockMap);
-    Deserializer deserializer = new Deserializer();
+    @Test(expected = InstantiationException.class)
+    public void testCreateObjectFromStringInstantiationException() throws Exception {
+        HashMap<String, Class> mockMap = mock(HashMap.class);
+        when(mockMap.get("articles")).thenReturn(InterfaceArticle.class);
+        Deserializer.setRegisteredClasses(mockMap);
+        Deserializer deserializer = new Deserializer();
 
-    Resource resource = deserializer.createObjectFromString("articles");
-  }
+        Resource resource = deserializer.createObjectFromString("articles");
+    }
 
-  @Test(expected = NotExtendingResourceException.class)
-  public void testCreateObjectFromStringClassCastException() throws Exception {
-    HashMap<String, Class> mockMap = mock(HashMap.class);
-    when(mockMap.get("test")).thenReturn(FalseResource.class);
-    Deserializer.setRegisteredClasses(mockMap);
-    Deserializer deserializer = new Deserializer();
+    @Test(expected = NotExtendingResourceException.class)
+    public void testCreateObjectFromStringClassCastException() throws Exception {
+        HashMap<String, Class> mockMap = mock(HashMap.class);
+        when(mockMap.get("test")).thenReturn(FalseResource.class);
+        Deserializer.setRegisteredClasses(mockMap);
+        Deserializer deserializer = new Deserializer();
 
-    Resource resource = deserializer.createObjectFromString("test");
-  }
+        Resource resource = deserializer.createObjectFromString("test");
+    }
 
-  @Test
-  public void testSetField() throws Exception {
-    Deserializer deserializer = new Deserializer();
-    Article article = new Article();
+    @Test
+    public void testSetField() throws Exception {
+        Deserializer deserializer = new Deserializer();
+        Article article = new Article();
 
-    Resource resource = deserializer.setField(article, "title", "My Title");
+        Resource resource = deserializer.setField(article, "title", "My Title");
 
-    article = (Article)resource;
-    assertEquals(article.getTitle(), "My Title");
-  }
+        article = (Article) resource;
+        assertEquals(article.getTitle(), "My Title");
+    }
 
-  @Test
-  public void testSetFieldNoSuchFieldException() throws Exception {
-    Deserializer deserializer = new Deserializer();
-    Article article = new Article();
+    @Test
+    public void testSetFieldNoSuchFieldException() throws Exception {
+        Deserializer deserializer = new Deserializer();
+        Article article = new Article();
 
-    Resource resource = deserializer.setField(article, "asdf", "My Title");
+        Resource resource = deserializer.setField(article, "asdf", "My Title");
 
-    article = (Article)resource;
-    assertNotNull(article);
-  }
+        article = (Article) resource;
+        assertNotNull(article);
+    }
 
-  @Test
-  public void testSetIdField() throws Exception {
-    Deserializer deserializer = new Deserializer();
-    Article article = new Article();
+    @Test
+    public void testSetIdField() throws Exception {
+        Deserializer deserializer = new Deserializer();
+        Article article = new Article();
 
-    Resource resource = deserializer.setIdField(article, "123456");
+        Resource resource = deserializer.setIdField(article, "123456");
 
-    article = (Article)resource;
-    assertEquals(article.getId(), "123456");
-  }
+        article = (Article) resource;
+        assertEquals(article.getId(), "123456");
+    }
 
-  @Test
-  public void testSetIdFieldNumber() throws Exception {
-    Deserializer deserializer = new Deserializer();
-    Article article = new Article();
+    @Test
+    public void testSetIdFieldNumber() throws Exception {
+        Deserializer deserializer = new Deserializer();
+        Article article = new Article();
 
-    Resource resource = deserializer.setIdField(article, 123456);
+        Resource resource = deserializer.setIdField(article, 123456);
 
-    article = (Article)resource;
-    assertEquals(article.getId(), "123456");
-  }
+        article = (Article) resource;
+        assertEquals(article.getId(), "123456");
+    }
 
-  @Test
-  public void testSetIdFieldMultiExtendingClass() throws Exception {
-    Deserializer deserializer = new Deserializer();
-    MultiExtendResource multiExtendResource= new MultiExtendResource();
+    @Test
+    public void testSetIdFieldMultiExtendingClass() throws Exception {
+        Deserializer deserializer = new Deserializer();
+        MultiExtendResource multiExtendResource = new MultiExtendResource();
 
-    Resource resource = deserializer.setIdField(multiExtendResource, 123456);
+        Resource resource = deserializer.setIdField(multiExtendResource, 123456);
 
-    multiExtendResource = (MultiExtendResource)resource;
-    assertEquals(multiExtendResource.getId(), "123456");
-  }
+        multiExtendResource = (MultiExtendResource) resource;
+        assertEquals(multiExtendResource.getId(), "123456");
+    }
 
 }

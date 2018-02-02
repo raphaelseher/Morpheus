@@ -9,36 +9,36 @@ import at.rags.morpheus.Resource;
  */
 public class Author extends Resource {
 
-  @SerializedName("first-name")
-  private String firstName;
+    @SerializedName("first-name")
+    private String firstName;
 
-  @SerializedName("last-name")
-  private String lastName;
+    @SerializedName("last-name")
+    private String lastName;
 
-  @SerializedName("twitter")
-  private String twitterHandle;
+    @SerializedName("twitter")
+    private String twitterHandle;
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public String getTwitterHandle() {
-    return twitterHandle;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
 
-  public void setTwitterHandle(String twitterHandle) {
-    this.twitterHandle = twitterHandle;
-  }
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
+    }
 }

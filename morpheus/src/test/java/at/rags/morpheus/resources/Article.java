@@ -11,83 +11,83 @@ import at.rags.morpheus.annotations.Relationship;
 
 public class Article extends Resource {
 
-  private String title;
-  @SerializedName("public")
-  private boolean publicStatus;
-  private List<String> tags;
-  private ArrayMap<String, String> map;
-  private int version;
-  private double price;
+    private String title;
+    @SerializedName("public")
+    private boolean publicStatus;
+    private List<String> tags;
+    private ArrayMap<String, String> map;
+    private int version;
+    private double price;
 
-  @Relationship("author")
-  private Author author;
+    @Relationship("author")
+    private Author author;
 
-  @Relationship("authors")
-  private List<Author> authors;
+    @Relationship("authors")
+    private List<Author> authors;
 
-  //getter & setter
+    //getter & setter
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public boolean getPublicStatus() {
-    return publicStatus;
-  }
+    public boolean getPublicStatus() {
+        return publicStatus;
+    }
 
-  public void setPublicStatus(boolean publicStatus) {
-    this.publicStatus = publicStatus;
-  }
+    public void setPublicStatus(boolean publicStatus) {
+        this.publicStatus = publicStatus;
+    }
 
-  public List<String> getTags() {
-    return tags;
-  }
+    public List<String> getTags() {
+        return tags;
+    }
 
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
-  public int getVersion() {
-    return version;
-  }
+    public int getVersion() {
+        return version;
+    }
 
-  public void setVersion(int version) {
-    this.version = version;
-  }
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-  public double getPrice() {
-    return price;
-  }
+    public double getPrice() {
+        return price;
+    }
 
-  public ArrayMap<String, String> getMap() {
-    return map;
-  }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-  public void setMap(ArrayMap<String, String> map) {
-    this.map = map;
-  }
+    public ArrayMap<String, String> getMap() {
+        return map;
+    }
 
-  public Author getAuthor() {
-    return author;
-  }
+    public void setMap(ArrayMap<String, String> map) {
+        this.map = map;
+    }
 
-  public List<Author> getAuthors() {
-    return authors;
-  }
+    public Author getAuthor() {
+        return author;
+    }
 
-  public void setPrice(double price) {
-    this.price = price;
-  }
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
-  public void setAuthor(Author author) {
-    this.author = author;
-  }
+    public List<Author> getAuthors() {
+        return authors;
+    }
 
-  public void setAuthors(List<Author> authors) {
-    this.authors = authors;
-  }
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
 }
