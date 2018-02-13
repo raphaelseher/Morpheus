@@ -106,7 +106,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonApiObject.setMeta(mapper.getAttributeMapper().createMapFromJSONObject(metaObject));
+      jsonApiObject.setMeta(metaObject);
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }
