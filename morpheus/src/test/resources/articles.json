@@ -29,7 +29,8 @@
         "data": [
           { "type": "comments", "id": "5" },
           { "type": "comments", "id": "12" }
-        ]
+        ],
+        "meta": { "test": "test" }
       }
     },
     "links": {

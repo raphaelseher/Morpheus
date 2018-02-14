@@ -170,6 +170,12 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
 
         assertTrue(jsonApiObject.getResource().getRelationshipMetas().get("author") != null);
         assertEquals("test", jsonApiObject.getResource().getRelationshipMetas().get("author").getString("test"));
+
+        jsonApiObject =
+            morpheus.parse(loadJSONFromResource("articles.json"));
+
+        assertTrue(jsonApiObject.getResources().get(0).getRelationshipMetas().get("comments") != null);
+        assertEquals("test", jsonApiObject.getResources().get(0).getRelationshipMetas().get("comments").getString("test"));
     }
 
     @Test
