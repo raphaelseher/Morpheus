@@ -159,6 +159,20 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
     }
 
     @Test
+    public void testRelationshipMetas() throws Exception {
+        Morpheus morpheus = new Morpheus();
+        Deserializer.registerResourceClass("articles", Article.class);
+        Deserializer.registerResourceClass("people", Author.class);
+        Deserializer.registerResourceClass("comments", Comment.class);
+
+        JsonApiObject jsonApiObject =
+            morpheus.parse(loadJSONFromResource("article.json"));
+
+        assertTrue(jsonApiObject.getResource().getRelationshipMetas().get("author") != null);
+        assertEquals("test", jsonApiObject.getResource().getRelationshipMetas().get("author").getString("test"));
+    }
+
+    @Test
     public void testIncluded() throws Exception {
         Morpheus morpheus = new Morpheus();
         Deserializer.registerResourceClass("articles", Article.class);

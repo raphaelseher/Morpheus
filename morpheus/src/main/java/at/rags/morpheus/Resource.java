@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Extend this resource to your custom Object you want to map.
@@ -29,6 +30,7 @@ public class Resource implements Serializable {
     private String type;
     private at.rags.morpheus.Links links;
     private JSONObject meta;
+    private Map<String, JSONObject> relationshipMetas;
 
     public Resource() {
     }
@@ -39,6 +41,14 @@ public class Resource implements Serializable {
 
     public void setMeta(JSONObject meta) {
         this.meta = meta;
+    }
+
+    public Map<String, JSONObject> getRelationshipMetas() {
+        return relationshipMetas;
+    }
+
+    public void setRelationshipMetas(Map<String, JSONObject> relationshipMetas) {
+        this.relationshipMetas = relationshipMetas;
     }
 
     public at.rags.morpheus.Links getLinks() {

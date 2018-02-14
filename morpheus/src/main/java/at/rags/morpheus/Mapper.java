@@ -195,12 +195,20 @@ class Mapper {
 
             //map json object of data
             JSONObject relationDataObject = null;
+            JSONObject metaObject = null;
             try {
                 relationDataObject = relationJsonObject.getJSONObject("data");
+                metaObject = relationJsonObject.getJSONObject("meta");
                 Resource relationObject = Factory.newObjectFromJSONObject(relationDataObject, null);
 
                 if (relationObject != null) {
                     relationObject = matchIncludedToRelation(relationObject, included);
+                }
+                if (metaObject != null) {
+                    if (object.getRelationshipMetas() == null) {
+                        object.setRelationshipMetas(new HashMap<String, JSONObject>());
+                    }
+                    object.getRelationshipMetas().put(relationship, metaObject);
                 }
 
                 deserializer.setField(object, relationshipNames.get(relationship), relationObject);
@@ -233,7 +241,7 @@ class Mapper {
      * @param included List of included resources.
      * @return Relation of included resource.
      */
-    Resource matchIncludedToRelation(Resource object, List<Resource> included) {
+    private Resource matchIncludedToRelation(Resource object, List<Resource> included) {
         if (included == null) {
             return object;
         }
@@ -548,15 +556,9 @@ class Mapper {
         HashMap<String, String> relationNames = new HashMap<>();
         for (Field field : clazz.getDeclaredFields()) {
             String fieldName = field.getName();
-            for (Annotation annotation : field.getDeclaredAnnotations()) {
-                if (annotation.annotationType() == SerializedName.class) {
-                    SerializedName serializeName = (SerializedName) annotation;
-                    fieldName = serializeName.value();
-                }
-                if (annotation.annotationType() == Relationship.class) {
-                    Relationship relationshipAnnotation = (Relationship) annotation;
-                    relationNames.put(relationshipAnnotation.value(), fieldName);
-                }
+            Relationship relationshipAnnotation = field.getAnnotation(Relationship.class);
+            if (relationshipAnnotation != null) {
+                relationNames.put(relationshipAnnotation.value(), fieldName);
             }
         }
 
