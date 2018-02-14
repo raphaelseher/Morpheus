@@ -198,7 +198,7 @@ class Mapper {
             JSONObject metaObject = null;
             try {
                 relationDataObject = relationJsonObject.getJSONObject("data");
-                metaObject = relationJsonObject.getJSONObject("meta");
+                metaObject = relationJsonObject.optJSONObject("meta");
                 Resource relationObject = Factory.newObjectFromJSONObject(relationDataObject, null);
 
                 if (relationObject != null) {
