@@ -5,12 +5,13 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,26 +30,44 @@ public class Resource implements Serializable {
     private String id;
     private String type;
     private at.rags.morpheus.Links links;
-    private JSONObject meta;
-    private Map<String, JSONObject> relationshipMetas;
+    private String meta;
+    private Map<String, String> relationshipMetas;
 
     public Resource() {
     }
 
     public JSONObject getMeta() {
-        return meta;
+        if (meta == null) return null;
+        try {
+            return new JSONObject(meta);
+        } catch (JSONException e) {
+            return null;
+        }
     }
 
     public void setMeta(JSONObject meta) {
-        this.meta = meta;
+        if (meta == null) return;
+        this.meta = meta.toString();
     }
 
     public Map<String, JSONObject> getRelationshipMetas() {
-        return relationshipMetas;
+        if (relationshipMetas == null) return null;
+        Map<String, JSONObject> metas = new HashMap<>();
+        for (Map.Entry<String, String> meta : relationshipMetas.entrySet()) {
+            if (meta.getValue() == null) continue;
+            try {
+                metas.put(meta.getKey(), new JSONObject(meta.getValue()));
+            } catch (JSONException e) {
+            }
+        }
+        return metas;
     }
 
-    public void setRelationshipMetas(Map<String, JSONObject> relationshipMetas) {
-        this.relationshipMetas = relationshipMetas;
+    public void setRelationshipMeta(String key, JSONObject meta) {
+        if (relationshipMetas == null) {
+            relationshipMetas = new HashMap<>();
+        }
+        relationshipMetas.put(key, meta.toString());
     }
 
     public at.rags.morpheus.Links getLinks() {

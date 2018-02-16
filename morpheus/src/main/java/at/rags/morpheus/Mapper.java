@@ -197,10 +197,7 @@ class Mapper {
             JSONObject metaObject = null;
             metaObject = relationJsonObject.optJSONObject("meta");
             if (metaObject != null) {
-                if (object.getRelationshipMetas() == null) {
-                    object.setRelationshipMetas(new HashMap<String, JSONObject>());
-                }
-                object.getRelationshipMetas().put(relationship, metaObject);
+                object.setRelationshipMeta(relationship, metaObject);
             }
 
             //map json object of data
