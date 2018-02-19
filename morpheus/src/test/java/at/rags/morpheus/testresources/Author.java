@@ -8,7 +8,7 @@ import at.rags.morpheus.annotations.JsonApiType;
 /**
  * Created by raphaelseher on 05/03/16.
  */
-@JsonApiType("Author")
+@JsonApiType("people")
 public class Author extends Resource {
 
     @SerializedName("first-name")

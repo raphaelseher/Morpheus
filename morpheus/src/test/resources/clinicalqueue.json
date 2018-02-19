@@ -40,14 +40,14 @@
   "included" : [
     {
       "id": "author_id",
-      "type": "Author",
+      "type": "people",
       "attributes": {
         "first-name": "first-name"
       }
     },
     {
       "id": "123",
-      "type": "Article",
+      "type": "articles",
       "attributes" : {
         "title": "test"
       },
@@ -55,7 +55,7 @@
         "author": {
           "data": {
             "id": "author_id",
-            "type": "Author"
+            "type": "people"
           }
         }
       }
@@ -73,7 +73,7 @@
         "article": {
           "data": {
             "id": "123",
-            "type": "Article"
+            "type": "articles"
           }
         }
       }

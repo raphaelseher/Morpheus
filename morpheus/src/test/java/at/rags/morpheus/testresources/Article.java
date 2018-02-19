@@ -8,7 +8,7 @@ import at.rags.morpheus.Resource;
 import at.rags.morpheus.annotations.JsonApiType;
 import at.rags.morpheus.annotations.Relationship;
 
-@JsonApiType("Article")
+@JsonApiType("articles")
 public class Article extends Resource {
 
     @SerializedName("title")
