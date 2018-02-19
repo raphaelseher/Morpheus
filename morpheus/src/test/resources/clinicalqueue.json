@@ -39,6 +39,28 @@
   ],
   "included" : [
     {
+      "id": "author_id",
+      "type": "Author",
+      "attributes": {
+        "first-name": "first-name"
+      }
+    },
+    {
+      "id": "123",
+      "type": "Article",
+      "attributes" : {
+        "title": "test"
+      },
+      "relationships": {
+        "author": {
+          "data": {
+            "id": "author_id",
+            "type": "Author"
+          }
+        }
+      }
+    },
+    {
       "type" : "ChatRoom",
       "id" : "8f04",
       "attributes" : {
@@ -46,6 +68,14 @@
         "audio_enabled" : false,
         "pin" : "9552780",
         "video_enabled" : false
+      },
+      "relationships": {
+        "article": {
+          "data": {
+            "id": "123",
+            "type": "Article"
+          }
+        }
       }
     },
     {

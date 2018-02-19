@@ -118,6 +118,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         Deserializer.registerResourceClass(ClinicalQueueItem.class.getAnnotation(JsonApiType.class).value(), ClinicalQueueItem.class);
         Deserializer.registerResourceClass(ChatSession.class.getAnnotation(JsonApiType.class).value(), ChatSession.class);
         Deserializer.registerResourceClass(ChatRoom.class.getAnnotation(JsonApiType.class).value(), ChatRoom.class);
+        Deserializer.registerResourceClass(Article.class.getAnnotation(JsonApiType.class).value(), Article.class);
+        Deserializer.registerResourceClass(Author.class.getAnnotation(JsonApiType.class).value(), Author.class);
         Deserializer.registerResourceClass(BasicExpert.class.getAnnotation(JsonApiType.class).value(), BasicExpert.class);
         Deserializer.registerResourceClass(BasicPerson.class.getAnnotation(JsonApiType.class).value(), BasicPerson.class);
 
@@ -139,6 +141,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertTrue(jsonApiObject.getResources().get(0) instanceof ClinicalQueueItem);
         ClinicalQueueItem clinicalqueue = (ClinicalQueueItem) jsonApiObject.getResources().get(0);
         assertEquals("9552780", clinicalqueue.getChatSession().getChatRoom().getPin());
+        assertEquals("test", clinicalqueue.getChatSession().getChatRoom().getArticle().getTitle());
+        assertEquals("first-name", clinicalqueue.getChatSession().getChatRoom().getArticle().getAuthor().getFirstName());
     }
 
     @Test

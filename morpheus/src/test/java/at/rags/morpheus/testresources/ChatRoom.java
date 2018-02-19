@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import at.rags.morpheus.Resource;
 import at.rags.morpheus.annotations.JsonApiType;
+import at.rags.morpheus.annotations.Relationship;
 
 @JsonApiType("ChatRoom")
 public class ChatRoom extends Resource implements Serializable {
@@ -15,8 +16,15 @@ public class ChatRoom extends Resource implements Serializable {
     @SerializedName("pin")
     private String pin;
 
+    @Relationship("article")
+    private Article article;
+
     public String getPin() {
         return pin;
+    }
+
+    public Article getArticle() {
+        return article;
     }
 
     @Override

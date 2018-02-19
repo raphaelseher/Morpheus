@@ -3,10 +3,12 @@ package at.rags.morpheus.testresources;
 import com.google.gson.annotations.SerializedName;
 
 import at.rags.morpheus.Resource;
+import at.rags.morpheus.annotations.JsonApiType;
 
 /**
  * Created by raphaelseher on 05/03/16.
  */
+@JsonApiType("Author")
 public class Author extends Resource {
 
     @SerializedName("first-name")
