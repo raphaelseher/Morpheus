@@ -90,6 +90,27 @@ public class Deserializer {
         return resourceObject;
     }
 
+    Object getRelationField(Resource resourceObject, String fieldName) {
+        Field field = null;
+        try {
+            field = resourceObject.getClass().getDeclaredField(fieldName);
+            boolean accessible = field.isAccessible();
+            field.setAccessible(true);
+            try {
+                return field.get(resourceObject);
+            } catch (IllegalAccessException e) {
+                Logger.debug("Could not access " + field.getName() + " field");
+            } catch (RuntimeException e) {
+                Logger.debug("Could not set " + field.getName() + " field");
+            } finally {
+                field.setAccessible(accessible);
+            }
+        } catch (NoSuchFieldException e) {
+            Logger.debug("Field " + fieldName + " not found.");
+        }
+        return null;
+    }
+
     /**
      * Sets the Id field of the resourceObject extending {@link Resource}.
      *

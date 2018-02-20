@@ -71,12 +71,6 @@ class Factory {
             Logger.debug("JSON data does not contain links");
         }
 
-        for (int i = 0; included != null && i < included.size(); i++) {
-            if (included.get(i).getType().equals(realObject.getType()) && included.get(i).getId().equals(realObject.getId())) {
-                included.set(i, realObject);
-                break;
-            }
-        }
         return realObject;
     }
 

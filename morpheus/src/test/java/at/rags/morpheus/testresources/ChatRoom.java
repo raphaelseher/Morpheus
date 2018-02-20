@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 import at.rags.morpheus.Resource;
 import at.rags.morpheus.annotations.JsonApiType;
@@ -16,15 +17,15 @@ public class ChatRoom extends Resource implements Serializable {
     @SerializedName("pin")
     private String pin;
 
-    @Relationship("article")
-    private Article article;
+    @Relationship("articles")
+    private List<Article> articles;
 
     public String getPin() {
         return pin;
     }
 
-    public Article getArticle() {
-        return article;
+    public List<Article> getArticles() {
+        return articles;
     }
 
     @Override

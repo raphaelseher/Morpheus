@@ -141,8 +141,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
         assertTrue(jsonApiObject.getResources().get(0) instanceof ClinicalQueueItem);
         ClinicalQueueItem clinicalqueue = (ClinicalQueueItem) jsonApiObject.getResources().get(0);
         assertEquals("9552780", clinicalqueue.getChatSession().getChatRoom().getPin());
-        assertEquals("test", clinicalqueue.getChatSession().getChatRoom().getArticle().getTitle());
-        assertEquals("first-name", clinicalqueue.getChatSession().getChatRoom().getArticle().getAuthor().getFirstName());
+        assertEquals("test", clinicalqueue.getChatSession().getChatRoom().getArticles().get(0).getTitle());
+        assertEquals("first-name", clinicalqueue.getChatSession().getChatRoom().getArticles().get(0).getAuthor().getFirstName());
     }
 
     @Test

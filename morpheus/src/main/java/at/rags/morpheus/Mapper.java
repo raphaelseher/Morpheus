@@ -232,6 +232,30 @@ class Mapper {
         return object;
     }
 
+    Resource mapRelations(Resource object, List<Resource> included)
+        throws NotExtendingResourceException, ResourceCreationException {
+        HashMap<String, String> relationshipNames = getRelationshipNames(object.getClass());
+
+        //going through relationship names annotated in Class
+        for (String relationship : relationshipNames.keySet()) {
+
+            String fieldName = relationshipNames.get(relationship);
+            Object relationObject = deserializer.getRelationField(object, fieldName);
+
+            if (relationObject != null) {
+                if (relationObject instanceof Resource) {
+                    relationObject = matchIncludedToRelation((Resource) relationObject, included);
+                } else if (relationObject instanceof List) {
+                    relationObject = matchIncludedToRelation((List<Resource>) relationObject, included);
+                }
+            }
+
+            deserializer.setField(object, relationshipNames.get(relationship), relationObject);
+        }
+
+        return object;
+    }
+
 
     /**
      * Will check if the relation is included. If true included object will be returned.

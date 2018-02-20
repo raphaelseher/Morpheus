@@ -70,7 +70,9 @@ public class Morpheus {
       JSONArray includedArray = jsonObject.getJSONArray("included");
       jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
       // Pass included second time to resolve nested relationships
-      jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, jsonApiObject.getIncluded()));
+      for (Resource resource : jsonApiObject.getIncluded()) {
+        mapper.mapRelations(resource, jsonApiObject.getIncluded());
+      }
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }

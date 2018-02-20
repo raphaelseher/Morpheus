@@ -46,6 +46,24 @@
       }
     },
     {
+      "type" : "ChatRoom",
+      "id" : "8f04",
+      "attributes" : {
+        "key" : null,
+        "audio_enabled" : false,
+        "pin" : "9552780",
+        "video_enabled" : false
+      },
+      "relationships": {
+        "articles": {
+          "data": [{
+            "id": "123",
+            "type": "articles"
+          }]
+        }
+      }
+    },
+    {
       "id": "123",
       "type": "articles",
       "attributes" : {
@@ -56,24 +74,6 @@
           "data": {
             "id": "author_id",
             "type": "people"
-          }
-        }
-      }
-    },
-    {
-      "type" : "ChatRoom",
-      "id" : "8f04",
-      "attributes" : {
-        "key" : null,
-        "audio_enabled" : false,
-        "pin" : "9552780",
-        "video_enabled" : false
-      },
-      "relationships": {
-        "article": {
-          "data": {
-            "id": "123",
-            "type": "articles"
           }
         }
       }
