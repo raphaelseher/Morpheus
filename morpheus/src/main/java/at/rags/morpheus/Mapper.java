@@ -156,7 +156,11 @@ class Mapper {
                 }
 
                 if (!Modifier.isStatic(field.getModifiers()) && !isRelation) {
-                    attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
+                    try {
+                        attributeMapper.mapAttributeToObject(object, objClass, attributesJsonObject, field, jsonFieldName);
+                    } catch (RuntimeException e) {
+                        Logger.debug("Failed parse attribute: " + jsonFieldName + ", class: " + objClass.getName());
+                    }
                 }
             }
 
