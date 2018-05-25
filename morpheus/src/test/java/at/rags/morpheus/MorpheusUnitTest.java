@@ -7,8 +7,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import at.rags.morpheus.resources.Author;
+import at.rags.morpheus.testresources.BasicExpert;
+import at.rags.morpheus.testresources.BasicPerson;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,5 +38,15 @@ public class MorpheusUnitTest {
     public void testInit() throws Exception {
         Morpheus morpheus = new Morpheus();
         assertNotNull(morpheus);
+    }
+
+    @Test
+    public void testResource() {
+        BasicPerson person = new BasicPerson();
+        person.setId("1");
+        BasicExpert expert = new BasicExpert();
+        expert.setId("1");
+        assertTrue(person.equals(expert));
+        assertTrue(expert.equals(person));
     }
 }
