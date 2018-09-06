@@ -1,8 +1,6 @@
 package at.rags.morpheus;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
@@ -83,14 +81,14 @@ public class AttributeMapper {
             Object obj = gson.fromJson(object.toString(), field.getType());
             deserializer.setField(jsonApiResource, objClass, field.getName(), obj);
         } else if (JSONObject.NULL != object) {
+            JsonReader reader = gson.newJsonReader(new StringReader(object.toString()));
             if (field.getType().isEnum()) {
-                JsonReader reader = gson.newJsonReader(new StringReader(object.toString()));
                 reader.setLenient(true);
-                try {
-                    object = gson.getAdapter(field.getType()).read(reader);
-                } catch (IOException e) {
-                    Logger.debug(jsonFieldName + " enum failed to read.");
-                }
+            }
+            try {
+                object = gson.getAdapter(field.getType()).read(reader);
+            } catch (IOException e) {
+                Logger.debug(jsonFieldName + " failed to read.");
             }
             deserializer.setField(jsonApiResource, objClass, field.getName(), object);
         }

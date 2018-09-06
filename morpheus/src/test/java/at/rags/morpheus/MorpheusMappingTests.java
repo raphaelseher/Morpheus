@@ -2,6 +2,8 @@ package at.rags.morpheus;
 
 import android.test.InstrumentationTestCase;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -292,8 +295,8 @@ public class MorpheusMappingTests extends InstrumentationTestCase {
 
         Product product = (Product) jsonApiObject.getResources().get(0);
 
-        assertTrue(product.getId().equals("123456"));
-        assertTrue(product.getName().equals("Fancy new roboter"));
+        assertEquals("123456", product.getId());
+        assertEquals("Fancy new roboter", product.getName());
         assertTrue(product.getPrice() == 999.75);
         assertTrue(product.getInStock() == 9);
         assertTrue(product.getAvailability().get("Store 1"));

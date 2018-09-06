@@ -10,7 +10,7 @@
     "attributes": {
       "product-name": "Fancy new roboter",
       "categories": ["roboter", "home", "tech"],
-      "price":999.75,
+      "price":"999.75",
       "in-stock":9,
       "string-int":"5",
       "available":"true",
