@@ -1,0 +1,109 @@
+{
+  "data" : [
+    {
+      "id" : "29064",
+      "relationships" : {
+        "patient" : {
+          "data" : {
+            "type" : "Person",
+            "id" : "12618847"
+          }
+        },
+        "expert" : {
+          "data" : {
+            "type" : "Expert",
+            "id" : "67789969"
+          }
+        },
+        "chat_room" : {
+          "data" : {
+            "type" : "ChatRoom",
+            "id" : "1272"
+          }
+        }
+      },
+      "type" : "ChatSession",
+      "attributes" : {
+        "state" : "initiated",
+        "expert_id" : null,
+        "reason_for_visit" : "sa fads asd ",
+        "appointment_slot_id" : 1490267700,
+        "requested_expert_id" : 12616679,
+        "consult_geo_state" : "CA",
+        "consult_geo_country" : "United States",
+        "start_time" : 1490039100,
+        "consult_type" : "LiveConsult",
+        "locale" : null,
+        "enterprise_group_id" : null,
+        "chat_room_id" : "1272",
+        "apply_insurance" : false,
+        "live_consult_duration" : "30_min",
+        "end_time" : null,
+        "appointment_id" : "1592",
+        "clinical_service_id" : null,
+        "patient_id" : "12618847"
+      }
+    }
+  ],
+  "included" : [
+    {
+      "type" : "Person",
+      "id" : "12618847",
+      "attributes" : {
+        "gender" : "male",
+        "photo" : {
+          "large" : "https://webservices.healthtap.com/images/avatars/gallery/member14_medium.png",
+          "thumb" : null
+        },
+        "dob" : "1973-01-01",
+        "name" : {
+          "given_name" : "Thbbj",
+          "family_name" : "Vgg",
+          "middle_name" : null,
+          "full_name" : "Thbbj Vgg"
+        },
+        "primary_external_id" : null,
+        "location" : {
+          "state" : "CA",
+          "city" : "Palo Alto",
+          "postcode" : "12435647"
+        }
+      }
+    },
+    {
+      "type" : "Expert",
+      "id" : "67789969",
+      "attributes" : {
+        "gender" : null,
+        "photo" : {
+          "large" : "expert_photo",
+          "thumb" : null
+        },
+        "dob" : "1954-01-01",
+        "name" : {
+          "given_name" : "Expert",
+          "family_name" : "Dr.",
+          "middle_name" : null,
+          "full_name" : "Dr. Expert"
+        },
+        "primary_external_id" : null,
+        "location" : {
+          "state" : "CA",
+          "city" : "Palo Alto",
+          "postcode" : "12435647"
+        },
+        "specialty" : "Addiction medicine"
+      }
+    },
+    {
+      "type" : "ChatRoom",
+      "id" : "1272",
+      "attributes" : {
+        "key" : null,
+        "audio_enabled" : false,
+        "pin" : "7999209",
+        "video_enabled" : false
+      }
+    }
+  ]
+}

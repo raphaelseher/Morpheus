@@ -9,6 +9,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import at.rags.morpheus.exceptions.NotExtendingResourceException;
+import at.rags.morpheus.exceptions.ResourceCreationException;
 
 /**
  * Morpheus is a library to map JSON with the json:api specification format.
@@ -43,7 +47,7 @@ public class Morpheus {
    * @return A {@link JsonApiObject}.
    * @throws JSONException or NotExtendingResourceException
    */
-  public JsonApiObject parse(String jsonString) throws Exception {
+  public JsonApiObject parse(String jsonString) throws JSONException, NotExtendingResourceException{
     JSONObject jsonObject = null;
     try {
       jsonObject = new JSONObject(jsonString);
@@ -57,13 +61,18 @@ public class Morpheus {
   /**
    * Parse and map all the top level members.
    */
-  private JsonApiObject parseFromJSONObject(JSONObject jsonObject) throws Exception {
+  private JsonApiObject parseFromJSONObject(JSONObject jsonObject)
+      throws ResourceCreationException, NotExtendingResourceException {
     JsonApiObject jsonApiObject = new JsonApiObject();
 
     //included
     try {
       JSONArray includedArray = jsonObject.getJSONArray("included");
       jsonApiObject.setIncluded(Factory.newObjectFromJSONArray(includedArray, null));
+      // Pass included second time to resolve nested relationships
+      for (Resource resource : jsonApiObject.getIncluded()) {
+        mapper.mapRelations(resource, jsonApiObject.getIncluded());
+      }
     } catch (JSONException e) {
       Logger.debug("JSON does not contain included");
     }
@@ -99,7 +108,7 @@ public class Morpheus {
     JSONObject metaObject = null;
     try {
       metaObject = jsonObject.getJSONObject("meta");
-      jsonApiObject.setMeta(mapper.getAttributeMapper().createMapFromJSONObject(metaObject));
+      jsonApiObject.setMeta(metaObject);
     } catch (JSONException e) {
       Logger.debug("JSON does not contain meta object");
     }

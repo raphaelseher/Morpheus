@@ -1,0 +1,165 @@
+{
+  "links" : {
+    "self" : "api.healthtap.com/api/v2.1/users/me/clinical_queue_items"
+  },
+  "data" : [
+    {
+      "id" : "8",
+      "relationships" : {
+        "invitee" : {
+          "data" : {
+            "type" : "Expert",
+            "id" : "12616679"
+          }
+        },
+        "chat_session" : {
+          "data" : {
+            "type" : "ChatSession",
+            "id" : "29063"
+          }
+        },
+        "inviter" : {
+          "data" : {
+            "type" : "Person",
+            "id" : "12618847"
+          },
+          "meta": {
+            "test": "test"
+          }
+        }
+      },
+      "type" : "ClinicalQueueItem",
+      "attributes" : {
+        "created_at" : 1487729767,
+        "clinical_status" : "new",
+        "routed_at" : 1490038027,
+        "invite_type" : "clinical"
+      }
+    }
+  ],
+  "included" : [
+    {
+      "id": "author_id",
+      "type": "people",
+      "attributes": {
+        "first-name": "first-name"
+      }
+    },
+    {
+      "type" : "ChatRoom",
+      "id" : "8f04",
+      "attributes" : {
+        "key" : null,
+        "audio_enabled" : false,
+        "pin" : "9552780",
+        "video_enabled" : false
+      },
+      "relationships": {
+        "articles": {
+          "data": [{
+            "id": "123",
+            "type": "articles"
+          }]
+        }
+      }
+    },
+    {
+      "id": "123",
+      "type": "articles",
+      "attributes" : {
+        "title": "test"
+      },
+      "relationships": {
+        "author": {
+          "data": {
+            "id": "author_id",
+            "type": "people"
+          }
+        }
+      }
+    },
+    {
+      "type" : "Person",
+      "id" : "12618847",
+      "attributes" : {
+        "dob" : "1973-01-01",
+        "gender" : "male",
+        "name" : {
+          "given_name" : "Thbbj",
+          "family_name" : "Vgg",
+          "middle_name" : null,
+          "full_name" : "Thbbj Vgg"
+        },
+        "photo" : {
+          "large" : "https://webservices.healthtap.com/images/avatars/gallery/member14_thumb.png",
+          "thumb" : "https://webservices.healthtap.com/images/avatars/gallery/member14_thumb.png"
+        },
+        "location" : {
+          "state" : "CA",
+          "country" : "United States",
+          "city" : "Palo Alto",
+          "postcode" : "12435647"
+        }
+      }
+    },
+    {
+      "type" : "Expert",
+      "id" : "12616679",
+      "attributes" : {
+        "gender" : "male",
+        "specialty" : "Addiction Medicine",
+        "name" : {
+          "given_name" : "Wuhao",
+          "family_name" : "Ouyang",
+          "middle_name" : null,
+          "full_name" : "Wuhao Ouyang"
+        },
+        "photo" : {
+          "large" : "https://edc2.healthtap.com/ht-webservices/people2/avatars/012/616/679/12616679/thumb/12616679x1438279333.png?1438279333",
+          "thumb" : "https://edc2.healthtap.com/ht-webservices/people2/avatars/012/616/679/12616679/thumb/12616679x1438279333.png?1438279333"
+        }
+      }
+    },
+    {
+      "id" : "29063",
+      "relationships" : {
+        "chat_room" : {
+          "data" : {
+            "type" : "ChatRoom",
+            "id" : "8f04"
+          }
+        },
+        "patient" : {
+          "data" : {
+            "type" : "Person",
+            "id" : "12618847"
+          }
+        },
+        "expert" : {
+          "data" : {
+            "type" : "Expert",
+            "id" : "12616679"
+          }
+        }
+      },
+      "type" : "ChatSession",
+      "attributes" : {
+        "state" : "ended",
+        "reason_for_visit" : "asd fas fads ds ",
+        "appointment_slot_id" : "1490084100",
+        "requested_expert_id" : "12616679",
+        "consult_geo_state" : "CA",
+        "consult_geo_country" : "United States",
+        "start_time" : 1490036218,
+        "consult_type" : "LiveConsult",
+        "locale" : null,
+        "enterprise_group_id" : "",
+        "live_consult_duration" : "30_min",
+        "apply_insurance" : false,
+        "concierge_appointment_id" : "1593",
+        "end_time" : 1490038029,
+        "clinical_service_id" : "2"
+      }
+    }
+  ]
+}

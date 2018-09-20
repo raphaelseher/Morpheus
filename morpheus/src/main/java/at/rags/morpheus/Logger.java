@@ -16,6 +16,6 @@ public class Logger {
   }
 
   public static void setDebug(boolean debug) {
-    Logger.debug = debug;
+    at.rags.morpheus.Logger.debug = debug;
   }
 }

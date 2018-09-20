@@ -1,7 +1,5 @@
 package at.rags.morpheus;
 
-import android.util.ArrayMap;
-
 import java.util.HashMap;
 
 /**
@@ -13,8 +11,8 @@ public class Error {
   private String code;
   private String title;
   private String detail;
-  private Source source;
-  private ErrorLinks links;
+  private at.rags.morpheus.Source source;
+  private at.rags.morpheus.ErrorLinks links;
   private HashMap<String, Object> meta;
 
   public HashMap<String, Object> getMeta() {
@@ -33,11 +31,11 @@ public class Error {
     this.id = id;
   }
 
-  public ErrorLinks getLinks() {
+  public at.rags.morpheus.ErrorLinks getLinks() {
     return links;
   }
 
-  public void setLinks(ErrorLinks linkss) {
+  public void setLinks(at.rags.morpheus.ErrorLinks linkss) {
     this.links = linkss;
   }
 
@@ -73,11 +71,11 @@ public class Error {
     this.detail = detail;
   }
 
-  public Source getSource() {
+  public at.rags.morpheus.Source getSource() {
     return source;
   }
 
-  public void setSource(Source source) {
+  public void setSource(at.rags.morpheus.Source source) {
     this.source = source;
   }
 }

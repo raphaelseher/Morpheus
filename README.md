@@ -1,7 +1,8 @@
 # Morpheus
 
- [![Download](https://api.bintray.com/packages/xamoom/maven/Morpheus/images/download.svg) ](https://bintray.com/xamoom/maven/Morpheus/_latestVersion)
- [![Build Status](https://travis-ci.org/xamoom/Morpheus.svg?branch=master)](https://travis-ci.org/xamoom/Morpheus)
+##### NOTE: This is a customized version of original Morpheus
+
+ [![Build Status](https://travis-ci.org/HealthTap/Morpheus.svg?branch=master)](https://travis-ci.org/HealthTap/Morpheus)
 
 Morpheus is a [JSONAPI](http://jsonapi.org/) deserializer for android that uses java reflection.
 You can define your own java classes to deserialize.
@@ -10,8 +11,13 @@ Take a look at the [documentation](http://xamoom.github.io/Morpheus/docs/0.5.1/i
 
 ## Install
 
- ```java
- compile 'com.xamoom.android:morpheus:0.5.2'
+ ```groovy
+ repositories {
+   maven { url "https://healthtap-android.s3.amazonaws.com/repo/" }
+ }
+ dependencies {
+  compile 'com.healthtap.androidsdk:morpheus:0.5.9'
+ }
  ```
 
 ## Usage

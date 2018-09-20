@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontobfuscate
+-dontoptimize
+
+-dontwarn at.rags.morpheus.*
+
+-keep class at.rags.morpheus.** { *; }
